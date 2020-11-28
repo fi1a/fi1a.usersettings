@@ -1,0 +1,46 @@
+.adm-workarea .heading.m_fus td {
+    text-align: left !important;
+}
+
+.b-fus-select {
+    width: 150px;
+}
+
+.adm-workarea .internal.m_fus {
+    width: 100%;
+}
+
+.adm-workarea .internal.m_fus :not(.heading) td {
+    background-color:#f5f9f9;
+}
+
+.flip-list-move {
+    transition: transform 1s;
+}
+
+.b-fus-field {
+    width: 90%;
+}
+
+.b-fus-table {
+    width: 100%;
+    border: 0;
+}
+
+.b-fus-table td {
+    padding: 5px;
+}
+
+#bx-admin-prefix .internal.m_fus tr:last-child td {
+    border-bottom: 1px solid #d0d7d8!important;
+}
+
+#bx-admin-prefix .internal td.b-fus-field-container {
+    padding: 20px !important;
+}
+
+.fi1a_usersettings_menu_icon {
+    background: url(icons/fi1a.usersettings/menu_icon.svg) center center no-repeat;
+    background-size: 60% 60%;
+    margin-top: -1px !important;
+}
