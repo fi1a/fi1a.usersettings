@@ -16,5 +16,13 @@
     "composer/installers": "~1"
   },
   "require-dev": {
+  },
+  "scripts": {
+    "fl:lint": "phpcs --cache=build/cache/phpcs.cache",
+    "fl:phpcbf": "phpcbf --cache=build/cache/phpcs.cache"
+  },
+  "scripts-descriptions": {
+    "fl:lint": "Проверяет весь исходный код на соответсвие стандартам.",
+    "fl:phpcbf": "Поправляет весь исходный код на соответсвие стандартам."
   }
 }
