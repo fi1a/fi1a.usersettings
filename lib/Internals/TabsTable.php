@@ -1,23 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings\Internals;
 
 use Bitrix\Main\Entity\DataManager;
 use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\ORM\Fields\BooleanField;
 use Bitrix\Main\ORM\Fields\IntegerField;
 use Bitrix\Main\ORM\Fields\TextField;
-use Bitrix\Main\ORM\Fields\BooleanField;
-use Bitrix\Main\ORM\Fields\Validators\UniqueValidator;
 use Bitrix\Main\ORM\Fields\Validators\RegExpValidator;
-
-Loc::loadMessages(__FILE__);
+use Bitrix\Main\ORM\Fields\Validators\UniqueValidator;
 
 /**
  * Вкладки
  */
 class TabsTable extends DataManager
 {
-
     /**
      * Returns DB table name for entity.
      *
@@ -31,7 +30,7 @@ class TabsTable extends DataManager
     /**
      * Returns entity map definition.
      *
-     * @return array
+     * @return mixed[]
      */
     public static function getMap()
     {
@@ -45,12 +44,12 @@ class TabsTable extends DataManager
             ]),
             'CODE' => new TextField('CODE', [
                 'required' => true,
-                'validation' => function() {
+                'validation' => function () {
                     return [
                         new RegExpValidator('/^[0-9A-Za-z_]+$/', Loc::getMessage('FUS_CODE_FORMAT_ERROR')),
                         new UniqueValidator(Loc::getMessage('FUS_CODE_UNIQUE_ERROR')),
                     ];
-                }
+                },
             ]),
             'SORT' => new IntegerField('SORT', [
                 'default_value' => 500,

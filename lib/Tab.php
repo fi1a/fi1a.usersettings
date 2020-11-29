@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings;
 
 use Bitrix\Main\Application;
@@ -9,19 +11,18 @@ use Bitrix\Main\EventResult;
 use Bitrix\Main\Localization\LanguageTable;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ORM\Data\AddResult;
-use Bitrix\Main\ORM\Data\UpdateResult;
 use Bitrix\Main\ORM\Data\DeleteResult;
+use Bitrix\Main\ORM\Data\UpdateResult;
 use Fi1a\UserSettings\Collection\ArrayObject;
 use Fi1a\UserSettings\Internals\TabsTable;
 
-Loc::loadMessages(__FILE__);
+use function htmlspecialcharsbx;
 
 /**
  * Класс вкладки в пользовательских настройках
  */
 class Tab extends ArrayObject implements ITab
 {
-
     /**
      * @var array
      */
@@ -43,7 +44,7 @@ class Tab extends ArrayObject implements ITab
     /**
      * Конструктор
      *
-     * @param array $input
+     * @param string[] $input
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
@@ -91,7 +92,7 @@ class Tab extends ArrayObject implements ITab
      */
     public function save()
     {
-        return (int)$this['ID'] > 0 ? $this->update() : $this->add();
+        return (int) $this['ID'] > 0 ? $this->update() : $this->add();
     }
 
     /**
@@ -108,7 +109,7 @@ class Tab extends ArrayObject implements ITab
             $event = new Event('fi1a.usersettings', 'OnBeforeTabAdd', [$fields]);
             $event->send();
             foreach ($event->getResults() as $eventResult) {
-                if ($eventResult->getType() == EventResult::ERROR) {
+                if ($eventResult->getType() === EventResult::ERROR) {
                     continue;
                 }
 
@@ -117,7 +118,7 @@ class Tab extends ArrayObject implements ITab
             unset($eventResult);
 
             $result = TabsTable::add($fields);
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             $result = new AddResult();
             $result->addError(new Error($exception->getMessage()));
         }
@@ -158,7 +159,7 @@ class Tab extends ArrayObject implements ITab
             $event = new Event('fi1a.usersettings', 'OnBeforeTabUpdate', [$fields]);
             $event->send();
             foreach ($event->getResults() as $eventResult) {
-                if ($eventResult->getType() == EventResult::ERROR) {
+                if ($eventResult->getType() === EventResult::ERROR) {
                     continue;
                 }
 
@@ -167,7 +168,7 @@ class Tab extends ArrayObject implements ITab
             unset($eventResult);
 
             $result = TabsTable::update($id, $fields);
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             $result = new UpdateResult();
             $result->addError(new Error($exception->getMessage()));
         }
@@ -192,7 +193,7 @@ class Tab extends ArrayObject implements ITab
     public function delete(): DeleteResult
     {
         $fields = $this->getArrayCopy();
-        $id = $fields['ID'];
+        $id = (int) $fields['ID'];
 
         $this->connection->startTransaction();
 
@@ -225,7 +226,7 @@ class Tab extends ArrayObject implements ITab
                 }
                 unset($field);
             }
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             $result = new DeleteResult();
             $result->addError(new Error($exception->getMessage()));
         }
@@ -264,7 +265,7 @@ class Tab extends ArrayObject implements ITab
     {
         $title = '';
         if ($this['LOCALIZATION'][$langId]['L_TITLE']) {
-            $title = \htmlspecialcharsbx($this['LOCALIZATION'][$langId]['L_TITLE']);
+            $title = htmlspecialcharsbx($this['LOCALIZATION'][$langId]['L_TITLE']);
         }
 
         return $title;

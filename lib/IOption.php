@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings;
 
 use Bitrix\Main\Result;
@@ -9,31 +11,27 @@ use Bitrix\Main\Result;
  */
 interface IOption
 {
+    public const ENTITY_ID = 'FUS';
 
-    const ENTITY_ID = 'FUS';
+    public const ID = 1;
 
-    const ID = 1;
-
-    const CACHE_ID = 'fus_option';
+    public const CACHE_ID = 'fus_option';
 
     /**
      * Синглетон
-     *
-     * @return IOption
      */
     public static function getInstance(): IOption;
 
     /**
      * Возвращает все значения
      *
-     * @return array
+     * @return string[]
      */
     public function getAll(): array;
 
     /**
      * Возвращает значение
      *
-     * @param string $key
      * @param mixed|false $default
      *
      * @return mixed
@@ -43,7 +41,6 @@ interface IOption
     /**
      * Устанавливает значение
      *
-     * @param string $key
      * @param mixed $value
      *
      * @return mixed
@@ -52,8 +49,6 @@ interface IOption
 
     /**
      * Очистить кеш полей со значениями
-     *
-     * @return bool
      */
     public function clearCache(): bool;
 }

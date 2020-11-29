@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings\Collection;
 
 /**
@@ -7,13 +9,10 @@ namespace Fi1a\UserSettings\Collection;
  */
 class Collection extends ArrayObject implements ICollection
 {
-
     /**
      * Есть ли элемент с таким ключем
      *
      * @param mixed $key
-     *
-     * @return bool
      */
     public function has($key): bool
     {
@@ -54,8 +53,6 @@ class Collection extends ArrayObject implements ICollection
      * Удаляет элемент по ключу
      *
      * @param mixed $key
-     *
-     * @return bool
      */
     public function delete($key): bool
     {
@@ -70,8 +67,6 @@ class Collection extends ArrayObject implements ICollection
     /**
      * Вызывает переданную функцию передавая ключ и значение из коллеекции
      *
-     * @param callable $callback
-     *
      * @return static
      */
     public function each(callable $callback)
@@ -85,8 +80,6 @@ class Collection extends ArrayObject implements ICollection
 
     /**
      * Вызывает переданную функцию передавая ключ и значение из коллекции и заменяет элемент результатом
-     *
-     * @param callable $callback
      *
      * @return static
      */

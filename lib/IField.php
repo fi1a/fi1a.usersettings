@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings;
 
 use Bitrix\Main\ORM\Data\AddResult;
@@ -12,13 +14,10 @@ use Fi1a\UserSettings\Collection\IArrayObject;
  */
 interface IField extends IArrayObject
 {
-
     /**
      * Фабричный метод
      *
-     * @param array $input
-     *
-     * @return IField
+     * @param string[] $input
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
@@ -38,8 +37,6 @@ interface IField extends IArrayObject
     /**
      * Добавление
      *
-     * @return AddResult
-     *
      * @throws \Exception
      */
     public function add(): AddResult;
@@ -47,16 +44,12 @@ interface IField extends IArrayObject
     /**
      * Обновление
      *
-     * @return UpdateResult
-     *
      * @throws \Exception
      */
     public function update(): UpdateResult;
 
     /**
      * Удаление
-     *
-     * @return DeleteResult
      *
      * @throws \Exception
      */

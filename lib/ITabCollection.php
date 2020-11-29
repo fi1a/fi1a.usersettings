@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings;
 
 /**
@@ -7,5 +9,4 @@ namespace Fi1a\UserSettings;
  */
 interface ITabCollection extends IBaseCollection
 {
-
 }

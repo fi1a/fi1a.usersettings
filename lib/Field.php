@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings;
 
 use Bitrix\Main\Application;
@@ -11,17 +13,16 @@ use Bitrix\Main\ORM\Data\AddResult;
 use Bitrix\Main\ORM\Data\DeleteResult;
 use Bitrix\Main\ORM\Data\UpdateResult;
 use Bitrix\Main\ORM\EntityError;
+use CUserTypeEntity;
 use Fi1a\UserSettings\Collection\ArrayObject;
+use Fi1a\UserSettings\Helpers\ModuleRegistry;
 use Fi1a\UserSettings\Internals\FieldsTable;
-
-Loc::loadMessages(__FILE__);
 
 /**
  * Поле пользовательских настроек
  */
 class Field extends ArrayObject implements IField
 {
-
     /**
      * @var \Bitrix\Main\DB\Connection
      */
@@ -43,7 +44,7 @@ class Field extends ArrayObject implements IField
     /**
      * Конструктор
      *
-     * @param array $input
+     * @param string[] $input
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
@@ -62,7 +63,7 @@ class Field extends ArrayObject implements IField
      */
     public function save()
     {
-        return (int)$this['ID'] > 0 ? $this->update() : $this->add();
+        return (int) $this['ID'] > 0 ? $this->update() : $this->add();
     }
 
     /**
@@ -70,8 +71,6 @@ class Field extends ArrayObject implements IField
      */
     public function add(): AddResult
     {
-        global $APPLICATION;
-
         $this->connection->startTransaction();
 
         $fields = $this->getArrayCopy();
@@ -87,7 +86,7 @@ class Field extends ArrayObject implements IField
             $event = new Event('fi1a.usersettings', 'OnBeforeFieldAdd', [$fields]);
             $event->send();
             foreach ($event->getResults() as $eventResult) {
-                if ($eventResult->getType() == EventResult::ERROR) {
+                if ($eventResult->getType() === EventResult::ERROR) {
                     continue;
                 }
 
@@ -95,11 +94,13 @@ class Field extends ArrayObject implements IField
             }
             unset($eventResult);
 
-            $userTypeEntity  = new \CUserTypeEntity();
+            $userTypeEntity  = new CUserTypeEntity();
             $userTypeId = $userTypeEntity->Add($fields['UF']);
 
             if (!$userTypeId) {
-                $result->addError(new EntityError($APPLICATION->GetException()->GetString()));
+                $result->addError(
+                    new EntityError(ModuleRegistry::getApplication()->GetException()->GetString())
+                );
             }
 
             if ($result->isSuccess()) {
@@ -114,7 +115,7 @@ class Field extends ArrayObject implements IField
                     ]);
                 }
             }
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             $result = new AddResult();
             $result->addError(new Error($exception->getMessage()));
         }
@@ -141,8 +142,6 @@ class Field extends ArrayObject implements IField
      */
     public function update(): UpdateResult
     {
-        global $APPLICATION;
-
         $fields = $this->getArrayCopy();
         $id = $fields['ID'];
         $ufId = $fields['UF_ID'] ? $fields['UF_ID'] : $fields['UF']['ID'];
@@ -159,7 +158,7 @@ class Field extends ArrayObject implements IField
             $event = new Event('fi1a.usersettings', 'OnBeforeFieldUpdate', [$fields]);
             $event->send();
             foreach ($event->getResults() as $eventResult) {
-                if ($eventResult->getType() == EventResult::ERROR) {
+                if ($eventResult->getType() === EventResult::ERROR) {
                     continue;
                 }
 
@@ -167,22 +166,23 @@ class Field extends ArrayObject implements IField
             }
             unset($eventResult);
 
-            if (!empty($fields['UF'])) {
-                $userTypeEntity  = new \CUserTypeEntity();
+            if (is_array($fields['UF']) && count($fields['UF']) > 0) {
+                $userTypeEntity  = new CUserTypeEntity();
 
                 if (!$userTypeEntity->Update($ufId, $fields['UF'])) {
-                    $result->addError(new EntityError($APPLICATION->GetException()->GetString()));
+                    $result->addError(
+                        new EntityError(ModuleRegistry::getApplication()->GetException()->GetString())
+                    );
                 }
             }
 
             if ($result->isSuccess()) {
                 $result = FieldsTable::update($id, $fields);
             }
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             $result = new UpdateResult();
             $result->addError(new Error($exception->getMessage()));
         }
-
 
         if ($result->isSuccess()) {
             $this->connection->commitTransaction();
@@ -203,10 +203,8 @@ class Field extends ArrayObject implements IField
      */
     public function delete(): DeleteResult
     {
-        global $APPLICATION;
-
         $fields = $this->getArrayCopy();
-        $id = $fields['ID'];
+        $id = (int) $fields['ID'];
 
         $this->connection->startTransaction();
 
@@ -218,7 +216,7 @@ class Field extends ArrayObject implements IField
             return $result;
         }
 
-        $ufId = $fields['UF_ID'] ? (int)$fields['UF_ID'] : (int)$fields['UF']['ID'];
+        $ufId = $fields['UF_ID'] ? (int) $fields['UF_ID'] : (int) $fields['UF']['ID'];
         if (!$ufId) {
             $result->addError(new Error(Loc::getMessage('FUS_UF_PRIMARY_VALUE_NOT_EXISTS')));
 
@@ -232,13 +230,15 @@ class Field extends ArrayObject implements IField
             $result = FieldsTable::delete($id);
 
             if ($result->isSuccess()) {
-                $userTypeEntity  = new \CUserTypeEntity();
+                $userTypeEntity  = new CUserTypeEntity();
 
                 if (!$userTypeEntity->Delete($ufId)) {
-                    $result->addError(new Error($APPLICATION->GetException()->GetString()));
+                    $result->addError(
+                        new Error(ModuleRegistry::getApplication()->GetException()->GetString())
+                    );
                 }
             }
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             $result = new DeleteResult();
             $result->addError(new Error($exception->getMessage()));
         }

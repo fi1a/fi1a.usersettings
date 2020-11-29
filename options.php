@@ -48,6 +48,10 @@ if ($isSubmit && $rightForModule < 'W') {
     $isSubmit = false;
 }
 
+if ($isSubmit) {
+    $Update = true;
+}
+
 $backUrlSettings = $request->getQuery('back_url_settings');
 if (!$backUrlSettings) {
     $backUrlSettings = $request->getPost('back_url_settings');
@@ -119,6 +123,7 @@ $menu = [
     'LOCALIZATION' => unserialize(\Bitrix\Main\Config\Option::get('fi1a.usersettings', 'LOCALIZATION')),
 ];
 
+
 if ($isSubmit) {
     // Сохранение табов
     $fusTabs = (array)$request->getPost('TABS');
@@ -179,22 +184,10 @@ if ($isSubmit) {
     }
     $menu['SORT'] = (int)$menu['SORT'];
 
-    if (empty($errors)) {
+    if (!count($errors)) {
         \Bitrix\Main\Config\Option::set('fi1a.usersettings', 'PARENT_MENU', $menu['PARENT_MENU']);
         \Bitrix\Main\Config\Option::set('fi1a.usersettings', 'SORT', $menu['SORT']);
         \Bitrix\Main\Config\Option::set('fi1a.usersettings', 'LOCALIZATION', serialize($menu['LOCALIZATION']));
-    }
-
-    if (empty($errors)) {
-        // Редиректим
-        Flush::set('FUS_EDIT_SUCCESS', true);
-
-        $uri = new Uri($request->getRequestUri());
-        if ($request->getPost('save') && $backUrlSettings) {
-            $uri = new Uri($backUrlSettings);
-        }
-
-        \LocalRedirect($uri->getUri());
     }
 }
 
@@ -331,3 +324,15 @@ echo BeginNote();
 <p><?= Loc::getMessage('FUS_NOTE_4')?></p>
 <?php
 echo EndNote();
+
+if ($isSubmit && !count($errors)) {
+    // Редиректим
+    Flush::set('FUS_EDIT_SUCCESS', true);
+
+    $uri = new Uri($request->getRequestUri());
+    if ($request->getPost('save') && $backUrlSettings) {
+        $uri = new Uri($backUrlSettings);
+    }
+
+    \LocalRedirect($uri->getUri());
+}

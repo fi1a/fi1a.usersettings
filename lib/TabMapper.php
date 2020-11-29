@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings;
 
 use Fi1a\UserSettings\Internals\TabsTable;
@@ -9,7 +11,6 @@ use Fi1a\UserSettings\Internals\TabsTable;
  */
 class TabMapper implements ITabMapper
 {
-
     /**
      * @inheritDoc
      */

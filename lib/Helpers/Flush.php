@@ -1,28 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings\Helpers;
+
+use Bitrix\Main\Application;
 
 /**
  * Хелпер
  */
 class Flush
 {
-
     /**
      * Установить значение
      *
-     * @param string $key
-     * @param mixed $valus
-     *
-     * @return bool
+     * @param mixed $value
      */
-    public static function set(string $key, $valus): bool
+    public static function set(string $key, $value): bool
     {
         if (!$key) {
             return false;
         }
-
-        $_SESSION[$key] = $valus;
+        $session = Application::getInstance()->getSession();
+        $session->set($key, $value);
 
         return true;
     }
@@ -30,14 +30,13 @@ class Flush
     /**
      * Возвращает значение
      *
-     * @param string $key
-     *
      * @return mixed
      */
     public static function get(string $key)
     {
-        $value = $_SESSION[$key];
-        unset($_SESSION[$key]);
+        $session = Application::getInstance()->getSession();
+        $value = $session->get($key);
+        $session->remove($key);
 
         return $value;
     }

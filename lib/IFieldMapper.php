@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings;
 
 /**
@@ -7,11 +9,10 @@ namespace Fi1a\UserSettings;
  */
 interface IFieldMapper
 {
-
     /**
      * Возвращает список полей пользовательских настроек
      *
-     * @param array $parameters - синтаксис d7
+     * @param string[] $parameters - синтаксис d7
      *
      * @return IFieldCollection|IField[]
      *
@@ -24,8 +25,6 @@ interface IFieldMapper
     /**
      * Возвращает поле по идентификатору
      *
-     * @param int $id
-     *
      * @return bool|IField
      *
      * @throws \Bitrix\Main\ArgumentException
@@ -36,8 +35,6 @@ interface IFieldMapper
 
     /**
      * Возвращает список полей принадлежащих вкладке
-     *
-     * @param int $tabId
      *
      * @return IFieldCollection|bool|IField[]
      *
@@ -50,9 +47,7 @@ interface IFieldMapper
     /**
      * Возвращает коллекцию с активными полями
      *
-     * @param array $parameters
-     *
-     * @return IFieldCollection
+     * @param string[] $parameters
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException

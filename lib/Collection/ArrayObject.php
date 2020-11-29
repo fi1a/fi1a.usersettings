@@ -1,19 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings\Collection;
+
+use ArrayIterator;
 
 /**
  * Класс ArrayObject
  */
 class ArrayObject extends \ArrayObject implements IArrayObject
 {
-
     /**
      * @inheritDoc
      */
-    public function __construct($input = null, $flags = 0, $iteratorClass = \ArrayIterator::class)
+    public function __construct($input = null, $flags = 0, $iteratorClass = ArrayIterator::class)
     {
-        parent::__construct((array)$input, $flags, $iteratorClass);
+        parent::__construct((array) $input, $flags, $iteratorClass);
     }
 
     /**

@@ -1,19 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings\Collection;
+
+use ArrayIterator;
 
 /**
  * Абстрактный класс коллекции экземпляров классов
  */
 abstract class AInstanceCollection extends Collection implements IInstanceCollection
 {
-
     /**
-     * @param null|array $input         массив со значениями
+     * @param mixed[]|null $input массив со значениями
      * @param int        $flags         флаги
      * @param string     $iteratorClass класс итератора
      */
-    public function __construct($input = null, $flags = 0, $iteratorClass = \ArrayIterator::class)
+    public function __construct(?array $input = null, int $flags = 0, string $iteratorClass = ArrayIterator::class)
     {
         parent::__construct([], $flags, $iteratorClass);
         if (!is_array($input)) {

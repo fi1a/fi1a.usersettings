@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings;
 
 /**
@@ -7,13 +9,10 @@ namespace Fi1a\UserSettings;
  */
 interface ITabMapper
 {
-
     /**
      * Возвращает список вкладок пользовательских настроек
      *
-     * @param array $parameters - синтаксис d7
-     *
-     * @return ITabCollection
+     * @param string[] $parameters - синтаксис d7
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
@@ -23,8 +22,6 @@ interface ITabMapper
 
     /**
      * Возвращает вкладку по ее идентификатору
-     *
-     * @param int $id
      *
      * @return bool|ITab
      *
@@ -37,9 +34,7 @@ interface ITabMapper
     /**
      * Возвращает коллекцию с активными табами
      *
-     * @param array $parameters
-     *
-     * @return ITabCollection
+     * @param string[] $parameters
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings\Collection;
 
 /**
@@ -7,7 +9,6 @@ namespace Fi1a\UserSettings\Collection;
  */
 interface IInstanceCollection extends ICollection
 {
-
     /**
      * Возвращает экземпляр класса элемента коллекции
      *
@@ -22,8 +23,6 @@ interface IInstanceCollection extends ICollection
      * Определяет является ли значение экземпляром класса элемента коллекции
      *
      * @param mixed $value
-     *
-     * @return bool
      */
     public static function isInstance($value): bool;
 
@@ -34,9 +33,9 @@ interface IInstanceCollection extends ICollection
      * результата выполнения этих методов или null, если такого метода нет
      *
      * @param string $func название функции
-     * @param array  $args аргументы функции
+     * @param mixed[]  $args аргументы функции
      *
-     * @return array
+     * @return mixed[]
      */
-    public function __call($func, $args);
+    public function __call(string $func, array $args);
 }

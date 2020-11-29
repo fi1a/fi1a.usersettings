@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings\Internals;
 
 use Bitrix\Main\Entity\DataManager;
@@ -12,7 +14,6 @@ use Bitrix\Main\ORM\Fields\TextField;
  */
 class UserFieldLangTable extends DataManager
 {
-
     /**
      * Returns DB table name for entity.
      *
@@ -26,7 +27,7 @@ class UserFieldLangTable extends DataManager
     /**
      * Returns entity map definition.
      *
-     * @return array
+     * @return mixed[]
      */
     public static function getMap()
     {
@@ -47,9 +48,10 @@ class UserFieldLangTable extends DataManager
     }
 
     /**
-     * @param array $data
+     * @param string[] $data
      *
      * @return \Bitrix\Main\ORM\Data\AddResult|void
+     *
      * @throws NotImplementedException
      */
     public static function add(array $data)
@@ -59,9 +61,10 @@ class UserFieldLangTable extends DataManager
 
     /**
      * @param mixed $primary
-     * @param array $data
+     * @param string[] $data
      *
      * @return \Bitrix\Main\ORM\Data\UpdateResult|void
+     *
      * @throws NotImplementedException
      */
     public static function update($primary, array $data)
@@ -73,6 +76,7 @@ class UserFieldLangTable extends DataManager
      * @param mixed $primary
      *
      * @return \Bitrix\Main\ORM\Data\void
+     *
      * @throws NotImplementedException
      */
     public static function delete($primary)

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings\Collection;
 
 /**
@@ -7,15 +9,12 @@ namespace Fi1a\UserSettings\Collection;
  */
 interface ICollection extends IArrayObject
 {
-
     /**
      * Есть ли элемент с таким ключем
      *
      * @param mixed $key
-     *
-     * @return bool
      */
-    public function has($key) : bool;
+    public function has($key): bool;
 
     /**
      * Возвращает элемент по ключу
@@ -41,15 +40,11 @@ interface ICollection extends IArrayObject
      * Удаляет элемент по ключу
      *
      * @param mixed $key
-     *
-     * @return bool
      */
     public function delete($key): bool;
 
     /**
      * Вызывает переданную функцию передавая ключ и значение из коллекции
-     *
-     * @param callable $callback
      *
      * @return static
      */
@@ -57,8 +52,6 @@ interface ICollection extends IArrayObject
 
     /**
      * Вызывает переданную функцию передавая ключ и значение из коллекции и заменяет элемент результатом
-     *
-     * @param callable $callback
      *
      * @return static
      */

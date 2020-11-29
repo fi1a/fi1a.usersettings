@@ -1,23 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings\Internals;
 
 use Bitrix\Main\Entity\DataManager;
-use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ORM\Fields\BooleanField;
 use Bitrix\Main\ORM\Fields\IntegerField;
 use Bitrix\Main\ORM\Fields\Validators\ForeignValidator;
 use Bitrix\Main\UserFieldTable;
 use Fi1a\UserSettings\Option;
 
-Loc::loadMessages(__FILE__);
-
 /**
  * Поля
  */
 class FieldsTable extends DataManager
 {
-
     /**
      * Returns DB table name for entity.
      *
@@ -31,7 +29,7 @@ class FieldsTable extends DataManager
     /**
      * Returns entity map definition.
      *
-     * @return array
+     * @return mixed[]
      */
     public static function getMap()
     {
@@ -45,7 +43,7 @@ class FieldsTable extends DataManager
             ]),
             'TAB_ID' => new IntegerField('TAB_ID', [
                 'required' => true,
-                'validation' => function() {
+                'validation' => function () {
                     return [
                         new ForeignValidator(TabsTable::getEntity()->getField('ID')),
                     ];
@@ -53,7 +51,7 @@ class FieldsTable extends DataManager
             ]),
             'UF_ID' => new IntegerField('UF_ID', [
                 'required' => true,
-                'validation' => function() {
+                'validation' => function () {
                     return [
                         new ForeignValidator(
                             UserFieldTable::getEntity()->getField('ID'),

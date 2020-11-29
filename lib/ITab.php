@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings;
 
 use Bitrix\Main\ORM\Data\AddResult;
@@ -12,13 +14,10 @@ use Fi1a\UserSettings\Collection\IArrayObject;
  */
 interface ITab extends IArrayObject
 {
-
     /**
      * Фабричный метод
      *
-     * @param array $input
-     *
-     * @return ITab
+     * @param string[] $input
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
@@ -38,16 +37,12 @@ interface ITab extends IArrayObject
     /**
      * Добавление
      *
-     * @return AddResult
-     *
      * @throws \Exception
      */
     public function add(): AddResult;
 
     /**
      * Обновление
-     *
-     * @return UpdateResult
      *
      * @throws \Exception
      */
@@ -56,27 +51,17 @@ interface ITab extends IArrayObject
     /**
      * Удаление
      *
-     * @return DeleteResult
-     *
      * @throws \Exception
      */
     public function delete(): DeleteResult;
 
     /**
      * Возвращает название вкладки
-     *
-     * @param string $langId
-     *
-     * @return string
      */
     public function getName(string $langId = LANGUAGE_ID): string;
 
     /**
      * Возвращает заголовок вкладки
-     *
-     * @param string $langId
-     *
-     * @return string
      */
     public function getTitle(string $langId = LANGUAGE_ID): string;
 }

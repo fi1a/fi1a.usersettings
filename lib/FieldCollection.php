@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings;
 
 /**
@@ -7,7 +9,6 @@ namespace Fi1a\UserSettings;
  */
 class FieldCollection extends ABaseCollection implements IFieldCollection
 {
-
     /**
      * Возвращает экземпляр класса элемента коллекции
      *

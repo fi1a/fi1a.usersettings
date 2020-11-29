@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings\Collection;
 
 /**
@@ -7,14 +9,13 @@ namespace Fi1a\UserSettings\Collection;
  */
 interface IArrayObject extends \IteratorAggregate, \ArrayAccess, \Countable
 {
-
     /**
      * Creates a copy of the ArrayObject.
      *
      * @link  http://php.net/manual/en/arrayobject.getarraycopy.php
-     * @return array a copy of the array. When the <b>ArrayObject</b> refers to an object
+     *
+     * @return mixed[] a copy of the array. When the <b>ArrayObject</b> refers to an object
      *        an array of the public properties of that object will be returned.
-     * @since 5.0.0
      */
     public function getArrayCopy();
 
@@ -27,8 +28,7 @@ interface IArrayObject extends \IteratorAggregate, \ArrayAccess, \Countable
      *                     The new array or object to exchange with the current array.
      *                     </p>
      *
-     * @return array the old array.
-     * @since 5.1.0
+     * @return mixed[] the old array.
      */
     public function exchangeArray($input);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings;
 
 use Bitrix\Main\Application;
@@ -8,15 +10,15 @@ use Bitrix\Main\Event;
 use Bitrix\Main\EventResult;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Result;
+use Fi1a\UserSettings\Helpers\ModuleRegistry;
 
-Loc::loadMessages(__FILE__);
+use function htmlspecialcharsbx;
 
 /**
  * Класс реализующий работу со значениями пользовательских настроек
  */
 class Option implements IOption
 {
-
     /**
      * @var IOption
      */
@@ -86,7 +88,7 @@ class Option implements IOption
         $event = new Event('fi1a.usersettings', 'OnOptionGet', $fields);
         $event->send();
         foreach ($event->getResults() as $eventResult) {
-            if ($eventResult->getType() == EventResult::ERROR) {
+            if ($eventResult->getType() === EventResult::ERROR) {
                 continue;
             }
 
@@ -94,7 +96,7 @@ class Option implements IOption
         }
         unset($eventResult);
 
-        if (is_null($fields['value']) || false === $fields['value']) {
+        if (is_null($fields['value']) || $fields['value'] === false) {
             return $fields['default'];
         }
 
@@ -106,8 +108,6 @@ class Option implements IOption
      */
     public function set(string $key, $value): Result
     {
-        global $APPLICATION;
-
         $result = new Result();
 
         if (is_null($this->userFields)) {
@@ -115,7 +115,11 @@ class Option implements IOption
         }
 
         if (!isset($this->userFields[$key])) {
-            $result->addError(new Error(Loc::getMessage('FUS_FIELD_NOT_EXIST', ['#CODE#' => \htmlspecialcharsbx($key)])));
+            $result->addError(
+                new Error(
+                    Loc::getMessage('FUS_FIELD_NOT_EXIST', ['#CODE#' => htmlspecialcharsbx($key)])
+                )
+            );
 
             return $result;
         }
@@ -128,7 +132,7 @@ class Option implements IOption
             $event = new Event('fi1a.usersettings', 'OnBeforeOptionSet', $fields);
             $event->send();
             foreach ($event->getResults() as $eventResult) {
-                if ($eventResult->getType() == EventResult::ERROR) {
+                if ($eventResult->getType() === EventResult::ERROR) {
                     continue;
                 }
 
@@ -137,7 +141,9 @@ class Option implements IOption
             unset($eventResult);
 
             if (!$userTypeManager->CheckFields(static::ENTITY_ID, static::ID, $fields)) {
-                $result->addError(new Error($APPLICATION->GetException()->GetString()));
+                $result->addError(
+                    new Error(ModuleRegistry::getApplication()->GetException()->GetString())
+                );
 
                 return $result;
             }
@@ -150,7 +156,7 @@ class Option implements IOption
             $event->send();
 
             $this->clearCache();
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             $result->addError(new Error($exception->getMessage()));
         }
 
@@ -173,7 +179,7 @@ class Option implements IOption
     /**
      * Возвращает пользовательские поля
      *
-     * @return array
+     * @return string[]
      *
      * @throws \Bitrix\Main\SystemException
      */

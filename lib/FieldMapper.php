@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fi1a\UserSettings;
 
 use Bitrix\Main\UserFieldTable;
@@ -11,7 +13,6 @@ use Fi1a\UserSettings\Internals\UserFieldLangTable;
  */
 class FieldMapper implements IFieldMapper
 {
-
     /**
      * @inheritDoc
      */
@@ -30,7 +31,7 @@ class FieldMapper implements IFieldMapper
         }
 
         // Выберем пользовательские поля
-        if (!empty($userFieldIdsAlias)) {
+        if (count($userFieldIdsAlias) > 0) {
             $userFieldIds = array_keys($userFieldIdsAlias);
 
             $userFieldsIterator = UserFieldTable::getList([
@@ -55,10 +56,12 @@ class FieldMapper implements IFieldMapper
             ]);
 
             while ($userFieldLang = $userFieldLangIterator->fetch()) {
-                $fields[$userFieldIdsAlias[$userFieldLang['USER_FIELD_ID']]]['UF']['EDIT_FORM_LABEL'][$userFieldLang['LANGUAGE_ID']] = $userFieldLang['EDIT_FORM_LABEL'];
-                $fields[$userFieldIdsAlias[$userFieldLang['USER_FIELD_ID']]]['UF']['HELP_MESSAGE'][$userFieldLang['LANGUAGE_ID']] = $userFieldLang['HELP_MESSAGE'];
+                $fieldId = $userFieldLang['USER_FIELD_ID'];
+                $alias = $userFieldIdsAlias[$fieldId];
+                $langId = $userFieldLang['LANGUAGE_ID'];
+                $fields[$alias]['UF']['EDIT_FORM_LABEL'][$langId] = $userFieldLang['EDIT_FORM_LABEL'];
+                $fields[$alias]['UF']['HELP_MESSAGE'][$langId] = $userFieldLang['HELP_MESSAGE'];
             }
-
         }
 
         return $fields;

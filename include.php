@@ -2,12 +2,26 @@
 namespace Fi1a\UserSettings;
 
 use \Bitrix\Main\Loader;
+use Bitrix\Main\Localization\Loc;
+use Fi1a\UserSettings\Helpers\ModuleRegistry;
+
+$classLocFilePaths = [
+    __DIR__ . '/lib/Tab.php',
+    __DIR__ . '/lib/Field.php',
+    __DIR__ . '/lib/Internals/TabsTable.php',
+    __DIR__ . '/lib/Option.php',
+];
+
+foreach ($classLocFilePaths as $classLocFilePath) {
+    Loc::loadMessages($classLocFilePath);
+}
 
 Loader::registerAutoloadClasses(
     'fi1a.usersettings',
     [
         // Хелперы
         '\Fi1a\UserSettings\Helpers\Flush' => 'lib/Helpers/Flush.php',
+        '\Fi1a\UserSettings\Helpers\ModuleRegistry' => 'lib/Helpers/ModuleRegistry.php',
 
         // Коллекции
         '\Fi1a\UserSettings\Collection\IArrayObject' => 'lib/Collection/IArrayObject.php',
@@ -42,3 +56,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\UserSettings\Option' => 'lib/Option.php',
     ]
 );
+
+global $APPLICATION;
+
+ModuleRegistry::configure($APPLICATION, $GLOBALS);
