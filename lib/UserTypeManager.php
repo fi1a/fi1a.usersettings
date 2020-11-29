@@ -52,7 +52,14 @@ class UserTypeManager extends \CUserTypeManager
                     $formValue = $arUserField['VALUE'];
                 }
 
-                if ($arUserField['MULTIPLE'] === 'N') {
+                if ($bVarsFromForm) {
+                    $arUserField['VALUE'] = $formValue;
+                }
+
+                if (
+                    $arUserField['MULTIPLE'] === 'N' ||
+                    $arUserField['USER_TYPE']['USE_FIELD_COMPONENT']
+                ) {
                     $valign = '';
                     $rowClass = '';
                     $html = call_user_func_array(
@@ -102,7 +109,7 @@ class UserTypeManager extends \CUserTypeManager
                     foreach ($formValue as $i => $value) {
                         if (
                             (is_array($value) && (strlen(implode('', $value)) > 0))
-                            || ((!is_array($value)) && (strlen($value) > 0))
+                            || ((!is_array($value)) && (strlen((string) $value) > 0))
                         ) {
                             $html .= '<tr><td>' . call_user_func_array(
                                 [$arUserField['USER_TYPE']['CLASS_NAME'], 'geteditformhtml'],

@@ -5,6 +5,10 @@ use \Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Fi1a\UserSettings\Helpers\ModuleRegistry;
 
+if (is_file(__DIR__ . '/vendor/autoload.php')) {
+    require __DIR__ . '/vendor/autoload.php';
+}
+
 $classLocFilePaths = [
     __DIR__ . '/lib/Tab.php',
     __DIR__ . '/lib/Field.php',

@@ -14,7 +14,7 @@ use Bitrix\Main\ORM\Data\DeleteResult;
 use Bitrix\Main\ORM\Data\UpdateResult;
 use Bitrix\Main\ORM\EntityError;
 use CUserTypeEntity;
-use Fi1a\UserSettings\Collection\ArrayObject;
+use Fi1a\Collection\DataType\ArrayObject;
 use Fi1a\UserSettings\Helpers\ModuleRegistry;
 use Fi1a\UserSettings\Internals\FieldsTable;
 
@@ -55,7 +55,7 @@ class Field extends ArrayObject implements IField
         $this->connection = Application::getConnection();
         $this->options = Option::getInstance();
 
-        parent::__construct($input, 0, 'ArrayIterator');
+        parent::__construct($input);
     }
 
     /**

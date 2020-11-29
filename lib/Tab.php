@@ -13,7 +13,7 @@ use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ORM\Data\AddResult;
 use Bitrix\Main\ORM\Data\DeleteResult;
 use Bitrix\Main\ORM\Data\UpdateResult;
-use Fi1a\UserSettings\Collection\ArrayObject;
+use Fi1a\Collection\DataType\ArrayObject;
 use Fi1a\UserSettings\Internals\TabsTable;
 
 use function htmlspecialcharsbx;
