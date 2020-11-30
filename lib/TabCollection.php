@@ -15,7 +15,7 @@ class TabCollection extends ABaseCollection implements ITabCollection
      * @param mixed $key
      * @param mixed $value
      *
-     * @return ITab|mixed
+     * @return ITab
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException

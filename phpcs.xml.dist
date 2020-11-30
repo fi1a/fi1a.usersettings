@@ -11,6 +11,7 @@
 
     <!-- Source and tests must follow the coding standard. -->
     <file>./lib</file>
+    <file>./tests</file>
 
     <!-- Rules -->
     <rule ref="PSR12">
@@ -408,7 +409,7 @@
     <rule ref="Squiz.PHP.NonExecutableCode"/>
 
     <!-- Forbid `$this` inside static function -->
-    <rule ref="Squiz.Scope.StaticThisUsage"/>
+    <!--<rule ref="Squiz.Scope.StaticThisUsage"/>-->
 
     <!-- Force whitespace before and after concatenation -->
     <rule ref="Squiz.Strings.ConcatenationSpacing">

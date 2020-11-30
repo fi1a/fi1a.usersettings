@@ -15,7 +15,7 @@ class FieldCollection extends ABaseCollection implements IFieldCollection
      * @param mixed $key
      * @param mixed $value
      *
-     * @return IField|mixed
+     * @return IField
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException

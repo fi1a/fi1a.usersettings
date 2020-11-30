@@ -6,7 +6,7 @@ use Bitrix\Main\Localization\Loc;
 use Fi1a\UserSettings\Helpers\ModuleRegistry;
 
 if (is_file(__DIR__ . '/vendor/autoload.php')) {
-    require __DIR__ . '/vendor/autoload.php';
+    require_once __DIR__ . '/vendor/autoload.php';
 }
 
 $classLocFilePaths = [
