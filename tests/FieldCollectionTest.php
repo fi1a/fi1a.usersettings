@@ -24,4 +24,14 @@ class FieldCollectionTest extends ModuleTestCase
         $collection[] = new Field(['ID' => 3,]);
         $this->assertCount(3, $collection);
     }
+
+    /**
+     * Преобразует экземпляры классов в массив
+     */
+    public function testToArray(): void
+    {
+        $collection = new FieldCollection();
+        $collection[] = ['ID' => 1,];
+        $this->assertEquals([['ID' => 1,]], $collection->toArray());
+    }
 }
