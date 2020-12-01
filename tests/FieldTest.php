@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Fi1a\Unit\UserSettings;
 
-use Bitrix\Main\Error;
 use Bitrix\Main\Event;
 use Bitrix\Main\EventManager;
 //use Bitrix\Main\EventResult;
@@ -109,66 +108,67 @@ class FieldTest extends ModuleTestCase
             function (Event $event) {
                 $fields = $event->getParameter('fields');
                 $result = new EventResult();
-                if ('UF_FUS_TEST_BEFORE_ADD' === $fields['UF']['FIELD_NAME']) {
+                if ($fields['UF']['FIELD_NAME'] === 'UF_FUS_TEST_BEFORE_ADD') {
                     $result->addError(new EntityError('UF_FUS_TEST_BEFORE_ADD'));
-                } elseif ('UF_FUS_TEST_BEFORE_ADD_S' === $fields['UF']['FIELD_NAME']) {
+                } elseif ($fields['UF']['FIELD_NAME'] === 'UF_FUS_TEST_BEFORE_ADD_S') {
                     $result->modifyFields(['fields' => [
                         'UF' => [
-                            'FIELD_NAME' => 'UF_FUS_TEST_BEFORE_ADD_SC'
+                            'FIELD_NAME' => 'UF_FUS_TEST_BEFORE_ADD_SC',
                         ],
-                    ]]);
+                    ],
+                    ]);
                 }
 
                 return $result;
             }
         );
         $field = Field::create([
-           'TAB_ID' => self::$tabIds['FUS_TEST_TAB1'],
-           'ACTIVE' => 1,
-           'UF' => [
-               'FIELD_NAME' => 'UF_FUS_TEST_BEFORE_ADD',
-               'USER_TYPE_ID' => 'string',
-               'XML_ID' => '',
-               'SORT' => '500',
-               'MULTIPLE' => 'N',
-               'MANDATORY' => 'Y',
-               'SETTINGS' => [
-                   'DEFAULT_VALUE' => '',
-                   'SIZE' => '20',
-                   'ROWS' => '1',
-                   'MIN_LENGTH' => '0',
-                   'MAX_LENGTH' => '0',
-                   'REGEXP' => '',
-               ],
-               'EDIT_FORM_LABEL' => ['ru' => '', 'en' => '',],
-               'ERROR_MESSAGE' => null,
-               'HELP_MESSAGE' => ['ru' => '', 'en' => '',],
-           ],
+            'TAB_ID' => self::$tabIds['FUS_TEST_TAB1'],
+            'ACTIVE' => 1,
+            'UF' => [
+                'FIELD_NAME' => 'UF_FUS_TEST_BEFORE_ADD',
+                'USER_TYPE_ID' => 'string',
+                'XML_ID' => '',
+                'SORT' => '500',
+                'MULTIPLE' => 'N',
+                'MANDATORY' => 'Y',
+                'SETTINGS' => [
+                    'DEFAULT_VALUE' => '',
+                    'SIZE' => '20',
+                    'ROWS' => '1',
+                    'MIN_LENGTH' => '0',
+                    'MAX_LENGTH' => '0',
+                    'REGEXP' => '',
+                ],
+                'EDIT_FORM_LABEL' => ['ru' => '', 'en' => '',],
+                'ERROR_MESSAGE' => null,
+                'HELP_MESSAGE' => ['ru' => '', 'en' => '',],
+            ],
         ]);
         $this->assertFalse($field->save()->isSuccess());
 
         $field = Field::create([
-           'TAB_ID' => self::$tabIds['FUS_TEST_TAB1'],
-           'ACTIVE' => 1,
-           'UF' => [
-               'FIELD_NAME' => 'UF_FUS_TEST_BEFORE_ADD_S',
-               'USER_TYPE_ID' => 'string',
-               'XML_ID' => '',
-               'SORT' => '500',
-               'MULTIPLE' => 'N',
-               'MANDATORY' => 'Y',
-               'SETTINGS' => [
-                   'DEFAULT_VALUE' => '',
-                   'SIZE' => '20',
-                   'ROWS' => '1',
-                   'MIN_LENGTH' => '0',
-                   'MAX_LENGTH' => '0',
-                   'REGEXP' => '',
-               ],
-               'EDIT_FORM_LABEL' => ['ru' => '', 'en' => '',],
-               'ERROR_MESSAGE' => null,
-               'HELP_MESSAGE' => ['ru' => '', 'en' => '',],
-           ],
+            'TAB_ID' => self::$tabIds['FUS_TEST_TAB1'],
+            'ACTIVE' => 1,
+            'UF' => [
+                'FIELD_NAME' => 'UF_FUS_TEST_BEFORE_ADD_S',
+                'USER_TYPE_ID' => 'string',
+                'XML_ID' => '',
+                'SORT' => '500',
+                'MULTIPLE' => 'N',
+                'MANDATORY' => 'Y',
+                'SETTINGS' => [
+                    'DEFAULT_VALUE' => '',
+                    'SIZE' => '20',
+                    'ROWS' => '1',
+                    'MIN_LENGTH' => '0',
+                    'MAX_LENGTH' => '0',
+                    'REGEXP' => '',
+                ],
+                'EDIT_FORM_LABEL' => ['ru' => '', 'en' => '',],
+                'ERROR_MESSAGE' => null,
+                'HELP_MESSAGE' => ['ru' => '', 'en' => '',],
+            ],
         ]);
         $this->assertTrue($field->save()->isSuccess());
         $this->assertEquals('UF_FUS_TEST_BEFORE_ADD_SC', $field['UF']['FIELD_NAME']);
