@@ -44,13 +44,13 @@ class Field extends ArrayObject implements IField
     /**
      * Конструктор
      *
-     * @param string[] $input
+     * @param mixed[]|null $input
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public function __construct(array $input = [])
+    protected function __construct(?array $input = [])
     {
         $this->connection = Application::getConnection();
         $this->options = Option::getInstance();

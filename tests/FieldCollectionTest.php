@@ -21,7 +21,7 @@ class FieldCollectionTest extends ModuleTestCase
         $collection = new FieldCollection();
         $collection[] = ['ID' => 1,];
         $collection[] = ['ID' => 2,];
-        $collection[] = new Field(['ID' => 3,]);
+        $collection[] = Field::create(['ID' => 3,]);
         $this->assertCount(3, $collection);
     }
 
