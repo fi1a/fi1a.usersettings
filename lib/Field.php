@@ -13,6 +13,7 @@ use Bitrix\Main\ORM\Data\AddResult;
 use Bitrix\Main\ORM\Data\DeleteResult;
 use Bitrix\Main\ORM\Data\UpdateResult;
 use Bitrix\Main\ORM\EntityError;
+use Bitrix\Main\ORM\EventResult as OrmEventResult;
 use CUserTypeEntity;
 use Fi1a\Collection\DataType\ArrayObject;
 use Fi1a\UserSettings\Helpers\ModuleRegistry;
@@ -83,14 +84,25 @@ class Field extends ArrayObject implements IField
         try {
             $result = new AddResult();
 
-            $event = new Event('fi1a.usersettings', 'OnBeforeFieldAdd', [$fields]);
+            $event = new Event('fi1a.usersettings', 'OnBeforeFieldAdd', ['fields' => $fields]);
             $event->send();
             foreach ($event->getResults() as $eventResult) {
+                /**
+                 * @var OrmEventResult $eventResult
+                 */
                 if ($eventResult->getType() === EventResult::ERROR) {
-                    continue;
-                }
+                    $result->addErrors(
+                        $eventResult instanceof OrmEventResult
+                        ? $eventResult->getErrors()
+                        : new Error(Loc::getMessage('FUS_ON_BEFORE_ADD_ERROR'))
+                    );
 
-                $fields = array_merge($fields, $eventResult->getParameters());
+                    return $result;
+                }
+                $parameters = $eventResult instanceof OrmEventResult
+                    ? $eventResult->getModified()
+                    : $eventResult->getParameters();
+                $fields = array_replace_recursive($fields, $parameters['fields']);
             }
             unset($eventResult);
 
@@ -124,8 +136,10 @@ class Field extends ArrayObject implements IField
             $this->connection->commitTransaction();
 
             $fields['ID'] = $result->getId();
-            $event = new Event('fi1a.usersettings', 'OnAfterFieldAdd', [$fields]);
+            $event = new Event('fi1a.usersettings', 'OnAfterFieldAdd', ['fields' => $fields]);
             $event->send();
+
+            $this->exchangeArray(array_replace_recursive($this->getArrayCopy(), $fields));
 
             $this->options->clearCache();
 
