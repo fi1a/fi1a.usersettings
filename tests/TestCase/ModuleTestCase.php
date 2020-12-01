@@ -20,14 +20,19 @@ class ModuleTestCase extends TestCase
     protected const MODULE_ID = 'fi1a.usersettings';
 
     /**
+     * @var bool
+     */
+    private static $isInstalled = false;
+
+    /**
      * До начала вызова тестов
      */
     public static function setUpBeforeClass(): void
     {
         $module = CModule::CreateModuleObject(self::MODULE_ID);
         if (!$module->IsInstalled()) {
+            self::$isInstalled = true;
             $connection = Application::getConnection();
-
             if (
                 strtolower($connection->getType()) === 'mysql'
                 && defined('MYSQL_TABLE_TYPE')
@@ -51,13 +56,15 @@ class ModuleTestCase extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        $module = CModule::CreateModuleObject(self::MODULE_ID);
-        if ($module->IsInstalled()) {
-            foreach (GetModuleEvents('main', 'OnModuleInstalled', true) as $arEvent) {
-                ExecuteModuleEventEx($arEvent, [self::MODULE_ID, false]);
-            }
-            if ($module->DoUninstall() === false) {
-                throw new \ErrorException('Can\'t uninstall module');
+        if (self::$isInstalled) {
+            $module = CModule::CreateModuleObject(self::MODULE_ID);
+            if ($module->IsInstalled()) {
+                foreach (GetModuleEvents('main', 'OnModuleInstalled', true) as $arEvent) {
+                    ExecuteModuleEventEx($arEvent, [self::MODULE_ID, false]);
+                }
+                if ($module->DoUninstall() === false) {
+                    throw new \ErrorException('Can\'t uninstall module');
+                }
             }
         }
     }
