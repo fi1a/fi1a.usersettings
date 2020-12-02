@@ -11,6 +11,7 @@ use Bitrix\Main\ORM\EntityError;
 use Bitrix\Main\ORM\EventResult;
 use Fi1a\Unit\UserSettings\TestCase\ModuleTestCase;
 use Fi1a\UserSettings\Field;
+use Fi1a\UserSettings\FieldMapper;
 use Fi1a\UserSettings\Tab;
 use Fi1a\UserSettings\TabMapper;
 
@@ -23,6 +24,11 @@ class FieldTest extends ModuleTestCase
      * @var int[]
      */
     private static $tabIds = [];
+
+    /**
+     * @var int[]
+     */
+    private static $fieldIds = [];
 
     /**
      * @inheritDoc
@@ -40,6 +46,16 @@ class FieldTest extends ModuleTestCase
             throw new \ErrorException();
         }
         self::$tabIds['FUS_TEST_TAB1'] = $result->getId();
+        $tab = Tab::create([
+            'ACTIVE' => 1,
+            'CODE' => 'FUS_TEST_TAB2',
+            'LOCALIZATION' => null,
+        ]);
+        $result = $tab->add();
+        if (!$result->isSuccess()) {
+            throw new \ErrorException();
+        }
+        self::$tabIds['FUS_TEST_TAB2'] = $result->getId();
     }
 
     /**
@@ -95,6 +111,7 @@ class FieldTest extends ModuleTestCase
             ],
         ]);
         $this->assertTrue($field->save()->isSuccess());
+        self::$fieldIds['UF_FUS_TEST_FIELD1'] = $field['ID'];
     }
 
     /**
@@ -281,5 +298,17 @@ class FieldTest extends ModuleTestCase
             ],
         ]);
         $this->assertFalse($field->save()->isSuccess());
+    }
+
+    /**
+     * Обновление поля
+     *
+     * @depends testAdd
+     */
+    public function testUpdate(): void
+    {
+        $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']);
+        $field['TAB_ID'] = self::$tabIds['FUS_TEST_TAB2'];
+        $this->assertTrue($field->save()->isSuccess());
     }
 }
