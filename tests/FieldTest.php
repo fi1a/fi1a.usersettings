@@ -398,4 +398,15 @@ class FieldTest extends ModuleTestCase
         $field['UF']['FIELD_NAME'] = 'UF_FUS_TEST_THROWABLE';
         $this->assertFalse($field->save()->isSuccess());
     }
+
+    /**
+     * Удаление поля
+     *
+     * @depends testAdd
+     */
+    public function testDelete(): void
+    {
+        $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']);
+        $this->assertTrue($field->delete()->isSuccess());
+    }
 }
