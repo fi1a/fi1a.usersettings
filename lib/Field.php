@@ -233,8 +233,6 @@ class Field extends ArrayObject implements IField
         $fields = $this->getArrayCopy();
         $id = (int) $fields['ID'];
 
-        $this->connection->startTransaction();
-
         $result = new DeleteResult();
 
         if (!$id) {
@@ -249,6 +247,8 @@ class Field extends ArrayObject implements IField
 
             return $result;
         }
+
+        $this->connection->startTransaction();
 
         try {
             $event = new Event('fi1a.usersettings', 'OnBeforeFieldDelete', [$fields]);

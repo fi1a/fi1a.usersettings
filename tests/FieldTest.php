@@ -112,6 +112,31 @@ class FieldTest extends ModuleTestCase
         ]);
         $this->assertTrue($field->save()->isSuccess());
         self::$fieldIds['UF_FUS_TEST_FIELD1'] = $field['ID'];
+        $field = Field::create([
+            'TAB_ID' => self::$tabIds['FUS_TEST_TAB1'],
+            'ACTIVE' => 1,
+            'UF' => [
+                'FIELD_NAME' => 'UF_FUS_TEST_FIELD2',
+                'USER_TYPE_ID' => 'string',
+                'XML_ID' => '',
+                'SORT' => '500',
+                'MULTIPLE' => 'N',
+                'MANDATORY' => 'Y',
+                'SETTINGS' => [
+                    'DEFAULT_VALUE' => '',
+                    'SIZE' => '20',
+                    'ROWS' => '1',
+                    'MIN_LENGTH' => '0',
+                    'MAX_LENGTH' => '0',
+                    'REGEXP' => '',
+                ],
+                'EDIT_FORM_LABEL' => ['ru' => '', 'en' => '',],
+                'ERROR_MESSAGE' => null,
+                'HELP_MESSAGE' => ['ru' => '', 'en' => '',],
+            ],
+        ]);
+        $this->assertTrue($field->save()->isSuccess());
+        self::$fieldIds['UF_FUS_TEST_FIELD2'] = $field['ID'];
     }
 
     /**
@@ -408,5 +433,17 @@ class FieldTest extends ModuleTestCase
     {
         $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']);
         $this->assertTrue($field->delete()->isSuccess());
+    }
+
+    /**
+     * Ошибка удаления при отсутсвии идентификатора
+     *
+     * @depends testAdd
+     */
+    public function testDeleteIdEmpty(): void
+    {
+        $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD2']);
+        unset($field['ID']);
+        $this->assertFalse($field->delete()->isSuccess());
     }
 }
