@@ -459,4 +459,22 @@ class FieldTest extends ModuleTestCase
         unset($field['UF_ID']);
         $this->assertFalse($field->delete()->isSuccess());
     }
+
+    /**
+     * Ошибка при удалении пользовательского поля
+     *
+     * @depends testAdd
+     */
+    public function testDeleteUfError(): void
+    {
+        EventManager::getInstance()->addEventHandler(
+            'main',
+            'OnBeforeUserTypeDelete',
+            function (array $fields) {
+                return false;
+            }
+        );
+        $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD2']);
+        $this->assertFalse($field->delete()->isSuccess());
+    }
 }
