@@ -101,8 +101,8 @@ class Field extends ArrayObject implements IField
                 }
                 $parameters = $eventResult instanceof OrmEventResult
                     ? $eventResult->getModified()
-                    : $eventResult->getParameters();
-                $fields = array_replace_recursive($fields, $parameters['fields']);
+                    : $eventResult->getParameters()['fields'];
+                $fields = array_replace_recursive($fields, $parameters);
             }
             unset($eventResult);
 

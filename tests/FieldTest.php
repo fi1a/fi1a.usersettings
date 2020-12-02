@@ -99,6 +99,8 @@ class FieldTest extends ModuleTestCase
 
     /**
      * Событие до добавления поля
+     *
+     * @depends testAdd
      */
     public function testAddEventOnBefore(): void
     {
@@ -111,11 +113,10 @@ class FieldTest extends ModuleTestCase
                 if ($fields['UF']['FIELD_NAME'] === 'UF_FUS_TEST_BEFORE_ADD') {
                     $result->addError(new EntityError('UF_FUS_TEST_BEFORE_ADD'));
                 } elseif ($fields['UF']['FIELD_NAME'] === 'UF_FUS_TEST_BEFORE_ADD_S') {
-                    $result->modifyFields(['fields' => [
+                    $result->modifyFields([
                         'UF' => [
                             'FIELD_NAME' => 'UF_FUS_TEST_BEFORE_ADD_SC',
                         ],
-                    ],
                     ]);
                 }
 
