@@ -324,4 +324,40 @@ class FieldTest extends ModuleTestCase
         unset($field['UF']['ID']);
         $this->assertTrue($field->save()->isSuccess());
     }
+
+    /**
+     * Событие до обновления поля
+     *
+     * @depends testUpdate
+     */
+    public function testUpdateEventOnBefore(): void
+    {
+        EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldUpdate',
+            function (Event $event) {
+                $fields = $event->getParameter('fields');
+                $result = new EventResult();
+                if ($fields['UF']['FIELD_NAME'] === 'UF_FUS_TEST_BEFORE_UPD') {
+                    $result->addError(new EntityError('UF_FUS_TEST_BEFORE_UPD'));
+                } elseif ($fields['UF']['FIELD_NAME'] === 'UF_FUS_TEST_BEFORE_UPD_S') {
+                    $result->modifyFields([
+                        'UF' => [
+                            'FIELD_NAME' => 'UF_FUS_TEST_BEFORE_UPD_SC',
+                        ],
+                    ]);
+                }
+
+                return $result;
+            }
+        );
+        $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']);
+        $field['UF']['FIELD_NAME'] = 'UF_FUS_TEST_BEFORE_UPD';
+        $this->assertFalse($field->save()->isSuccess());
+
+        $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']);
+        $field['UF']['FIELD_NAME'] = 'UF_FUS_TEST_BEFORE_UPD_S';
+        $this->assertTrue($field->save()->isSuccess());
+        $this->assertEquals('UF_FUS_TEST_BEFORE_UPD_SC', $field['UF']['FIELD_NAME']);
+    }
 }
