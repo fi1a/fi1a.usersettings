@@ -311,4 +311,17 @@ class FieldTest extends ModuleTestCase
         $field['TAB_ID'] = self::$tabIds['FUS_TEST_TAB2'];
         $this->assertTrue($field->save()->isSuccess());
     }
+
+    /**
+     * Значение идентификатора пользовательского поля при обновлении
+     *
+     * @depends testUpdate
+     */
+    public function testUfIdUpdate(): void
+    {
+        $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']);
+        $field['TAB_ID'] = self::$tabIds['FUS_TEST_TAB1'];
+        unset($field['UF']['ID']);
+        $this->assertTrue($field->save()->isSuccess());
+    }
 }
