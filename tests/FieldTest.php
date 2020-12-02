@@ -359,5 +359,20 @@ class FieldTest extends ModuleTestCase
         $field['UF']['FIELD_NAME'] = 'UF_FUS_TEST_BEFORE_UPD_S';
         $this->assertTrue($field->save()->isSuccess());
         $this->assertEquals('UF_FUS_TEST_BEFORE_UPD_SC', $field['UF']['FIELD_NAME']);
+        $field['UF']['FIELD_NAME'] = 'UF_FUS_TEST_FIELD1';
+        $this->assertTrue($field->save()->isSuccess());
+    }
+
+    /**
+     * Ошибка при добавлении пользовательского поля
+     *
+     * @depends testUpdate
+     */
+    public function testUFErrorOnUpdate(): void
+    {
+        $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']);
+        unset($field['UF']['ID']);
+        unset($field['UF_ID']);
+        $this->assertFalse($field->update()->isSuccess());
     }
 }
