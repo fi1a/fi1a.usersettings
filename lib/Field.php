@@ -251,7 +251,7 @@ class Field extends ArrayObject implements IField
         $this->connection->startTransaction();
 
         try {
-            $event = new Event('fi1a.usersettings', 'OnBeforeFieldDelete', [$fields]);
+            $event = new Event('fi1a.usersettings', 'OnBeforeFieldDelete', ['fields' => $fields]);
             $event->send();
 
             $result = FieldsTable::delete($id);
@@ -273,7 +273,7 @@ class Field extends ArrayObject implements IField
         if ($result->isSuccess()) {
             $this->connection->commitTransaction();
 
-            $event = new Event('fi1a.usersettings', 'OnAfterFieldDelete', [$fields]);
+            $event = new Event('fi1a.usersettings', 'OnAfterFieldDelete', ['fields' => $fields]);
             $event->send();
 
             $this->options->clearCache();

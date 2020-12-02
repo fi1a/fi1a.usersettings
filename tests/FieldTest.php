@@ -146,21 +146,12 @@ class FieldTest extends ModuleTestCase
      */
     public function testAddEventOnBefore(): void
     {
-        EventManager::getInstance()->addEventHandler(
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
             self::MODULE_ID,
             'OnBeforeFieldAdd',
             function (Event $event) {
-                $fields = $event->getParameter('fields');
                 $result = new EventResult();
-                if ($fields['UF']['FIELD_NAME'] === 'UF_FUS_TEST_BEFORE_ADD') {
-                    $result->addError(new EntityError('UF_FUS_TEST_BEFORE_ADD'));
-                } elseif ($fields['UF']['FIELD_NAME'] === 'UF_FUS_TEST_BEFORE_ADD_S') {
-                    $result->modifyFields([
-                        'UF' => [
-                            'FIELD_NAME' => 'UF_FUS_TEST_BEFORE_ADD_SC',
-                        ],
-                    ]);
-                }
+                $result->addError(new EntityError('UF_FUS_TEST_BEFORE_ADD'));
 
                 return $result;
             }
@@ -189,7 +180,26 @@ class FieldTest extends ModuleTestCase
             ],
         ]);
         $this->assertFalse($field->save()->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldAdd',
+            $eventHandlerKey
+        );
 
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldAdd',
+            function (Event $event) {
+                $result = new EventResult();
+                $result->modifyFields([
+                    'UF' => [
+                        'FIELD_NAME' => 'UF_FUS_TEST_BEFORE_ADD_SC',
+                    ],
+                ]);
+
+                return $result;
+            }
+        );
         $field = Field::create([
             'TAB_ID' => self::$tabIds['FUS_TEST_TAB1'],
             'ACTIVE' => 1,
@@ -215,6 +225,11 @@ class FieldTest extends ModuleTestCase
         ]);
         $this->assertTrue($field->save()->isSuccess());
         $this->assertEquals('UF_FUS_TEST_BEFORE_ADD_SC', $field['UF']['FIELD_NAME']);
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldAdd',
+            $eventHandlerKey
+        );
     }
 
     /**
@@ -259,7 +274,7 @@ class FieldTest extends ModuleTestCase
         $field = Field::create([
             'ACTIVE' => 1,
             'UF' => [
-                'FIELD_NAME' => 'UF_FUS_TEST_FIELD2',
+                'FIELD_NAME' => 'UF_FUS_TEST_FIELD_EX',
                 'USER_TYPE_ID' => 'string',
                 'XML_ID' => '',
                 'SORT' => '500',
@@ -288,15 +303,11 @@ class FieldTest extends ModuleTestCase
      */
     public function testCatchThrowableExceptionOnAdd(): void
     {
-        EventManager::getInstance()->addEventHandler(
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
             self::MODULE_ID,
             'OnBeforeFieldAdd',
             function (Event $event) {
-                $fields = $event->getParameter('fields');
-
-                if ($fields['UF']['FIELD_NAME'] === 'UF_FUS_TEST_THROWABLE') {
-                    throw new \ErrorException();
-                }
+                throw new \ErrorException();
             }
         );
         $field = Field::create([
@@ -323,6 +334,11 @@ class FieldTest extends ModuleTestCase
             ],
         ]);
         $this->assertFalse($field->save()->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldAdd',
+            $eventHandlerKey
+        );
     }
 
     /**
@@ -357,21 +373,12 @@ class FieldTest extends ModuleTestCase
      */
     public function testUpdateEventOnBefore(): void
     {
-        EventManager::getInstance()->addEventHandler(
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
             self::MODULE_ID,
             'OnBeforeFieldUpdate',
             function (Event $event) {
-                $fields = $event->getParameter('fields');
                 $result = new EventResult();
-                if ($fields['UF']['FIELD_NAME'] === 'UF_FUS_TEST_BEFORE_UPD') {
-                    $result->addError(new EntityError('UF_FUS_TEST_BEFORE_UPD'));
-                } elseif ($fields['UF']['FIELD_NAME'] === 'UF_FUS_TEST_BEFORE_UPD_S') {
-                    $result->modifyFields([
-                        'UF' => [
-                            'FIELD_NAME' => 'UF_FUS_TEST_BEFORE_UPD_SC',
-                        ],
-                    ]);
-                }
+                $result->addError(new EntityError('UF_FUS_TEST_BEFORE_UPD'));
 
                 return $result;
             }
@@ -379,13 +386,37 @@ class FieldTest extends ModuleTestCase
         $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']);
         $field['UF']['FIELD_NAME'] = 'UF_FUS_TEST_BEFORE_UPD';
         $this->assertFalse($field->save()->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldUpdate',
+            $eventHandlerKey
+        );
 
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldUpdate',
+            function (Event $event) {
+                $result = new EventResult();
+                $result->modifyFields([
+                    'UF' => [
+                        'FIELD_NAME' => 'UF_FUS_TEST_BEFORE_UPD_SC',
+                    ],
+                ]);
+
+                return $result;
+            }
+        );
         $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']);
         $field['UF']['FIELD_NAME'] = 'UF_FUS_TEST_BEFORE_UPD_S';
         $this->assertTrue($field->save()->isSuccess());
         $this->assertEquals('UF_FUS_TEST_BEFORE_UPD_SC', $field['UF']['FIELD_NAME']);
         $field['UF']['FIELD_NAME'] = 'UF_FUS_TEST_FIELD1';
         $this->assertTrue($field->save()->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldUpdate',
+            $eventHandlerKey
+        );
     }
 
     /**
@@ -408,20 +439,21 @@ class FieldTest extends ModuleTestCase
      */
     public function testCatchThrowableExceptionOnUpdate(): void
     {
-        EventManager::getInstance()->addEventHandler(
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
             self::MODULE_ID,
             'OnBeforeFieldUpdate',
             function (Event $event) {
-                $fields = $event->getParameter('fields');
-
-                if ($fields['UF']['FIELD_NAME'] === 'UF_FUS_TEST_THROWABLE') {
-                    throw new \ErrorException();
-                }
+                throw new \ErrorException();
             }
         );
         $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']);
         $field['UF']['FIELD_NAME'] = 'UF_FUS_TEST_THROWABLE';
         $this->assertFalse($field->save()->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldUpdate',
+            $eventHandlerKey
+        );
     }
 
     /**
@@ -467,7 +499,7 @@ class FieldTest extends ModuleTestCase
      */
     public function testDeleteUfError(): void
     {
-        EventManager::getInstance()->addEventHandler(
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
             'main',
             'OnBeforeUserTypeDelete',
             function (array $fields) {
@@ -476,5 +508,34 @@ class FieldTest extends ModuleTestCase
         );
         $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD2']);
         $this->assertFalse($field->delete()->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            'main',
+            'OnBeforeUserTypeDelete',
+            $eventHandlerKey
+        );
+    }
+
+    /**
+     * Ошибка удаления при исключении \Throwable
+     *
+     * @depends testAdd
+     */
+    public function testCatchThrowableExceptionOnDelete(): void
+    {
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldDelete',
+            function (Event $event) {
+                throw new \ErrorException();
+            }
+        );
+        $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD2']);
+        $field['UF']['FIELD_NAME'] = 'UF_FUS_TEST_THROWABLE';
+        $this->assertFalse($field->delete()->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldDelete',
+            $eventHandlerKey
+        );
     }
 }
