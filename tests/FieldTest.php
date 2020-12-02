@@ -375,4 +375,27 @@ class FieldTest extends ModuleTestCase
         unset($field['UF_ID']);
         $this->assertFalse($field->update()->isSuccess());
     }
+
+    /**
+     * Ошибка обновления при исключении \Throwable
+     *
+     * @depends testUpdate
+     */
+    public function testCatchThrowableExceptionOnUpdate(): void
+    {
+        EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldUpdate',
+            function (Event $event) {
+                $fields = $event->getParameter('fields');
+
+                if ($fields['UF']['FIELD_NAME'] === 'UF_FUS_TEST_THROWABLE') {
+                    throw new \ErrorException();
+                }
+            }
+        );
+        $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']);
+        $field['UF']['FIELD_NAME'] = 'UF_FUS_TEST_THROWABLE';
+        $this->assertFalse($field->save()->isSuccess());
+    }
 }
