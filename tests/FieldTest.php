@@ -174,4 +174,112 @@ class FieldTest extends ModuleTestCase
         $this->assertTrue($field->save()->isSuccess());
         $this->assertEquals('UF_FUS_TEST_BEFORE_ADD_SC', $field['UF']['FIELD_NAME']);
     }
+
+    /**
+     * Ошибка при добавлении пользовательского поля
+     *
+     * @depends testAdd
+     */
+    public function testUFErrorOnAdd(): void
+    {
+        $field = Field::create([
+            'TAB_ID' => self::$tabIds['FUS_TEST_TAB1'],
+            'ACTIVE' => 1,
+            'UF' => [
+                'USER_TYPE_ID' => 'string',
+                'XML_ID' => '',
+                'SORT' => '500',
+                'MULTIPLE' => 'N',
+                'MANDATORY' => 'Y',
+                'SETTINGS' => [
+                    'DEFAULT_VALUE' => '',
+                    'SIZE' => '20',
+                    'ROWS' => '1',
+                    'MIN_LENGTH' => '0',
+                    'MAX_LENGTH' => '0',
+                    'REGEXP' => '',
+                ],
+                'EDIT_FORM_LABEL' => ['ru' => '', 'en' => '',],
+                'ERROR_MESSAGE' => null,
+                'HELP_MESSAGE' => ['ru' => '', 'en' => '',],
+            ],
+        ]);
+        $this->assertFalse($field->save()->isSuccess());
+    }
+
+    /**
+     * Ошибка при добавлении поля
+     *
+     * @depends testAdd
+     */
+    public function testFieldAdd(): void
+    {
+        $field = Field::create([
+            'ACTIVE' => 1,
+            'UF' => [
+                'FIELD_NAME' => 'UF_FUS_TEST_FIELD2',
+                'USER_TYPE_ID' => 'string',
+                'XML_ID' => '',
+                'SORT' => '500',
+                'MULTIPLE' => 'N',
+                'MANDATORY' => 'Y',
+                'SETTINGS' => [
+                    'DEFAULT_VALUE' => '',
+                    'SIZE' => '20',
+                    'ROWS' => '1',
+                    'MIN_LENGTH' => '0',
+                    'MAX_LENGTH' => '0',
+                    'REGEXP' => '',
+                ],
+                'EDIT_FORM_LABEL' => ['ru' => '', 'en' => '',],
+                'ERROR_MESSAGE' => null,
+                'HELP_MESSAGE' => ['ru' => '', 'en' => '',],
+            ],
+        ]);
+        $this->assertFalse($field->save()->isSuccess());
+    }
+
+    /**
+     * Ошибка сохранения при исключении \Throwable
+     *
+     * @depends testAdd
+     */
+    public function testCatchThrowableExceptionOnAdd(): void
+    {
+        EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldAdd',
+            function (Event $event) {
+                $fields = $event->getParameter('fields');
+
+                if ($fields['UF']['FIELD_NAME'] === 'UF_FUS_TEST_THROWABLE') {
+                    throw new \ErrorException();
+                }
+            }
+        );
+        $field = Field::create([
+            'TAB_ID' => self::$tabIds['FUS_TEST_TAB1'],
+            'ACTIVE' => 1,
+            'UF' => [
+                'FIELD_NAME' => 'UF_FUS_TEST_THROWABLE',
+                'USER_TYPE_ID' => 'string',
+                'XML_ID' => '',
+                'SORT' => '500',
+                'MULTIPLE' => 'N',
+                'MANDATORY' => 'Y',
+                'SETTINGS' => [
+                    'DEFAULT_VALUE' => '',
+                    'SIZE' => '20',
+                    'ROWS' => '1',
+                    'MIN_LENGTH' => '0',
+                    'MAX_LENGTH' => '0',
+                    'REGEXP' => '',
+                ],
+                'EDIT_FORM_LABEL' => ['ru' => '', 'en' => '',],
+                'ERROR_MESSAGE' => null,
+                'HELP_MESSAGE' => ['ru' => '', 'en' => '',],
+            ],
+        ]);
+        $this->assertFalse($field->save()->isSuccess());
+    }
 }
