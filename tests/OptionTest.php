@@ -110,4 +110,25 @@ class OptionTest extends TabsAndFieldsTestCase
         $option = Option::getInstance();
         $this->assertFalse($option->set('UF_FUS_TEST_FIELD1', null)->isSuccess());
     }
+
+    /**
+     * Ошибка получения значения при исключении \Throwable
+     */
+    public function testThrowableExceptionOnSet(): void
+    {
+        $option = Option::getInstance();
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeOptionSet',
+            function (Event $event) {
+                throw new \ErrorException();
+            }
+        );
+        $this->assertFalse($option->set('UF_FUS_TEST_FIELD1', 'value')->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeOptionSet',
+            $eventHandlerKey
+        );
+    }
 }
