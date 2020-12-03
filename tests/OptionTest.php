@@ -101,4 +101,13 @@ class OptionTest extends TabsAndFieldsTestCase
         $option = Option::getInstance();
         $this->assertFalse($option->set('UNKNOWN', 123)->isSuccess());
     }
+
+    /**
+     * Ошибка при попытке установить пустое значение для обязательного поля
+     */
+    public function testSetValidationError(): void
+    {
+        $option = Option::getInstance();
+        $this->assertFalse($option->set('UF_FUS_TEST_FIELD1', null)->isSuccess());
+    }
 }
