@@ -131,4 +131,53 @@ class OptionTest extends TabsAndFieldsTestCase
             $eventHandlerKey
         );
     }
+
+    /**
+     * Изменение значения из обработчика события OnBeforeOptionSet
+     */
+    public function testSetEventModify(): void
+    {
+        $option = Option::getInstance();
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeOptionSet',
+            function (Event $event) {
+                $result = new EventResult();
+                $result->modifyFields(['UF_FUS_TEST_FIELD1' => 'modify']);
+
+                return $result;
+            }
+        );
+        $option->set('UF_FUS_TEST_FIELD1', 'value');
+        $this->assertEquals('modify', $option->get('UF_FUS_TEST_FIELD1'));
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeOptionSet',
+            $eventHandlerKey
+        );
+    }
+
+    /**
+     * Тестирование исключения при возврате ошибки обработчиком события OnOptionGet
+     */
+    public function testSetEventTypeError(): void
+    {
+        $option = Option::getInstance();
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeOptionSet',
+            function (Event $event) {
+                $result = new EventResult();
+                $result->addError(new EntityError('UF_FUS_TEST_BEFORE_SET'));
+
+                return $result;
+            }
+        );
+        $this->assertFalse($option->set('UF_FUS_TEST_FIELD1', 'value')->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeOptionSet',
+            $eventHandlerKey
+        );
+    }
 }

@@ -147,11 +147,22 @@ class Option implements IOption
             $event = new Event('fi1a.usersettings', 'OnBeforeOptionSet', $fields);
             $event->send();
             foreach ($event->getResults() as $eventResult) {
+                /**
+                 * @var OrmEventResult $eventResult
+                 */
                 if ($eventResult->getType() === EventResult::ERROR) {
-                    continue;
-                }
+                    $result->addErrors(
+                        $eventResult instanceof OrmEventResult
+                            ? $eventResult->getErrors()
+                            : new Error(Loc::getMessage('FUS_ON_BEFORE_OPTION_SET_ERROR'))
+                    );
 
-                $fields = array_merge($fields, $eventResult->getParameters());
+                    return $result;
+                }
+                $parameters = $eventResult instanceof OrmEventResult
+                    ? $eventResult->getModified()
+                    : $eventResult->getParameters();
+                $fields = array_replace_recursive($fields, $parameters);
             }
             unset($eventResult);
 
@@ -167,12 +178,14 @@ class Option implements IOption
 
             $this->userFields[$key]['VALUE'] = $fields[$key];
 
-            $event = new Event('fi1a.usersettings', 'OnAfterOptionSet', $fields);
-            $event->send();
-
             $this->clearCache();
         } catch (\Throwable $exception) {
             $result->addError(new Error($exception->getMessage()));
+        }
+
+        if ($result->isSuccess()) {
+            $event = new Event('fi1a.usersettings', 'OnAfterOptionSet', $fields);
+            $event->send();
         }
 
         return $result;
@@ -201,7 +214,9 @@ class Option implements IOption
     protected function getUserFields(): array
     {
         if ($this->cache->read(60 * 60 * 3, static::CACHE_ID)) {
+            // @codeCoverageIgnoreStart
             $fields = $this->cache->get(static::CACHE_ID);
+            // @codeCoverageIgnoreEnd
         } else {
             $fields = [];
 
