@@ -9,7 +9,9 @@ use Bitrix\Main\Error;
 use Bitrix\Main\Event;
 use Bitrix\Main\EventResult;
 use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\ORM\EventResult as OrmEventResult;
 use Bitrix\Main\Result;
+use Fi1a\UserSettings\Exceptions\OptionGetValueException;
 use Fi1a\UserSettings\Helpers\ModuleRegistry;
 
 use function htmlspecialcharsbx;
@@ -88,11 +90,24 @@ class Option implements IOption
         $event = new Event('fi1a.usersettings', 'OnOptionGet', $fields);
         $event->send();
         foreach ($event->getResults() as $eventResult) {
+            /**
+             * @var OrmEventResult $eventResult
+             */
             if ($eventResult->getType() === EventResult::ERROR) {
-                continue;
-            }
+                $errorMessage = Loc::getMessage('FUS_ON_BEFORE_OPTION_GET_ERROR');
+                if ($eventResult instanceof OrmEventResult) {
+                    $errorMessage = '';
+                    foreach ($eventResult->getErrors() as $error) {
+                        $errorMessage .= ' ' . $error->getMessage();
+                    }
+                }
 
-            $fields = array_merge($fields, $eventResult->getParameters());
+                throw new OptionGetValueException($errorMessage);
+            }
+            $parameters = $eventResult instanceof OrmEventResult
+                ? $eventResult->getModified()
+                : $eventResult->getParameters();
+            $fields = array_replace_recursive($fields, $parameters);
         }
         unset($eventResult);
 
