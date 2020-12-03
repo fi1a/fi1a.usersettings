@@ -21,4 +21,15 @@ class OptionTest extends TabsAndFieldsTestCase
         $this->assertIsArray($values);
         $this->assertCount(2, $values);
     }
+
+    /**
+     * Тестирование методов set и get
+     */
+    public function testSetGet(): void
+    {
+        $option = Option::getInstance();
+        $this->assertFalse($option->get('UF_FUS_TEST_FIELD1'));
+        $this->assertTrue($option->set('UF_FUS_TEST_FIELD1', 'value')->isSuccess());
+        $this->assertEquals('value', $option->get('UF_FUS_TEST_FIELD1'));
+    }
 }
