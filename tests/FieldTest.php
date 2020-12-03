@@ -6,7 +6,6 @@ namespace Fi1a\Unit\UserSettings;
 
 use Bitrix\Main\Event;
 use Bitrix\Main\EventManager;
-//use Bitrix\Main\EventResult;
 use Bitrix\Main\ORM\EntityError;
 use Bitrix\Main\ORM\EventResult;
 use Fi1a\Unit\UserSettings\TestCase\ModuleTestCase;
