@@ -55,7 +55,36 @@ class OptionTest extends TabsAndFieldsTestCase
             }
         );
         $this->expectException(OptionGetValueException::class);
-        $option->get('UF_FUS_TEST_FIELD1');
+        try {
+            $option->get('UF_FUS_TEST_FIELD1');
+        } catch (OptionGetValueException $exception) {
+            EventManager::getInstance()->removeEventHandler(
+                self::MODULE_ID,
+                'OnOptionGet',
+                $eventHandlerKey
+            );
+
+            throw $exception;
+        }
+    }
+
+    /**
+     * Изменение значения из обработчика события OnOptionGet
+     */
+    public function testGetEventModify(): void
+    {
+        $option = Option::getInstance();
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnOptionGet',
+            function (Event $event) {
+                $result = new EventResult();
+                $result->modifyFields(['value' => 'modify']);
+
+                return $result;
+            }
+        );
+        $this->assertEquals('modify', $option->get('UF_FUS_TEST_FIELD1'));
         EventManager::getInstance()->removeEventHandler(
             self::MODULE_ID,
             'OnOptionGet',
