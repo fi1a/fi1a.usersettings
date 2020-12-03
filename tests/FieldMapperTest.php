@@ -7,9 +7,12 @@ namespace Fi1a\Unit\UserSettings;
 use Fi1a\Unit\UserSettings\TestCase\ModuleTestCase;
 use Fi1a\UserSettings\Field;
 use Fi1a\UserSettings\FieldMapper;
+use Fi1a\UserSettings\IField;
 use Fi1a\UserSettings\IFieldCollection;
 use Fi1a\UserSettings\Tab;
 use Fi1a\UserSettings\TabMapper;
+
+use const PHP_INT_MAX;
 
 class FieldMapperTest extends ModuleTestCase
 {
@@ -119,5 +122,19 @@ class FieldMapperTest extends ModuleTestCase
         $collection = FieldMapper::getList();
         $this->assertInstanceOf(IFieldCollection::class, $collection);
         $this->assertCount(2, $collection);
+    }
+
+    /**
+     * Тестирование метода getById
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     */
+    public function testGetById(): void
+    {
+        $this->assertFalse(FieldMapper::getById(0));
+        $this->assertFalse(FieldMapper::getById(PHP_INT_MAX));
+        $this->assertInstanceOf(IField::class, FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']));
     }
 }
