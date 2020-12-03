@@ -34,6 +34,7 @@ class OptionTest extends TabsAndFieldsTestCase
     {
         $option = Option::getInstance();
         $this->assertFalse($option->get('UF_FUS_TEST_FIELD1'));
+        $option->clearCache();
         $this->assertTrue($option->set('UF_FUS_TEST_FIELD1', 'value')->isSuccess());
         $this->assertEquals('value', $option->get('UF_FUS_TEST_FIELD1'));
     }
@@ -90,5 +91,14 @@ class OptionTest extends TabsAndFieldsTestCase
             'OnOptionGet',
             $eventHandlerKey
         );
+    }
+
+    /**
+     * Ошибка при попытке установить не существующую пользовательскую настройку
+     */
+    public function testSetUnknownOption(): void
+    {
+        $option = Option::getInstance();
+        $this->assertFalse($option->set('UNKNOWN', 123)->isSuccess());
     }
 }
