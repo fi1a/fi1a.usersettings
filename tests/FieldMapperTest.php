@@ -137,4 +137,19 @@ class FieldMapperTest extends ModuleTestCase
         $this->assertFalse(FieldMapper::getById(PHP_INT_MAX));
         $this->assertInstanceOf(IField::class, FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']));
     }
+
+    /**
+     * Тестирование метода getByTabId
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     */
+    public function testGetByTabId(): void
+    {
+        $this->assertFalse(FieldMapper::getByTabId(0));
+        $collection = FieldMapper::getByTabId(self::$tabIds['FUS_TEST_TAB1']);
+        $this->assertInstanceOf(IFieldCollection::class, $collection);
+        $this->assertCount(2, $collection);
+    }
 }
