@@ -537,4 +537,30 @@ class FieldTest extends ModuleTestCase
             $eventHandlerKey
         );
     }
+
+    /**
+     * Событие до удаления поля
+     *
+     * @depends testAdd
+     */
+    public function testDeleteEventOnBefore(): void
+    {
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldDelete',
+            function (Event $event) {
+                $result = new EventResult();
+                $result->addError(new EntityError('UF_FUS_TEST_BEFORE_DELETE'));
+
+                return $result;
+            }
+        );
+        $field = FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD2']);
+        $this->assertFalse($field->delete()->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldDelete',
+            $eventHandlerKey
+        );
+    }
 }

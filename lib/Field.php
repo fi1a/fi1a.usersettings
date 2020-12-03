@@ -253,6 +253,21 @@ class Field extends ArrayObject implements IField
         try {
             $event = new Event('fi1a.usersettings', 'OnBeforeFieldDelete', ['fields' => $fields]);
             $event->send();
+            foreach ($event->getResults() as $eventResult) {
+                /**
+                 * @var OrmEventResult $eventResult
+                 */
+                if ($eventResult->getType() === EventResult::ERROR) {
+                    $result->addErrors(
+                        $eventResult instanceof OrmEventResult
+                            ? $eventResult->getErrors()
+                            : new Error(Loc::getMessage('FUS_ON_BEFORE_DELETE_ERROR'))
+                    );
+
+                    return $result;
+                }
+            }
+            unset($eventResult);
 
             $result = FieldsTable::delete($id);
 
