@@ -152,4 +152,18 @@ class FieldMapperTest extends ModuleTestCase
         $this->assertInstanceOf(IFieldCollection::class, $collection);
         $this->assertCount(2, $collection);
     }
+
+    /**
+     * Тестирование метода getActive
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     */
+    public function testGetActive(): void
+    {
+        $collection = FieldMapper::getActive();
+        $this->assertInstanceOf(IFieldCollection::class, $collection);
+        $this->assertCount(2, $collection);
+    }
 }
