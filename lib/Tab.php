@@ -141,8 +141,10 @@ class Tab extends ArrayObject implements ITab
             $this->connection->commitTransaction();
 
             $fields['ID'] = $result->getId();
-            $event = new Event('fi1a.usersettings', 'OnAfterTabAdd', [$fields]);
+            $event = new Event('fi1a.usersettings', 'OnAfterTabAdd', ['fields' => $fields]);
             $event->send();
+
+            $this->exchangeArray(array_replace_recursive($this->getArrayCopy(), $fields));
 
             return $result;
         }
