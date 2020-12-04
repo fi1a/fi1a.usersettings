@@ -349,8 +349,31 @@ class TabTest extends ModuleTestCase
                 return $result;
             }
         );
-        $field = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
-        $this->assertFalse($field->delete()->isSuccess());
+        $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
+        $this->assertFalse($tab->delete()->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeTabDelete',
+            $eventHandlerKey
+        );
+    }
+
+    /**
+     * Ошибка удаления при исключении \Throwable
+     *
+     * @depends testAdd
+     */
+    public function testCatchThrowableExceptionOnDelete(): void
+    {
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeTabDelete',
+            function (Event $event) {
+                throw new \ErrorException();
+            }
+        );
+        $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
+        $this->assertFalse($tab->delete()->isSuccess());
         EventManager::getInstance()->removeEventHandler(
             self::MODULE_ID,
             'OnBeforeTabDelete',
