@@ -53,7 +53,7 @@ class Tab extends ArrayObject implements ITab
     protected function __construct(array $input = [])
     {
         // Языки
-        if (!static::$languages) {
+        if (!self::$languages) {
             $languagesIterator = LanguageTable::getList([
                 'order' => [
                     'SORT' => 'ASC',
@@ -62,14 +62,14 @@ class Tab extends ArrayObject implements ITab
             ]);
 
             while ($language = $languagesIterator->fetch()) {
-                static::$languages[] = $language['LID'];
+                self::$languages[] = $language['LID'];
             }
             unset($language);
         }
 
         // Добавляем не достающие языки
         if (isset($input['LOCALIZATION'])) {
-            foreach (static::$languages as $language) {
+            foreach (self::$languages as $language) {
                 if (isset($input['LOCALIZATION'][$language])) {
                     continue;
                 }
