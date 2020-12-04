@@ -236,8 +236,25 @@ class Tab extends ArrayObject implements ITab
         }
 
         try {
-            $event = new Event('fi1a.usersettings', 'OnBeforeTabDelete', [$fields]);
+            $result = new DeleteResult();
+
+            $event = new Event('fi1a.usersettings', 'OnBeforeTabDelete', ['fields' => $fields]);
             $event->send();
+            foreach ($event->getResults() as $eventResult) {
+                /**
+                 * @var OrmEventResult $eventResult
+                 */
+                if ($eventResult->getType() === EventResult::ERROR) {
+                    $result->addErrors(
+                        $eventResult instanceof OrmEventResult
+                            ? $eventResult->getErrors()
+                            : new Error(Loc::getMessage('FUS_TAB_ON_BEFORE_DELETE_ERROR'))
+                    );
+
+                    return $result;
+                }
+            }
+            unset($eventResult);
 
             $result = TabsTable::delete($id);
 
@@ -265,7 +282,7 @@ class Tab extends ArrayObject implements ITab
         if ($result->isSuccess()) {
             $this->connection->commitTransaction();
 
-            $event = new Event('fi1a.usersettings', 'OnAfterTabDelete', [$fields]);
+            $event = new Event('fi1a.usersettings', 'OnAfterTabDelete', ['fields' => $fields]);
             $event->send();
 
             return $result;

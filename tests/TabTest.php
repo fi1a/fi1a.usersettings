@@ -331,4 +331,30 @@ class TabTest extends ModuleTestCase
         unset($tab['ID']);
         $this->assertFalse($tab->delete()->isSuccess());
     }
+
+    /**
+     * Событие до удаления поля
+     *
+     * @depends testAdd
+     */
+    public function testDeleteEventOnBefore(): void
+    {
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeTabDelete',
+            function (Event $event) {
+                $result = new EventResult();
+                $result->addError(new EntityError('UF_FUS_TEST_BEFORE_DELETE'));
+
+                return $result;
+            }
+        );
+        $field = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
+        $this->assertFalse($field->delete()->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeTabDelete',
+            $eventHandlerKey
+        );
+    }
 }
