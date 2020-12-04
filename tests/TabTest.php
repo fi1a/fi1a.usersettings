@@ -276,4 +276,28 @@ class TabTest extends ModuleTestCase
             $eventHandlerKey
         );
     }
+
+    /**
+     * Ошибка обновления при исключении \Throwable
+     *
+     * @depends testAdd
+     */
+    public function testCatchThrowableExceptionOnUpdate(): void
+    {
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeTabUpdate',
+            function (Event $event) {
+                throw new \ErrorException();
+            }
+        );
+        $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
+
+        $this->assertFalse($tab->save()->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeTabUpdate',
+            $eventHandlerKey
+        );
+    }
 }
