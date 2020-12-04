@@ -94,7 +94,7 @@ class Field extends ArrayObject implements IField
                     $result->addErrors(
                         $eventResult instanceof OrmEventResult
                         ? $eventResult->getErrors()
-                        : new Error(Loc::getMessage('FUS_ON_BEFORE_ADD_ERROR'))
+                        : new Error(Loc::getMessage('FUS_FIELD_ON_BEFORE_ADD_ERROR'))
                     );
 
                     return $result;
@@ -179,7 +179,7 @@ class Field extends ArrayObject implements IField
                     $result->addErrors(
                         $eventResult instanceof OrmEventResult
                             ? $eventResult->getErrors()
-                            : new Error(Loc::getMessage('FUS_ON_BEFORE_UPDATE_ERROR'))
+                            : new Error(Loc::getMessage('FUS_FIELD_ON_BEFORE_UPDATE_ERROR'))
                     );
 
                     return $result;
@@ -261,7 +261,7 @@ class Field extends ArrayObject implements IField
                     $result->addErrors(
                         $eventResult instanceof OrmEventResult
                             ? $eventResult->getErrors()
-                            : new Error(Loc::getMessage('FUS_ON_BEFORE_DELETE_ERROR'))
+                            : new Error(Loc::getMessage('FUS_FIELD_ON_BEFORE_DELETE_ERROR'))
                     );
 
                     return $result;

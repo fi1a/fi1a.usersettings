@@ -13,6 +13,7 @@ use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ORM\Data\AddResult;
 use Bitrix\Main\ORM\Data\DeleteResult;
 use Bitrix\Main\ORM\Data\UpdateResult;
+use Bitrix\Main\ORM\EventResult as OrmEventResult;
 use Fi1a\Collection\DataType\ArrayObject;
 use Fi1a\UserSettings\Internals\TabsTable;
 
@@ -106,14 +107,27 @@ class Tab extends ArrayObject implements ITab
         unset($fields['ID']);
 
         try {
-            $event = new Event('fi1a.usersettings', 'OnBeforeTabAdd', [$fields]);
+            $result = new AddResult();
+
+            $event = new Event('fi1a.usersettings', 'OnBeforeTabAdd', ['fields' => $fields]);
             $event->send();
             foreach ($event->getResults() as $eventResult) {
+                /**
+                 * @var OrmEventResult $eventResult
+                 */
                 if ($eventResult->getType() === EventResult::ERROR) {
-                    continue;
-                }
+                    $result->addErrors(
+                        $eventResult instanceof OrmEventResult
+                            ? $eventResult->getErrors()
+                            : new Error(Loc::getMessage('FUS_TAB_ON_BEFORE_ADD_ERROR'))
+                    );
 
-                $fields = array_merge($fields, $eventResult->getParameters());
+                    return $result;
+                }
+                $parameters = $eventResult instanceof OrmEventResult
+                    ? $eventResult->getModified()
+                    : $eventResult->getParameters()['fields'];
+                $fields = array_replace_recursive($fields, $parameters);
             }
             unset($eventResult);
 

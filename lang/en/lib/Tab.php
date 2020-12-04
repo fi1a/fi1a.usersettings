@@ -1,2 +1,3 @@
 <?php
 $MESS['FUS_PRIMARY_VALUE_NOT_EXISTS'] = 'Нет идентификатора вкладки';
+$MESS['FUS_TAB_ON_BEFORE_ADD_ERROR'] = 'Обработчик события OnBeforeTabAdd вернул ошибку';
