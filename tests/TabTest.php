@@ -96,7 +96,7 @@ class TabTest extends ModuleTestCase
         );
         $tab1 = Tab::create([
             'ACTIVE' => 1,
-            'CODE' => 'FUS_TEST_TAB1',
+            'CODE' => 'FUS_TEST_TAB2',
             'LOCALIZATION' => [
                 'ru' => [
                     'L_NAME' => '',
@@ -106,6 +106,35 @@ class TabTest extends ModuleTestCase
         ]);
         $this->assertInstanceOf(ITab::class, $tab1);
         $this->assertFalse($tab1->save()->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeTabAdd',
+            $eventHandlerKey
+        );
+
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeTabAdd',
+            function (Event $event) {
+                $result = new EventResult();
+                $result->modifyFields([
+                    'CODE' => 'FUS_TEST_TAB2_MODIFY',
+                ]);
+
+                return $result;
+            }
+        );
+        $tab2 = Tab::create([
+            'ACTIVE' => 1,
+            'CODE' => 'FUS_TEST_TAB2',
+            'LOCALIZATION' => [
+                'ru' => [
+                    'L_NAME' => '',
+                    'L_TITLE' => '',
+                ],
+            ],
+        ]);
+        $this->assertTrue($tab2->save()->isSuccess());
         EventManager::getInstance()->removeEventHandler(
             self::MODULE_ID,
             'OnBeforeTabAdd',
