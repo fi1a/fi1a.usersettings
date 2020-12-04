@@ -11,6 +11,7 @@ use Bitrix\Main\ORM\EventResult;
 use Fi1a\Unit\UserSettings\TestCase\ModuleTestCase;
 use Fi1a\UserSettings\ITab;
 use Fi1a\UserSettings\Tab;
+use Fi1a\UserSettings\TabMapper;
 use ReflectionClass;
 
 /**
@@ -71,6 +72,21 @@ class TabTest extends ModuleTestCase
         $result = $tab1->save();
         $this->assertTrue($result->isSuccess());
         self::$tabIds['FUS_TEST_TAB1'] = $result->getId();
+
+        $tab1 = Tab::create([
+            'ACTIVE' => 1,
+            'CODE' => 'FUS_TEST_TAB2',
+            'LOCALIZATION' => [
+                'ru' => [
+                    'L_NAME' => '',
+                    'L_TITLE' => '',
+                ],
+            ],
+        ]);
+        $this->assertInstanceOf(ITab::class, $tab1);
+        $result = $tab1->save();
+        $this->assertTrue($result->isSuccess());
+        self::$tabIds['FUS_TEST_TAB2'] = $result->getId();
     }
 
     /**
@@ -172,5 +188,19 @@ class TabTest extends ModuleTestCase
             'OnBeforeTabAdd',
             $eventHandlerKey
         );
+    }
+
+    /**
+     * Обновление таба
+     *
+     * @depends testAdd
+     */
+    public function testUpdate(): void
+    {
+        $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
+        $tab['ACTIVE'] = 0;
+        $this->assertTrue($tab->save()->isSuccess());
+        $tab['ACTIVE'] = 1;
+        $this->assertTrue($tab->save()->isSuccess());
     }
 }
