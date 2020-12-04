@@ -38,4 +38,20 @@ class TabTest extends ModuleTestCase
         ]);
         $this->assertInstanceOf(ITab::class, $tab2);
     }
+
+    public function testAdd(): void
+    {
+        $tab1 = Tab::create([
+            'ACTIVE' => 1,
+            'CODE' => 'FUS_TEST_TAB1',
+            'LOCALIZATION' => [
+                'ru' => [
+                    'L_NAME' => '',
+                    'L_TITLE' => '',
+                ],
+            ],
+        ]);
+        $this->assertInstanceOf(ITab::class, $tab1);
+        $this->assertTrue($tab1->save()->isSuccess());
+    }
 }
