@@ -141,4 +141,36 @@ class TabTest extends ModuleTestCase
             $eventHandlerKey
         );
     }
+
+    /**
+     * Ошибка сохранения при исключении \Throwable
+     *
+     * @depends testAdd
+     */
+    public function testCatchThrowableExceptionOnAdd(): void
+    {
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeTabAdd',
+            function (Event $event) {
+                throw new \ErrorException();
+            }
+        );
+        $tab = Tab::create([
+            'ACTIVE' => 1,
+            'CODE' => 'FUS_TEST_TAB2',
+            'LOCALIZATION' => [
+                'ru' => [
+                    'L_NAME' => '',
+                    'L_TITLE' => '',
+                ],
+            ],
+        ]);
+        $this->assertFalse($tab->save()->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeTabAdd',
+            $eventHandlerKey
+        );
+    }
 }
