@@ -50,7 +50,7 @@ class Tab extends ArrayObject implements ITab
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public function __construct(array $input = [])
+    protected function __construct(array $input = [])
     {
         // Языки
         if (!static::$languages) {
@@ -84,7 +84,7 @@ class Tab extends ArrayObject implements ITab
 
         $this->connection = Application::getConnection();
 
-        parent::__construct($input, 0, 'ArrayIterator');
+        parent::__construct($input);
     }
 
     /**
