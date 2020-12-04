@@ -16,6 +16,7 @@ use Bitrix\Main\ORM\Data\UpdateResult;
 use Bitrix\Main\ORM\EventResult as OrmEventResult;
 use Fi1a\Collection\DataType\ArrayObject;
 use Fi1a\UserSettings\Internals\TabsTable;
+use Fi1a\UserSettings\Internals\TransactionState;
 
 use function htmlspecialcharsbx;
 
@@ -24,6 +25,8 @@ use function htmlspecialcharsbx;
  */
 class Tab extends ArrayObject implements ITab
 {
+    use TransactionState;
+
     /**
      * @var array
      */
@@ -101,8 +104,6 @@ class Tab extends ArrayObject implements ITab
      */
     public function add(): AddResult
     {
-        $this->connection->startTransaction();
-
         $fields = $this->getArrayCopy();
         unset($fields['ID']);
 
@@ -131,6 +132,9 @@ class Tab extends ArrayObject implements ITab
             }
             unset($eventResult);
 
+            $this->connection->startTransaction();
+            $this->inTransaction();
+
             $result = TabsTable::add($fields);
         } catch (\Throwable $exception) {
             $result = new AddResult();
@@ -139,6 +143,7 @@ class Tab extends ArrayObject implements ITab
 
         if ($result->isSuccess()) {
             $this->connection->commitTransaction();
+            $this->notInTransaction();
 
             $fields['ID'] = $result->getId();
             $event = new Event('fi1a.usersettings', 'OnAfterTabAdd', ['fields' => $fields]);
@@ -149,7 +154,10 @@ class Tab extends ArrayObject implements ITab
             return $result;
         }
 
-        $this->connection->rollbackTransaction();
+        if ($this->isInTransaction()) {
+            $this->connection->rollbackTransaction();
+            $this->notInTransaction();
+        }
 
         return $result;
     }
@@ -168,8 +176,6 @@ class Tab extends ArrayObject implements ITab
 
             return $result;
         }
-
-        $this->connection->startTransaction();
 
         try {
             $result = new UpdateResult();
@@ -196,6 +202,9 @@ class Tab extends ArrayObject implements ITab
             }
             unset($eventResult);
 
+            $this->connection->startTransaction();
+            $this->inTransaction();
+
             $result = TabsTable::update($id, $fields);
         } catch (\Throwable $exception) {
             $result = new UpdateResult();
@@ -204,6 +213,7 @@ class Tab extends ArrayObject implements ITab
 
         if ($result->isSuccess()) {
             $this->connection->commitTransaction();
+            $this->notInTransaction();
 
             $event = new Event('fi1a.usersettings', 'OnAfterTabUpdate', ['fields' => $fields]);
             $event->send();
@@ -213,7 +223,10 @@ class Tab extends ArrayObject implements ITab
             return $result;
         }
 
-        $this->connection->rollbackTransaction();
+        if ($this->isInTransaction()) {
+            $this->connection->rollbackTransaction();
+            $this->notInTransaction();
+        }
 
         return $result;
     }
@@ -225,8 +238,6 @@ class Tab extends ArrayObject implements ITab
     {
         $fields = $this->getArrayCopy();
         $id = (int) $fields['ID'];
-
-        $this->connection->startTransaction();
 
         if (!$id) {
             $result = new DeleteResult();
@@ -256,6 +267,9 @@ class Tab extends ArrayObject implements ITab
             }
             unset($eventResult);
 
+            $this->connection->startTransaction();
+            $this->inTransaction();
+
             $result = TabsTable::delete($id);
 
             if ($result->isSuccess()) {
@@ -281,6 +295,7 @@ class Tab extends ArrayObject implements ITab
 
         if ($result->isSuccess()) {
             $this->connection->commitTransaction();
+            $this->notInTransaction();
 
             $event = new Event('fi1a.usersettings', 'OnAfterTabDelete', ['fields' => $fields]);
             $event->send();
@@ -288,7 +303,10 @@ class Tab extends ArrayObject implements ITab
             return $result;
         }
 
-        $this->connection->rollbackTransaction();
+        if ($this->isInTransaction()) {
+            $this->connection->rollbackTransaction();
+            $this->notInTransaction();
+        }
 
         return $result;
     }

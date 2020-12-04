@@ -9,6 +9,7 @@ use Bitrix\Main\EventManager;
 use Bitrix\Main\ORM\EntityError;
 use Bitrix\Main\ORM\EventResult;
 use Fi1a\Unit\UserSettings\TestCase\ModuleTestCase;
+use Fi1a\UserSettings\Field;
 use Fi1a\UserSettings\ITab;
 use Fi1a\UserSettings\Tab;
 use Fi1a\UserSettings\TabMapper;
@@ -312,8 +313,89 @@ class TabTest extends ModuleTestCase
      */
     public function testDelete(): void
     {
+        $field = Field::create([
+            'TAB_ID' => self::$tabIds['FUS_TEST_TAB2'],
+            'ACTIVE' => 1,
+            'UF' => [
+                'FIELD_NAME' => 'UF_FUS_TEST_FIELD1',
+                'USER_TYPE_ID' => 'string',
+                'XML_ID' => '',
+                'SORT' => '500',
+                'MULTIPLE' => 'N',
+                'MANDATORY' => 'Y',
+                'SETTINGS' => [
+                    'DEFAULT_VALUE' => '',
+                    'SIZE' => '20',
+                    'ROWS' => '1',
+                    'MIN_LENGTH' => '0',
+                    'MAX_LENGTH' => '0',
+                    'REGEXP' => '',
+                ],
+                'EDIT_FORM_LABEL' => ['ru' => '', 'en' => '',],
+                'ERROR_MESSAGE' => null,
+                'HELP_MESSAGE' => ['ru' => '', 'en' => '',],
+            ],
+        ]);
+        $this->assertTrue($field->save()->isSuccess());
         $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB2']);
         $this->assertTrue($tab->delete()->isSuccess());
+    }
+
+    /**
+     * Ошибка удаления полей при удалении таба
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     *
+     * @depends testAdd
+     */
+    public function testDeleteErrorFields(): void
+    {
+        $field = Field::create([
+            'TAB_ID' => self::$tabIds['FUS_TEST_TAB1'],
+            'ACTIVE' => 1,
+            'UF' => [
+                'FIELD_NAME' => 'UF_FUS_TEST_FIELD1',
+                'USER_TYPE_ID' => 'string',
+                'XML_ID' => '',
+                'SORT' => '500',
+                'MULTIPLE' => 'N',
+                'MANDATORY' => 'Y',
+                'SETTINGS' => [
+                    'DEFAULT_VALUE' => '',
+                    'SIZE' => '20',
+                    'ROWS' => '1',
+                    'MIN_LENGTH' => '0',
+                    'MAX_LENGTH' => '0',
+                    'REGEXP' => '',
+                ],
+                'EDIT_FORM_LABEL' => ['ru' => '', 'en' => '',],
+                'ERROR_MESSAGE' => null,
+                'HELP_MESSAGE' => ['ru' => '', 'en' => '',],
+            ],
+        ]);
+        $this->assertTrue($field->save()->isSuccess());
+        $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
+        $this->assertInstanceOf(ITab::class, $tab);
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldDelete',
+            function (Event $event) {
+                $result = new EventResult();
+                $result->addError(new EntityError('UF_FUS_TEST_BEFORE_ADD'));
+
+                return $result;
+            }
+        );
+        $this->assertFalse($tab->delete()->isSuccess());
+        $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
+        $this->assertInstanceOf(ITab::class, $tab);
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeFieldDelete',
+            $eventHandlerKey
+        );
     }
 
     /**

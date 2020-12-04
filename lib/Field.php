@@ -18,12 +18,15 @@ use CUserTypeEntity;
 use Fi1a\Collection\DataType\ArrayObject;
 use Fi1a\UserSettings\Helpers\ModuleRegistry;
 use Fi1a\UserSettings\Internals\FieldsTable;
+use Fi1a\UserSettings\Internals\TransactionState;
 
 /**
  * Поле пользовательских настроек
  */
 class Field extends ArrayObject implements IField
 {
+    use TransactionState;
+
     /**
      * @var \Bitrix\Main\DB\Connection
      */
@@ -72,8 +75,6 @@ class Field extends ArrayObject implements IField
      */
     public function add(): AddResult
     {
-        $this->connection->startTransaction();
-
         $fields = $this->getArrayCopy();
         unset($fields['ID']);
         unset($fields['UF_ID']);
@@ -106,6 +107,9 @@ class Field extends ArrayObject implements IField
             }
             unset($eventResult);
 
+            $this->connection->startTransaction();
+            $this->inTransaction();
+
             $userTypeEntity  = new CUserTypeEntity();
             $userTypeId = $userTypeEntity->Add($fields['UF']);
 
@@ -134,6 +138,7 @@ class Field extends ArrayObject implements IField
 
         if ($result->isSuccess()) {
             $this->connection->commitTransaction();
+            $this->notInTransaction();
 
             $fields['ID'] = $result->getId();
             $event = new Event('fi1a.usersettings', 'OnAfterFieldAdd', ['fields' => $fields]);
@@ -146,7 +151,10 @@ class Field extends ArrayObject implements IField
             return $result;
         }
 
-        $this->connection->rollbackTransaction();
+        if ($this->isInTransaction()) {
+            $this->connection->rollbackTransaction();
+            $this->notInTransaction();
+        }
 
         return $result;
     }
@@ -165,8 +173,6 @@ class Field extends ArrayObject implements IField
         }
 
         $result = new UpdateResult();
-
-        $this->connection->startTransaction();
 
         try {
             $event = new Event('fi1a.usersettings', 'OnBeforeFieldUpdate', ['fields' => $fields]);
@@ -191,6 +197,9 @@ class Field extends ArrayObject implements IField
             }
             unset($eventResult);
 
+            $this->connection->startTransaction();
+            $this->inTransaction();
+
             if (is_array($fields['UF']) && count($fields['UF']) > 0) {
                 $userTypeEntity  = new CUserTypeEntity();
 
@@ -211,6 +220,7 @@ class Field extends ArrayObject implements IField
 
         if ($result->isSuccess()) {
             $this->connection->commitTransaction();
+            $this->notInTransaction();
 
             $event = new Event('fi1a.usersettings', 'OnAfterFieldUpdate', ['fields' => $fields]);
             $event->send();
@@ -220,7 +230,10 @@ class Field extends ArrayObject implements IField
             return $result;
         }
 
-        $this->connection->rollbackTransaction();
+        if ($this->isInTransaction()) {
+            $this->connection->rollbackTransaction();
+            $this->notInTransaction();
+        }
 
         return $result;
     }
@@ -248,8 +261,6 @@ class Field extends ArrayObject implements IField
             return $result;
         }
 
-        $this->connection->startTransaction();
-
         try {
             $event = new Event('fi1a.usersettings', 'OnBeforeFieldDelete', ['fields' => $fields]);
             $event->send();
@@ -269,6 +280,9 @@ class Field extends ArrayObject implements IField
             }
             unset($eventResult);
 
+            $this->connection->startTransaction();
+            $this->inTransaction();
+
             $result = FieldsTable::delete($id);
 
             if ($result->isSuccess()) {
@@ -287,6 +301,7 @@ class Field extends ArrayObject implements IField
 
         if ($result->isSuccess()) {
             $this->connection->commitTransaction();
+            $this->notInTransaction();
 
             $event = new Event('fi1a.usersettings', 'OnAfterFieldDelete', ['fields' => $fields]);
             $event->send();
@@ -296,7 +311,10 @@ class Field extends ArrayObject implements IField
             return $result;
         }
 
-        $this->connection->rollbackTransaction();
+        if ($this->isInTransaction()) {
+            $this->connection->rollbackTransaction();
+            $this->notInTransaction();
+        }
 
         return $result;
     }
