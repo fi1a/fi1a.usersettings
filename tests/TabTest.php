@@ -134,7 +134,7 @@ class TabTest extends ModuleTestCase
             function (Event $event) {
                 $result = new EventResult();
                 $result->modifyFields([
-                    'CODE' => 'FUS_TEST_TAB2_MODIFY',
+                    'CODE' => 'FUS_TEST_TAB_MODIFY',
                 ]);
 
                 return $result;
@@ -142,7 +142,7 @@ class TabTest extends ModuleTestCase
         );
         $tab2 = Tab::create([
             'ACTIVE' => 1,
-            'CODE' => 'FUS_TEST_TAB2',
+            'CODE' => 'FUS_TEST_TAB_NOT_MODIFY',
             'LOCALIZATION' => [
                 'ru' => [
                     'L_NAME' => '',
@@ -151,6 +151,7 @@ class TabTest extends ModuleTestCase
             ],
         ]);
         $this->assertTrue($tab2->save()->isSuccess());
+        $this->assertEquals('FUS_TEST_TAB_MODIFY', $tab2['CODE']);
         EventManager::getInstance()->removeEventHandler(
             self::MODULE_ID,
             'OnBeforeTabAdd',
@@ -193,6 +194,10 @@ class TabTest extends ModuleTestCase
     /**
      * Обновление таба
      *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     *
      * @depends testAdd
      */
     public function testUpdate(): void
@@ -202,5 +207,73 @@ class TabTest extends ModuleTestCase
         $this->assertTrue($tab->save()->isSuccess());
         $tab['ACTIVE'] = 1;
         $this->assertTrue($tab->save()->isSuccess());
+    }
+
+    /**
+     * Ошибка отсутствия идентификатора при обновлении
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     *
+     * @depends testAdd
+     */
+    public function testUpdateEmptyId(): void
+    {
+        $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
+        unset($tab['ID']);
+        $this->assertFalse($tab->update()->isSuccess());
+    }
+
+    /**
+     * Событие до добавления поля
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     *
+     * @depends testAdd
+     */
+    public function testUpdateEventOnBefore(): void
+    {
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeTabUpdate',
+            function (Event $event) {
+                $result = new EventResult();
+                $result->addError(new EntityError('UF_FUS_TEST_BEFORE_ADD'));
+
+                return $result;
+            }
+        );
+        $tab1 = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
+        $this->assertInstanceOf(ITab::class, $tab1);
+        $this->assertFalse($tab1->save()->isSuccess());
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeTabUpdate',
+            $eventHandlerKey
+        );
+
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeTabUpdate',
+            function (Event $event) {
+                $result = new EventResult();
+                $result->modifyFields([
+                    'CODE' => 'FUS_TEST_TAB2_MODIFY',
+                ]);
+
+                return $result;
+            }
+        );
+        $tab2 = TabMapper::getById(self::$tabIds['FUS_TEST_TAB2']);
+        $this->assertTrue($tab2->save()->isSuccess());
+        $this->assertEquals('FUS_TEST_TAB2_MODIFY', $tab2['CODE']);
+        EventManager::getInstance()->removeEventHandler(
+            self::MODULE_ID,
+            'OnBeforeTabUpdate',
+            $eventHandlerKey
+        );
     }
 }

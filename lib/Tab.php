@@ -172,14 +172,27 @@ class Tab extends ArrayObject implements ITab
         $this->connection->startTransaction();
 
         try {
-            $event = new Event('fi1a.usersettings', 'OnBeforeTabUpdate', [$fields]);
+            $result = new UpdateResult();
+
+            $event = new Event('fi1a.usersettings', 'OnBeforeTabUpdate', ['fields' => $fields]);
             $event->send();
             foreach ($event->getResults() as $eventResult) {
+                /**
+                 * @var OrmEventResult $eventResult
+                 */
                 if ($eventResult->getType() === EventResult::ERROR) {
-                    continue;
-                }
+                    $result->addErrors(
+                        $eventResult instanceof OrmEventResult
+                            ? $eventResult->getErrors()
+                            : new Error(Loc::getMessage('FUS_TAB_ON_BEFORE_UPDATE_ERROR'))
+                    );
 
-                $fields = array_merge($fields, $eventResult->getParameters());
+                    return $result;
+                }
+                $parameters = $eventResult instanceof OrmEventResult
+                    ? $eventResult->getModified()
+                    : $eventResult->getParameters()['fields'];
+                $fields = array_replace_recursive($fields, $parameters);
             }
             unset($eventResult);
 
@@ -192,8 +205,10 @@ class Tab extends ArrayObject implements ITab
         if ($result->isSuccess()) {
             $this->connection->commitTransaction();
 
-            $event = new Event('fi1a.usersettings', 'OnAfterTabUpdate', [$fields]);
+            $event = new Event('fi1a.usersettings', 'OnAfterTabUpdate', ['fields' => $fields]);
             $event->send();
+
+            $this->exchangeArray(array_replace_recursive($this->getArrayCopy(), $fields));
 
             return $result;
         }
