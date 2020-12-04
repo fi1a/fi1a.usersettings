@@ -300,4 +300,19 @@ class TabTest extends ModuleTestCase
             $eventHandlerKey
         );
     }
+
+    /**
+     * Тестирование удаления вкладки
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     *
+     * @depends testAdd
+     */
+    public function testDelete(): void
+    {
+        $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB2']);
+        $this->assertTrue($tab->delete()->isSuccess());
+    }
 }
