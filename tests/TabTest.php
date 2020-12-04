@@ -315,4 +315,20 @@ class TabTest extends ModuleTestCase
         $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB2']);
         $this->assertTrue($tab->delete()->isSuccess());
     }
+
+    /**
+     * Ошибка отсутствия идентификатора при удалении
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     *
+     * @depends testAdd
+     */
+    public function testDeleteEmptyId(): void
+    {
+        $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
+        unset($tab['ID']);
+        $this->assertFalse($tab->delete()->isSuccess());
+    }
 }
