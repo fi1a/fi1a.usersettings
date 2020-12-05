@@ -12,6 +12,8 @@ use function htmlspecialcharsbx;
 /**
  * Данный класс фактически является интерфейсной прослойкой между значениями
  * пользовательских свойств и сущностью к которой они привязаны.
+ *
+ * @codeCoverageIgnore
  */
 class UserTypeManager extends \CUserTypeManager
 {
