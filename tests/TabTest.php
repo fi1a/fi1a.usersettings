@@ -215,6 +215,21 @@ class TabTest extends ModuleTestCase
     }
 
     /**
+     * Тестирование геттера заголовка таба
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     *
+     * @depends testAdd
+     */
+    public function testGetTitle(): void
+    {
+        $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
+        $this->assertEquals('title', $tab->getTitle());
+    }
+
+    /**
      * Обновление таба
      *
      * @throws \Bitrix\Main\ArgumentException
