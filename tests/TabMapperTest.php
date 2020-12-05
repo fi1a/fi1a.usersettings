@@ -71,4 +71,22 @@ class TabMapperTest extends TabsAndFieldsTestCase
     {
         $this->assertFalse(TabMapper::getById(PHP_INT_MAX));
     }
+
+    /**
+     * Тестирование метода getActive возвращающего активные табы
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     */
+    public function testGetActive(): void
+    {
+        $collection = TabMapper::getActive([
+            'filter' => [
+                'CODE' => 'FUS_TEST_TAB1',
+            ],
+        ]);
+        $this->assertInstanceOf(TabCollection::class, $collection);
+        $this->assertCount(1, $collection);
+    }
 }
