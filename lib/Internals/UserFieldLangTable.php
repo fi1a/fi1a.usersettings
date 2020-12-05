@@ -11,6 +11,8 @@ use Bitrix\Main\ORM\Fields\TextField;
 
 /**
  * Языковые сообщения пользовательских полей
+ *
+ * @codeCoverageIgnore
  */
 class UserFieldLangTable extends DataManager
 {

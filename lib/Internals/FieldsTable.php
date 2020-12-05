@@ -13,6 +13,8 @@ use Fi1a\UserSettings\Option;
 
 /**
  * Поля
+ *
+ * @codeCoverageIgnore
  */
 class FieldsTable extends DataManager
 {

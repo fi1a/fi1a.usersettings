@@ -14,6 +14,8 @@ use Bitrix\Main\ORM\Fields\Validators\UniqueValidator;
 
 /**
  * Вкладки
+ *
+ * @codeCoverageIgnore
  */
 class TabsTable extends DataManager
 {
