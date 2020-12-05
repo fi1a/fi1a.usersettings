@@ -9,6 +9,8 @@ use Fi1a\UserSettings\ITab;
 use Fi1a\UserSettings\TabCollection;
 use Fi1a\UserSettings\TabMapper;
 
+use const PHP_INT_MAX;
+
 /**
  * Тестирование маппера вкладок
  */
@@ -56,5 +58,17 @@ class TabMapperTest extends TabsAndFieldsTestCase
     public function testGetByIdZeroId(): void
     {
         $this->assertFalse(TabMapper::getById(0));
+    }
+
+    /**
+     * Тестирование проверки найденных элементов в методе getById
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     */
+    public function testGetByIdEmptyResult(): void
+    {
+        $this->assertFalse(TabMapper::getById(PHP_INT_MAX));
     }
 }
