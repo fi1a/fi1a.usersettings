@@ -64,8 +64,8 @@ class TabTest extends ModuleTestCase
             'CODE' => 'FUS_TEST_TAB1',
             'LOCALIZATION' => [
                 'ru' => [
-                    'L_NAME' => '',
-                    'L_TITLE' => '',
+                    'L_NAME' => 'name',
+                    'L_TITLE' => 'title',
                 ],
             ],
         ]);
@@ -197,6 +197,21 @@ class TabTest extends ModuleTestCase
             'OnBeforeTabAdd',
             $eventHandlerKey
         );
+    }
+
+    /**
+     * Тестирование геттера названия таба
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     *
+     * @depends testAdd
+     */
+    public function testGetName(): void
+    {
+        $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
+        $this->assertEquals('name', $tab->getName());
     }
 
     /**
