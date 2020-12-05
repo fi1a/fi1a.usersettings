@@ -45,4 +45,16 @@ class TabMapperTest extends TabsAndFieldsTestCase
         $this->assertInstanceOf(ITab::class, $tab);
         $this->assertEquals(self::$tabIds['FUS_TEST_TAB1'], $tab['ID']);
     }
+
+    /**
+     * Тестирование ошибки getById с передачей нулевого идентификатора
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     */
+    public function testGetByIdZeroId(): void
+    {
+        $this->assertFalse(TabMapper::getById(0));
+    }
 }
