@@ -174,7 +174,11 @@ class TabTest extends ModuleTestCase
                 throw new \ErrorException();
             }
         );
-        $tab = Tab::create([
+        $mock = $this->getMockBuilder(Tab::class)
+            ->onlyMethods(['isInTransaction'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mock = $mock::create([
             'ACTIVE' => 1,
             'CODE' => 'FUS_TEST_TAB2',
             'LOCALIZATION' => [
@@ -184,7 +188,10 @@ class TabTest extends ModuleTestCase
                 ],
             ],
         ]);
-        $this->assertFalse($tab->save()->isSuccess());
+        $mock->expects($this->once())
+            ->method('isInTransaction')
+            ->will($this->returnValue(true));
+        $this->assertFalse($mock->save()->isSuccess());
         EventManager::getInstance()->removeEventHandler(
             self::MODULE_ID,
             'OnBeforeTabAdd',
@@ -292,9 +299,15 @@ class TabTest extends ModuleTestCase
                 throw new \ErrorException();
             }
         );
-        $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
-
-        $this->assertFalse($tab->save()->isSuccess());
+        $mock = $this->getMockBuilder(Tab::class)
+            ->onlyMethods(['isInTransaction'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mock = $mock::create(TabMapper::getById(self::$tabIds['FUS_TEST_TAB1'])->getArrayCopy());
+        $mock->expects($this->once())
+            ->method('isInTransaction')
+            ->will($this->returnValue(true));
+        $this->assertFalse($mock->save()->isSuccess());
         EventManager::getInstance()->removeEventHandler(
             self::MODULE_ID,
             'OnBeforeTabUpdate',
