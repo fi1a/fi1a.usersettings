@@ -717,12 +717,12 @@ Option::getInstance()->get('UF_RECAPCHA_SECRET', 'foo');
 - ```OnBeforeFieldDelete``` &mdash; вызывается ДО удаления поля методом ```delete(): DeleteResult``` класса ```\Fi1a\UserSettings\Field```;
 - ```OnAfterFieldDelete``` &mdash; вызывается ПОСЛЕ удаления поля методом ```delete(): DeleteResult``` класса ```\Fi1a\UserSettings\Field```.
 
-[badge-release]: https://img.shields.io/packagist/v/fi1a/fi1a.usersettings?label=release
-[badge-license]: https://img.shields.io/github/license/fi1a/fi1a.usersettings?style=flat-square
-[badge-php]: https://img.shields.io/packagist/php-v/fi1a/fi1a.usersettings?style=flat-square
-[badge-downloads]: https://img.shields.io/packagist/dt/fi1a/fi1a.usersettings.svg?style=flat-square&colorB=mediumvioletred
+[badge-release]: https://img.shields.io/packagist/v/fi1a/usersettings?label=release
+[badge-license]: https://img.shields.io/github/license/fi1a/usersettings?style=flat-square
+[badge-php]: https://img.shields.io/packagist/php-v/fi1a/usersettings?style=flat-square
+[badge-downloads]: https://img.shields.io/packagist/dt/fi1a/usersettings.svg?style=flat-square&colorB=mediumvioletred
 
-[packagist]: https://packagist.org/packages/fi1a/fi1a.usersettings
-[license]: https://github.com/fi1a/fi1a.usersettings/blob/master/LICENSE
+[packagist]: https://packagist.org/packages/fi1a/usersettings
+[license]: https://github.com/fi1a/usersettings/blob/master/LICENSE
 [php]: https://php.net
-[downloads]: https://packagist.org/packages/fi1a/fi1a.usersettings
+[downloads]: https://packagist.org/packages/fi1a/usersettings
