@@ -1,9 +1,9 @@
 {
-  "name": "fi1a/fi1a.usersettings",
+  "name": "fi1a/usersettings",
   "type": "bitrix-d7-module",
   "description": "Модуль 1С-Битрикс \"Пользовательские настройки\". Предоставляет страницу с пользовательскими настройками сайта.",
   "keywords": [],
-  "homepage": "https://github.com/fi1a/fi1a.usersettings",
+  "homepage": "https://github.com/fi1a/usersettings",
   "license": "MIT",
   "authors": [
     {
