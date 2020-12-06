@@ -57,8 +57,51 @@
 
 *список актуален на момент релиза модуля для «1С-Битрикс: Управление сайтом» редакции "Бизнес"*
 
+## Изображения модуля
+
+![Добавление новой вкладки](images/elpha.usersettings-screen-1-preview@2x.png)
+
 ## Установка модуля
 
+В вашем composer.json проекта необходимо указать:
+
+- в блоке require указать инсталятор ```"composer/installers": "~1.0"```;
+- в блоке require указать модуль "fi1a/usersettings": ">=1.0.0 <1.1.0";
+- указать путь для копирования модулей при установке ```composer/installers```.
+
+Пример файла composer.json проекта:
+
+```json
+{
+  "name": "fi1a/project",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Nikolay Gorohovsky",
+      "email": "fi1a@icloud.com"
+    }
+  ],
+  "require": {
+    "composer/installers": "~1.0",
+    "fi1a/usersettings": ">=1.0.0 <1.1.0"
+  },
+  "extra": {
+    "installer-paths": {
+      "modules/{$vendor}.{$name}/": ["type:bitrix-d7-module"]
+    }
+  }
+}
+```
+
+Если у вас не подключен composer autoload.php, его необходимо подключить в файле local/php_interface/init.php
+
+```php
+require_once __DIR__ . '/../vendor/autoload.php';
+```
+
+Затем выполняем установку пакетов командой ```composer install``` и устанавливаем модуль из админки 1С-Битрикс
+(Marketplace > Установленные решения модуль "Пользовательские настройки (fi1a.usersettings)").
 
 ## Работа со значениями полей
 
