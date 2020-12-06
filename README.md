@@ -59,7 +59,21 @@
 
 ## Изображения модуля
 
-![Добавление новой вкладки](images/elpha.usersettings-screen-1.png)
+Добавление новой вкладки:
+
+![Добавление новой вкладки](images/elpha.usersettings-screen-1-preview@2x.png)
+
+Добавление поля для пользовательских настроек:
+
+![Добавление поля для пользовательских настроек](images/elpha.usersettings-screen-2-preview@2x.png)
+
+Редактирование пользовательских настроек
+
+![Редактирование пользовательских настроек](images/elpha.usersettings-screen-3-preview@2x.png)
+
+Внешний вид пользовательских настроек
+
+![Внешний вид пользовательских настроек](images/elpha.usersettings-screen-4-preview@2x.png)
 
 ## Установка модуля
 
