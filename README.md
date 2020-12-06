@@ -59,7 +59,7 @@
 
 ## Изображения модуля
 
-![Добавление новой вкладки](images/elpha.usersettings-screen-1-preview@2x.png)
+![Добавление новой вкладки](images/elpha.usersettings-screen-1.png)
 
 ## Установка модуля
 
