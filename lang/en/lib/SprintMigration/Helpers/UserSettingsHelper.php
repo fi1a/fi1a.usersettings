@@ -1,0 +1,21 @@
+<?php
+$MESS['FUS_SM_HELPER_REQUIRE'] = 'Не передан обязательный параметр "#PARAM#"';
+$MESS['FUS_SM_HELPER_TAB_NOT_FOUND'] = 'Вкладка CODE="#CODE#" не найдена';
+$MESS['FUS_SM_HELPER_TAB_NOT_FOUND_ID'] = 'Вкладка ID="#ID#" не найдена';
+$MESS['FUS_SM_HELPER_TAB_ADD_SUCCESS'] = 'Вкладка CODE="#CODE#" успешно добавлена';
+$MESS['FUS_SM_HELPER_TAB_ADD_ERROR'] = 'Не удалось добавить вкладку CODE="#CODE#"';
+$MESS['FUS_SM_HELPER_TAB_UPDATE_SUCCESS'] = 'Вкладка ID="#ID#" успешно обновлена';
+$MESS['FUS_SM_HELPER_TAB_UPDATE_ERROR'] = 'Не удалось обновить вкладку ID="#ID"';
+$MESS['FUS_SM_HELPER_TAB_DELETE_ERROR_NOT_FOUND'] = 'Не удалось удалить вкладку CODE="#CODE#". Вкладка не найдена';
+$MESS['FUS_SM_HELPER_TAB_DELETE_SUCCESS'] = 'Вкладка CODE="#CODE#" успешно удалена';
+$MESS['FUS_SM_HELPER_TAB_DELETE_ERROR'] = 'Не удалось удалить вкладку CODE="#CODE#"';
+$MESS['FUS_SM_HELPER_FIELD_NOT_FOUND'] = 'Поле FIELD_NAME="#FIELD_NAME#" не найдено';
+$MESS['FUS_SM_HELPER_FIELD_NOT_FOUND_ID'] = 'Поле ID="#ID#" не найдено';
+$MESS['FUS_SM_HELPER_FIELD_ADD_SUCCESS'] = 'Поле FIELD_NAME="#FIELD_NAME#" успешно добавлено';
+$MESS['FUS_SM_HELPER_FIELD_ADD_ERROR'] = 'Не удалось добавить поле FIELD_NAME="#FIELD_NAME#"';
+$MESS['FUS_SM_HELPER_FIELD_UPDATE_ERROR_NOT_FOUND'] = 'Не удалось обновить поле ID="#ID#". Поле не найдено';
+$MESS['FUS_SM_HELPER_FIELD_UPDATE_SUCCESS'] = 'Поле ID="#ID#" успешно обновлено';
+$MESS['FUS_SM_HELPER_FIELD_UPDATE_ERROR'] = 'Не удалось обновить поле ID="#ID#"';
+$MESS['FUS_SM_HELPER_FIELD_DELETE_ERROR_NOT_FOUND'] = 'Не удалось удалить поле FIELD_NAME="#FIELD_NAME#". Поле не найдено';
+$MESS['FUS_SM_HELPER_FIELD_DELETE_SUCCESS'] = 'Поле FIELD_NAME="#FIELD_NAME#" успешно удалено';
+$MESS['FUS_SM_HELPER_FIELD_DELETE_ERROR'] = 'Не удалось удалить поле FIELD_NAME="#FIELD_NAME#"';

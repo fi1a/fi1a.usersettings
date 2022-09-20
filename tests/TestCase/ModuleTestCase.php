@@ -7,6 +7,7 @@ namespace Fi1a\Unit\UserSettings\TestCase;
 use Bitrix\Main\Application;
 use Bitrix\Main\Loader;
 use CModule;
+use Fi1a\UserSettings\Helpers\ModuleRegistry;
 use PHPUnit\Framework\TestCase;
 
 use function ExecuteModuleEventEx;
@@ -44,7 +45,11 @@ class ModuleTestCase extends TestCase
                 ExecuteModuleEventEx($arEvent, [self::MODULE_ID, true]);
             }
             if ($module->DoInstall() === false) {
-                throw new \ErrorException('Can\'t install module');
+                $application = ModuleRegistry::getGlobals('APPLICATION');
+
+                throw new \ErrorException(
+                    $application->GetException()->GetString() ?: 'Can\'t install module.'
+                );
             }
         }
 

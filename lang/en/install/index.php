@@ -10,4 +10,4 @@ $MESS['FUS_WRITE_ERROR_BITRIX_ADMIN_DIR'] = 'Нет доступа на запи
 $MESS['FUS_WRITE_FILE_ERROR'] = 'Не удалось записать файл "#FILE_PATH#"';
 $MESS['FUS_MENU_TITLE'] = 'Пользовательские настройки';
 $MESS['FUS_DELETE_FILE_ERROR'] = 'Не удалось удалить файл "#FILE_PATH#"';
-$MESS['FUS_PARTNER_NAME'] = 'Николай Гороховский';
+$MESS['FUS_PARTNER_NAME'] = 'Fi1a';

@@ -1,7 +1,7 @@
 <?php
 namespace Fi1a\UserSettings;
 
-use \Bitrix\Main\Loader;
+use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Fi1a\UserSettings\Helpers\ModuleRegistry;
 
@@ -14,6 +14,8 @@ $classLocFilePaths = [
     __DIR__ . '/lib/Field.php',
     __DIR__ . '/lib/Internals/TabsTable.php',
     __DIR__ . '/lib/Option.php',
+    __DIR__ . '/lib/SprintMigration/Builders/UserSettingsBuilder.php',
+    __DIR__ . '/lib/SprintMigration/Helpers/UserSettingsHelper.php',
 ];
 
 foreach ($classLocFilePaths as $classLocFilePath) {
@@ -58,6 +60,13 @@ Loader::registerAutoloadClasses(
         '\Fi1a\UserSettings\FieldMapper' => 'lib/FieldMapper.php',
         '\Fi1a\UserSettings\IOption' => 'lib/IOption.php',
         '\Fi1a\UserSettings\Option' => 'lib/Option.php',
+
+        // События
+        '\Fi1a\UserSettings\Events\SprintMigration' => 'lib/Events/SprintMigration.php',
+
+        //Классы для модуля sprint.migration
+        '\Fi1a\UserSettings\SprintMigration\Builders\UserSettingsBuilder' => 'lib/SprintMigration/Builders/UserSettingsBuilder.php',
+        '\Fi1a\UserSettings\SprintMigration\Helpers\UserSettingsHelper' => 'lib/SprintMigration/Helpers/UserSettingsHelper.php',
     ]
 );
 

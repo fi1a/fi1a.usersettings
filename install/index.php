@@ -226,6 +226,8 @@ class fi1a_usersettings extends CModule
      */
     public function InstallEvents(): bool
     {
+        RegisterModuleDependences('sprint.migration', 'OnSearchConfigFiles', $this->MODULE_ID, \Fi1a\UserSettings\Events\SprintMigration::class, 'onSearchConfigFiles');
+
         return true;
     }
 
@@ -338,6 +340,8 @@ class fi1a_usersettings extends CModule
      */
     public function UnInstallEvents(): bool
     {
+        UnRegisterModuleDependences('sprint.migration', 'OnSearchConfigFiles', $this->MODULE_ID, \Fi1a\UserSettings\Events\SprintMigration::class, 'onSearchConfigFiles');
+
         return true;
     }
 
