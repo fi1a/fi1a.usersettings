@@ -9,6 +9,8 @@ use Sprint\Migration\HelperManager;
 
 /**
  * Обработчик событий модуля sprint.migration
+ *
+ * @codeCoverageIgnore
  */
 class SprintMigration
 {
@@ -17,8 +19,8 @@ class SprintMigration
      */
     public static function onSearchConfigFiles(): string
     {
-        HelperManager::getInstance()->registerHelper('userSettings', UserSettingsHelper::class);
+        HelperManager::getInstance()->registerHelper('UserSettings', UserSettingsHelper::class);
 
-        return __DIR__ . '/../../sprint.migration.config';
+        return __DIR__ . '/../../sprint.migration/config';
     }
 }

@@ -1161,4 +1161,66 @@ class UserSettingsHelperTest extends TabsAndFieldsTestCase
         $this->assertTrue($helper->setOption('UF_FUS_TEST_FIELD3', 'XML_ID_1'));
         $this->assertEquals('XML_ID_1', $helper->getOption('UF_FUS_TEST_FIELD3'));
     }
+
+    /**
+     * Тестирование метода setOption
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     */
+    public function testSetOptionNotFound(): void
+    {
+        $helper = new FixtureUserSettingsHelper();
+
+        $this->expectException(HelperException::class);
+        $helper->setOption('UF_FUS_TEST_FIELD_UNKNOWN', 'XML_ID_1');
+    }
+
+    /**
+     * Тестирование метода setOption
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     */
+    public function testSetOptionError(): void
+    {
+        $helper = new FixtureUserSettingsHelper();
+
+        $this->expectException(HelperException::class);
+        $eventHandlerKey = EventManager::getInstance()->addEventHandler(
+            self::MODULE_ID,
+            'OnBeforeOptionSet',
+            function (Event $event) {
+                throw new \ErrorException();
+            }
+        );
+        try {
+            $helper->setOption('UF_FUS_TEST_FIELD3', 'XML_ID_2');
+        } catch (HelperException $exception) {
+            EventManager::getInstance()->removeEventHandler(
+                self::MODULE_ID,
+                'OnBeforeOptionSet',
+                $eventHandlerKey
+            );
+
+            throw $exception;
+        }
+    }
+
+    /**
+     * Тестирование метода getOption
+     *
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ObjectPropertyException
+     * @throws \Bitrix\Main\SystemException
+     */
+    public function testGetOptionNotFound(): void
+    {
+        $helper = new FixtureUserSettingsHelper();
+
+        $this->expectException(HelperException::class);
+        $helper->getOption('UF_FUS_TEST_FIELD_UNKNOWN');
+    }
 }

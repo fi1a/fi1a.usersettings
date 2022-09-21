@@ -957,6 +957,11 @@ class UserSettingsHelper extends Helper
     public function getOption(string $key)
     {
         $field = $this->getFieldByCode($key);
+
+        if (!$field) {
+            throw new HelperException(Loc::getMessage('FUS_SM_HELPER_FIELD_NOT_FOUND', ['#FIELD_NAME#' => $key,]));
+        }
+
         $value = Option::getInstance()->get($key);
 
         if ($field['UF']['USER_TYPE_ID'] === 'enumeration') {
@@ -981,9 +986,13 @@ class UserSettingsHelper extends Helper
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public function setOption(string $key, $value): bool
+    public function setOption(string $key, $value, bool $silent = false): bool
     {
         $field = $this->getFieldByCode($key);
+
+        if (!$field) {
+            throw new HelperException(Loc::getMessage('FUS_SM_HELPER_FIELD_NOT_FOUND', ['#FIELD_NAME#' => $key,]));
+        }
 
         if ($field['UF']['USER_TYPE_ID'] === 'enumeration') {
             foreach ($field['UF']['ENUMS'] as $enum) {
@@ -993,9 +1002,22 @@ class UserSettingsHelper extends Helper
             }
         }
 
-        Option::getInstance()->set($key, $value);
+        $result = Option::getInstance()->set($key, $value);
 
-        return true;
+        if ($result->isSuccess()) {
+            $this->outInfoIf(!$silent, Loc::getMessage('FUS_SM_HELPER_SET_OPTION_SUCCESS', ['#ID#' => $field['ID'],]));
+
+            return true;
+        }
+
+        if (!$silent && !$result->isSuccess()) {
+            foreach ($result->getErrorMessages() as $errorMessage) {
+                $this->outError($errorMessage);
+            }
+            unset($errorMessage);
+        }
+
+        throw new HelperException(Loc::getMessage('FUS_SM_HELPER_SET_OPTION_ERROR', ['#ID#' => $field['ID'],]));
     }
 
     /**

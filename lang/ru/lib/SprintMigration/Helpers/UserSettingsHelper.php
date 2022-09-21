@@ -19,3 +19,5 @@ $MESS['FUS_SM_HELPER_FIELD_UPDATE_ERROR'] = 'Не удалось обновит�
 $MESS['FUS_SM_HELPER_FIELD_DELETE_ERROR_NOT_FOUND'] = 'Не удалось удалить поле FIELD_NAME="#FIELD_NAME#". Поле не найдено';
 $MESS['FUS_SM_HELPER_FIELD_DELETE_SUCCESS'] = 'Поле FIELD_NAME="#FIELD_NAME#" успешно удалено';
 $MESS['FUS_SM_HELPER_FIELD_DELETE_ERROR'] = 'Не удалось удалить поле FIELD_NAME="#FIELD_NAME#"';
+$MESS['FUS_SM_HELPER_SET_OPTION_SUCCESS'] = 'Значение поля ID="#ID#" успешно установлено';
+$MESS['FUS_SM_HELPER_SET_OPTION_ERROR'] = 'Не удалось установить значение поля ID="#ID#"';
