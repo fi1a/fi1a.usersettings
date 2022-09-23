@@ -92,13 +92,13 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "Nikolay Gorohovsky",
+      "name": "Fi1a",
       "email": "fi1a@icloud.com"
     }
   ],
   "require": {
     "composer/installers": "~1.0",
-    "fi1a/usersettings": ">=1.0.0 <1.1.0"
+    "fi1a/usersettings": ">=1.2.0 <1.3.0"
   },
   "extra": {
     "installer-paths": {
