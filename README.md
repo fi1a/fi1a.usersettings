@@ -80,7 +80,7 @@
 В вашем composer.json проекта необходимо указать:
 
 - в блоке require указать инсталятор ```"composer/installers": "~1.0"```;
-- в блоке require указать модуль "fi1a/usersettings": ">=1.0.0 <1.1.0";
+- в блоке require указать модуль "fi1a/usersettings": ">=1.2.0 <1.3.0";
 - указать путь для копирования модулей при установке ```composer/installers```.
 
 Пример файла composer.json проекта:
@@ -116,6 +116,42 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 Затем выполняем установку пакетов командой ```composer install``` и устанавливаем модуль из админки 1С-Битрикс
 (Marketplace > Установленные решения модуль "Пользовательские настройки (fi1a.usersettings)").
+
+## Поддержка миграций
+
+Начиная с версии 1.2.0 появилась поддержка миграций модуля ["Миграции для разработчиков" (sprint.migration)](https://marketplace.1c-bitrix.ru/solutions/sprint.migration/)
+
+Добавлен хелпер ```\Fi1a\UserSettings\SprintMigration\Helpers\UserSettingsHelper``` и билдер ```\Fi1a\UserSettings\SprintMigration\Builders\UserSettingsBuilder```
+
+Использование хелпера:
+
+```php
+public function up()
+{
+    $helper = $this->getHelperManager();
+
+    $helper->UserSettings()->saveTab("TAB", array (
+        'ACTIVE' => '1',
+        'CODE' => 'TAB',
+        'SORT' => '500',
+        'LOCALIZATION' => [
+            'ru' => [
+                'L_NAME' => 'Вкладка',
+                'L_TITLE' => 'Вкладка',
+            ],
+            'en' => [
+                'L_NAME' => 'Tab',
+                'L_TITLE' => 'Tab',
+            ],
+        ],
+    ));
+}
+```
+
+Создание миграции доступно в разделе "Инструменты" под пунктом "Пользовательские настройки" на странице управления
+миграциями модуля "Миграции для разработчиков" (sprint.migration).
+
+![Билдер модуля миграций](images/fi1a.usersettings-screen-5.png)
 
 ## Работа со значениями полей
 
