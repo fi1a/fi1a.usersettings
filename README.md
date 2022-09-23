@@ -223,7 +223,7 @@ $option = Option::getInstance();
 $result = $option->set('UF_CAPTCHA_SECRET', 'foo');
 if (!$result->isSuccess()) {
     // В случае ошибки
-    echo implode('&lt;br&gt;', $result->getErrorMessages());
+    echo implode('<br>', $result->getErrorMessages());
 
     return;
 }
@@ -288,7 +288,7 @@ $tab = Tab::create([
 
 $addResult = $tab->add();
 if (!$addResult->isSuccess()) {
-    echo implode('&lt;br&gt;', $addResult->getErrorMessages());
+    echo implode('<br>', $addResult->getErrorMessages());
 }
 ```
 
@@ -406,7 +406,7 @@ if (false !== $tab) {
     $updateResult = $tab->update();
 
     if (!$updateResult->isSuccess()) {
-        echo implode('&lt;br&gt;', $updateResult->getErrorMessages());
+        echo implode('<br>', $updateResult->getErrorMessages());
     }
 }
 ```
@@ -433,7 +433,7 @@ if (false !== $tab) {
     $updateResult = $tab->save();
 
     if (!$updateResult->isSuccess()) {
-        echo implode('&lt;br&gt;', $updateResult->getErrorMessages());
+        echo implode('<br>', $updateResult->getErrorMessages());
     }
 }
 ```
@@ -456,7 +456,7 @@ if (false !== $tab) {
     $addResult = $tab->save();
 
     if (!$addResult->isSuccess()) {
-        echo implode('&lt;br&gt;', $addResult->getErrorMessages());
+        echo implode('<br>', $addResult->getErrorMessages());
     }
 }
 ```
@@ -480,7 +480,7 @@ $tab = TabMapper::getById(3);
 $deleteResult = $tab->delete();
 
 if (!$deleteResult->isSuccess()) {
-    echo implode('&lt;br&gt;', $deleteResult->getErrorMessages());
+    echo implode('<br>', $deleteResult->getErrorMessages());
 }
 ```
 
@@ -539,7 +539,7 @@ $field = Field::create([
 $addResult = $field->add();
 
 if (!$addResult->isSuccess()) {
-    echo implode('&lt;br&gt;', $addResult->getErrorMessages());
+    echo implode('<br>', $addResult->getErrorMessages());
 }
 ```
 
@@ -675,7 +675,7 @@ if (false !== $field) {
     $updateResult = $field->update();
 
     if (!$updateResult->isSuccess()) {
-        echo implode('&lt;br&gt;', $updateResult->getErrorMessages());
+        echo implode('<br>', $updateResult->getErrorMessages());
     }
 }
 ```
@@ -702,7 +702,7 @@ if (false !== $field) {
     $updateResult = $field->save();
 
     if (!$updateResult->isSuccess()) {
-        echo implode('&lt;br&gt;', $updateResult->getErrorMessages());
+        echo implode('<br>', $updateResult->getErrorMessages());
     }
 }
 ```
@@ -727,7 +727,7 @@ if (false !== $field) {
     $addResult = $field->save();
 
     if (!$addResult->isSuccess()) {
-        echo implode('&lt;br&gt;', $addResult->getErrorMessages());
+        echo implode('<br>', $addResult->getErrorMessages());
     }
 }
 ```
@@ -751,7 +751,7 @@ $field = FieldMapper::getById(3);
 $deleteResult = $field->delete();
 
 if (!$deleteResult->isSuccess()) {
-    echo implode('&lt;br&gt;', $deleteResult->getErrorMessages());
+    echo implode('<br>', $deleteResult->getErrorMessages());
 }
 ```
 
