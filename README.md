@@ -80,7 +80,7 @@
 В вашем composer.json проекта необходимо указать:
 
 - в блоке require указать инсталятор ```"composer/installers": "~1.0"```;
-- в блоке require указать модуль "fi1a/usersettings": ">=1.2.0 <1.3.0";
+- в блоке require указать модуль ```"fi1a/usersettings": ">=1.2.0 <1.3.0"```;
 - указать путь для копирования модулей при установке ```composer/installers```.
 
 Пример файла composer.json проекта:
