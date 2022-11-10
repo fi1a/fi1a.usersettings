@@ -655,6 +655,27 @@ foreach ($fieldCollection as $field) {
 unset($field);
 ```
 
+Для выбора поля по символьному коду можно использовать метод ```getByCode(string $code)```.
+Метод вернет поле с символьным кодом ```string $code``` или false, если поле с символьным кодом не найдено.
+
+
+| Аргумент     | Описание            |
+|--------------|---------------------|
+| string $code | Символьный код поля |
+
+```php
+use \Bitrix\Main\Loader;
+use \Fi1a\UserSettings\FieldMapper;
+
+Loader::includeModule('fi1a.usersettings');
+
+$field = FieldMapper::getByCode('UF_FUS_FIELD');
+
+if (false !== $field) {
+    echo $field['ID'];
+}
+```
+
 ### Обновление поля
 
 Для обновления поля следует использовать метод ```update(): UpdateResult```
@@ -755,6 +776,22 @@ $deleteResult = $field->delete();
 if (!$deleteResult->isSuccess()) {
     echo implode('<br>', $deleteResult->getErrorMessages());
 }
+```
+
+## Значения поля типа "список"
+
+Получить значения поля типа "список" можно с помощью класса-хелпера ```Fi1a\UserSettings\Helpers\Enums``` метода ```get```
+передав в качестве аргумента объект поля ```Fi1a\UserSettings\IField``` типа "список".
+
+```php
+use \Bitrix\Main\Loader;
+use \Fi1a\UserSettings\FieldMapper;
+use \Fi1a\UserSettings\Helpers\Enums;
+
+Loader::includeModule('fi1a.usersettings');
+
+$field = FieldMapper::getById(3);
+$enums = Enums::get($field);
 ```
 
 ## События модуля

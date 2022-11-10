@@ -6,7 +6,6 @@ namespace Fi1a\UserSettings\SprintMigration\Helpers;
 
 use Bitrix\Main\Localization\Loc;
 use CUserFieldEnum;
-use CUserTypeEntity;
 use Fi1a\UserSettings\Field;
 use Fi1a\UserSettings\FieldMapper;
 use Fi1a\UserSettings\IOption;
@@ -455,21 +454,7 @@ class UserSettingsHelper extends Helper
             throw new InvalidArgumentException(Loc::getMessage('FUS_SM_HELPER_REQUIRE', ['#PARAM#' => '$code',]));
         }
 
-        $fieldUf = CUserTypeEntity::GetList([], ['ENTITY_ID' => IOption::ENTITY_ID, 'FIELD_NAME' => $code,])->Fetch();
-
-        if (!$fieldUf) {
-            return false;
-        }
-
-        $parameters = [
-            'filter' => [
-                'UF_ID' => $fieldUf['ID'],
-            ],
-            'limit' => 1,
-        ];
-
-        $result = FieldMapper::getList($parameters)->getArrayCopy();
-        $field = reset($result);
+        $field = FieldMapper::getByCode($code);
 
         if (!$field) {
             return false;
@@ -477,9 +462,9 @@ class UserSettingsHelper extends Helper
 
         $field = $field->getArrayCopy();
 
-        if ($fieldUf['USER_TYPE_ID'] === 'enumeration') {
+        if ($field['UF']['USER_TYPE_ID'] === 'enumeration') {
             $enums = [];
-            $iterator = (new CUserFieldEnum())->GetList([], ['USER_FIELD_ID' => $fieldUf['ID']]);
+            $iterator = (new CUserFieldEnum())->GetList([], ['USER_FIELD_ID' => $field['UF_ID']]);
 
             while ($enum = $iterator->Fetch()) {
                 $enums[] = $enum;
