@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\UserSettings;
 
 use Bitrix\Main\UserFieldTable;
+use CUserTypeEntity;
 use Fi1a\UserSettings\Internals\FieldsTable;
 use Fi1a\UserSettings\Internals\UserFieldLangTable;
 
@@ -106,5 +107,29 @@ class FieldMapper implements IFieldMapper
         $parameters['filter']['ACTIVE'] = 1;
 
         return static::getList($parameters);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getByCode(string $code)
+    {
+        if (!$code) {
+            return false;
+        }
+        $fieldUf = CUserTypeEntity::GetList([], ['ENTITY_ID' => IOption::ENTITY_ID, 'FIELD_NAME' => $code,])->Fetch();
+
+        if (!$fieldUf) {
+            return false;
+        }
+
+        $collection = static::getList(['filter' => ['UF_ID' => $fieldUf['ID'],],]);
+
+        if (!count($collection)) {
+            return false;
+        }
+        $collectionArray = $collection->getArrayCopy();
+
+        return reset($collectionArray);
     }
 }

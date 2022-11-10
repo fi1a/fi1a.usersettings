@@ -54,4 +54,11 @@ interface IFieldMapper
      * @throws \Bitrix\Main\SystemException
      */
     public static function getActive(array $parameters = []): IFieldCollection;
+
+    /**
+     * Возвращает поле по коду
+     *
+     * @return bool|IField
+     */
+    public static function getByCode(string $code);
 }
