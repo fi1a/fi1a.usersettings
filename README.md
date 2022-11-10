@@ -75,12 +75,12 @@
 
 ![Внешний вид пользовательских настроек](images/fi1a.usersettings-screen-4.png)
 
-## Установка модуля
+## Установка модуля через composer
 
 В вашем composer.json проекта необходимо указать:
 
-- в блоке require указать инсталятор ```"composer/installers": "~1.0"```;
-- в блоке require указать модуль ```"fi1a/usersettings": "~1.2"```;
+- в блоке require указать инсталятор ```"fi1a/installers": "~1.0"```;
+- в блоке require указать модуль ```"fi1a/usersettings": "~1.3"```;
 - указать путь для копирования модулей при установке ```composer/installers```.
 
 Пример файла composer.json проекта:
@@ -101,9 +101,7 @@
     "fi1a/usersettings": "~1.2"
   },
   "extra": {
-    "installer-paths": {
-      "modules/{$vendor}.{$name}/": ["type:bitrix-d7-module"]
-    }
+    "bitrix-dir": ""
   }
 }
 ```

@@ -506,9 +506,10 @@ class fi1a_usersettings extends CModule
             ];
         }
 
-        Option::set('fi1a.usersettings', 'PARENT_MENU', 'global_menu_services');
-        Option::set('fi1a.usersettings', 'SORT', 2000);
-        Option::set('fi1a.usersettings', 'LOCALIZATION', serialize($localization));
+        Option::set($this->MODULE_ID, 'PARENT_MENU', 'global_menu_services');
+        Option::set($this->MODULE_ID, 'SORT', 2000);
+        Option::set($this->MODULE_ID, 'LOCALIZATION', serialize($localization));
+        Option::set($this->MODULE_ID, 'version', $this->MODULE_VERSION);
     }
 
     /**
