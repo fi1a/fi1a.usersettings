@@ -27,8 +27,7 @@
     "sort-packages": true,
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true,
-      "fi1a/installers": true,
-      "composer/installers": true
+      "fi1a/installers": true
     }
   },
   "autoload-dev": {

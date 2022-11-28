@@ -101,7 +101,7 @@ class fi1a_usersettings extends CModule
     private function initPartnerInfo()
     {
         $this->PARTNER_NAME = Loc::getMessage('FUS_PARTNER_NAME');
-        $this->PARTNER_URI = 'https://github.com/fi1a/fi1a.usersettings';
+        $this->PARTNER_URI = 'https://github.com/fi1a/usersettings';
     }
 
     /**
