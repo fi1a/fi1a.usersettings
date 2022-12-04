@@ -12,7 +12,7 @@ use Fi1a\Collection\DataType\ArrayObjectInterface;
 /**
  * Интерфейс поля
  */
-interface IField extends ArrayObjectInterface
+interface FieldInterface extends ArrayObjectInterface
 {
     /**
      * Фабричный метод
@@ -23,7 +23,7 @@ interface IField extends ArrayObjectInterface
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public static function create(array $input = []): IField;
+    public static function create(array $input = []): FieldInterface;
 
     /**
      * Сохранение

@@ -276,7 +276,7 @@ class Tab extends ArrayObject implements ITab
                 $fieldCollection = FieldMapper::getByTabId($id);
                 foreach ($fieldCollection as $field) {
                     /**
-                     * @var IField $field
+                     * @var FieldInterface $field
                      */
                     $fieldDeleteResult = $field->delete();
 

@@ -14,7 +14,7 @@ interface IFieldMapper
      *
      * @param string[] $parameters - синтаксис d7
      *
-     * @return IFieldCollection|IField[]
+     * @return IFieldCollection|FieldInterface[]
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
@@ -25,7 +25,7 @@ interface IFieldMapper
     /**
      * Возвращает поле по идентификатору
      *
-     * @return bool|IField
+     * @return bool|FieldInterface
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
@@ -36,7 +36,7 @@ interface IFieldMapper
     /**
      * Возвращает список полей принадлежащих вкладке
      *
-     * @return IFieldCollection|bool|IField[]
+     * @return IFieldCollection|bool|FieldInterface[]
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
@@ -58,7 +58,7 @@ interface IFieldMapper
     /**
      * Возвращает поле по коду
      *
-     * @return bool|IField
+     * @return bool|FieldInterface
      */
     public static function getByCode(string $code);
 }

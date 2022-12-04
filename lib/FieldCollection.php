@@ -15,7 +15,7 @@ class FieldCollection extends AbstractBaseCollection implements IFieldCollection
      * @param mixed $key
      * @param mixed $value
      *
-     * @return IField
+     * @return FieldInterface
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException

@@ -6,8 +6,8 @@ namespace Fi1a\Unit\UserSettings;
 
 use CUserTypeEntity;
 use Fi1a\Unit\UserSettings\TestCase\TabsAndFieldsTestCase;
+use Fi1a\UserSettings\FieldInterface;
 use Fi1a\UserSettings\FieldMapper;
-use Fi1a\UserSettings\IField;
 use Fi1a\UserSettings\IFieldCollection;
 use Fi1a\UserSettings\IOption;
 
@@ -39,7 +39,7 @@ class FieldMapperTest extends TabsAndFieldsTestCase
     {
         $this->assertFalse(FieldMapper::getById(0));
         $this->assertFalse(FieldMapper::getById(PHP_INT_MAX));
-        $this->assertInstanceOf(IField::class, FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']));
+        $this->assertInstanceOf(FieldInterface::class, FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']));
     }
 
     /**
@@ -78,7 +78,7 @@ class FieldMapperTest extends TabsAndFieldsTestCase
     {
         $this->assertFalse(FieldMapper::getByCode(''));
         $this->assertFalse(FieldMapper::getByCode('UF_FUS_TEST_UNKNOWN'));
-        $this->assertInstanceOf(IField::class, FieldMapper::getByCode('UF_FUS_TEST_FIELD1'));
+        $this->assertInstanceOf(FieldInterface::class, FieldMapper::getByCode('UF_FUS_TEST_FIELD1'));
     }
 
     /**

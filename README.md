@@ -500,7 +500,7 @@ if (!$deleteResult->isSuccess()) {
 
 Класс поля ```\Fi1a\UserSettings\Field``` является наследником класса
 ```\ArrayObject```. Для начала нужно получить экземпляр класса поля, используя
-фабричный метод ```create(array $input = []): IField```, передав в него все необходимые
+фабричный метод ```create(array $input = []): FieldInterface```, передав в него все необходимые
 парамеры. Данный метод является статичным. После того как мы получили экземпляр
 класса ```\Fi1a\UserSettings\Field``` вызовем метод ```add(): AddResult```,
 который вернет результат в виде объкта класса ```\Bitrix\Main\ORM\Data\AddResult```.
@@ -781,7 +781,7 @@ if (!$deleteResult->isSuccess()) {
 ## Значения поля типа "список"
 
 Получить значения поля типа "список" можно с помощью класса-хелпера ```Fi1a\UserSettings\Helpers\Enums``` метода ```get```
-передав в качестве аргумента объект поля ```Fi1a\UserSettings\IField``` типа "список".
+передав в качестве аргумента объект поля ```Fi1a\UserSettings\FieldInterface``` типа "список".
 
 ```php
 use \Bitrix\Main\Loader;

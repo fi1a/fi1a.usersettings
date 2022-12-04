@@ -46,7 +46,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\UserSettings\UserTypeManager' => 'lib/UserTypeManager.php',
         '\Fi1a\UserSettings\ITab' => 'lib/ITab.php',
         '\Fi1a\UserSettings\Tab' => 'lib/Tab.php',
-        '\Fi1a\UserSettings\IField' => 'lib/IField.php',
+        '\Fi1a\UserSettings\FieldInterface' => 'lib/FieldInterface.php',
         '\Fi1a\UserSettings\Field' => 'lib/Field.php',
         '\Fi1a\UserSettings\BaseCollectionInterface' => 'lib/BaseCollectionInterface.php',
         '\Fi1a\UserSettings\AbstractBaseCollection' => 'lib/AbstractBaseCollection.php',

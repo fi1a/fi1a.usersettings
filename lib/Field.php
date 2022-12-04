@@ -23,7 +23,7 @@ use Fi1a\UserSettings\Internals\TransactionState;
 /**
  * Поле пользовательских настроек
  */
-class Field extends ArrayObject implements IField
+class Field extends ArrayObject implements FieldInterface
 {
     use TransactionState;
 
@@ -40,7 +40,7 @@ class Field extends ArrayObject implements IField
     /**
      * @inheritDoc
      */
-    public static function create(array $input = []): IField
+    public static function create(array $input = []): FieldInterface
     {
         return new static($input);
     }
