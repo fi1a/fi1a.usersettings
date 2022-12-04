@@ -15,7 +15,7 @@ class TabCollection extends AbstractBaseCollection implements ITabCollection
      * @param mixed $key
      * @param mixed $value
      *
-     * @return ITab
+     * @return TabInterface
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
@@ -31,6 +31,6 @@ class TabCollection extends AbstractBaseCollection implements ITabCollection
      */
     protected function isInstance($value): bool
     {
-        return $value instanceof ITab;
+        return $value instanceof TabInterface;
     }
 }

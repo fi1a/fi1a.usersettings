@@ -12,7 +12,7 @@ use Fi1a\Collection\DataType\ArrayObjectInterface;
 /**
  * Интерфейс класса вкладки пользовательских настроек
  */
-interface ITab extends ArrayObjectInterface
+interface TabInterface extends ArrayObjectInterface
 {
     /**
      * Фабричный метод
@@ -23,7 +23,7 @@ interface ITab extends ArrayObjectInterface
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public static function create(array $input = []): ITab;
+    public static function create(array $input = []): TabInterface;
 
     /**
      * Сохранение

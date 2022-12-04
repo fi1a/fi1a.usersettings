@@ -44,7 +44,7 @@ Loader::registerAutoloadClasses(
 
         // Классы модуля
         '\Fi1a\UserSettings\UserTypeManager' => 'lib/UserTypeManager.php',
-        '\Fi1a\UserSettings\ITab' => 'lib/ITab.php',
+        '\Fi1a\UserSettings\TabInterface' => 'lib/TabInterface.php',
         '\Fi1a\UserSettings\Tab' => 'lib/Tab.php',
         '\Fi1a\UserSettings\FieldInterface' => 'lib/FieldInterface.php',
         '\Fi1a\UserSettings\Field' => 'lib/Field.php',

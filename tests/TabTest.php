@@ -10,8 +10,8 @@ use Bitrix\Main\ORM\EntityError;
 use Bitrix\Main\ORM\EventResult;
 use Fi1a\Unit\UserSettings\TestCase\ModuleTestCase;
 use Fi1a\UserSettings\Field;
-use Fi1a\UserSettings\ITab;
 use Fi1a\UserSettings\Tab;
+use Fi1a\UserSettings\TabInterface;
 use Fi1a\UserSettings\TabMapper;
 use ReflectionClass;
 
@@ -39,7 +39,7 @@ class TabTest extends ModuleTestCase
         $property = $reflection->getProperty('languages');
         $property->setAccessible(true);
         $property->setValue($tab1, null);
-        $this->assertInstanceOf(ITab::class, $tab1);
+        $this->assertInstanceOf(TabInterface::class, $tab1);
         $tab2 = Tab::create(['ID' => 2, 'LOCALIZATION' => [
             'ru' => [
                 'L_NAME' => '',
@@ -47,7 +47,7 @@ class TabTest extends ModuleTestCase
             ],
         ],
         ]);
-        $this->assertInstanceOf(ITab::class, $tab2);
+        $this->assertInstanceOf(TabInterface::class, $tab2);
     }
 
     /**
@@ -69,7 +69,7 @@ class TabTest extends ModuleTestCase
                 ],
             ],
         ]);
-        $this->assertInstanceOf(ITab::class, $tab1);
+        $this->assertInstanceOf(TabInterface::class, $tab1);
         $result = $tab1->save();
         $this->assertTrue($result->isSuccess());
         self::$tabIds['FUS_TEST_TAB1'] = $result->getId();
@@ -84,7 +84,7 @@ class TabTest extends ModuleTestCase
                 ],
             ],
         ]);
-        $this->assertInstanceOf(ITab::class, $tab1);
+        $this->assertInstanceOf(TabInterface::class, $tab1);
         $result = $tab1->save();
         $this->assertTrue($result->isSuccess());
         self::$tabIds['FUS_TEST_TAB2'] = $result->getId();
@@ -121,7 +121,7 @@ class TabTest extends ModuleTestCase
                 ],
             ],
         ]);
-        $this->assertInstanceOf(ITab::class, $tab1);
+        $this->assertInstanceOf(TabInterface::class, $tab1);
         $this->assertFalse($tab1->save()->isSuccess());
         EventManager::getInstance()->removeEventHandler(
             self::MODULE_ID,
@@ -285,7 +285,7 @@ class TabTest extends ModuleTestCase
             }
         );
         $tab1 = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
-        $this->assertInstanceOf(ITab::class, $tab1);
+        $this->assertInstanceOf(TabInterface::class, $tab1);
         $this->assertFalse($tab1->save()->isSuccess());
         EventManager::getInstance()->removeEventHandler(
             self::MODULE_ID,
@@ -420,7 +420,7 @@ class TabTest extends ModuleTestCase
         ]);
         $this->assertTrue($field->save()->isSuccess());
         $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
-        $this->assertInstanceOf(ITab::class, $tab);
+        $this->assertInstanceOf(TabInterface::class, $tab);
         $eventHandlerKey = EventManager::getInstance()->addEventHandler(
             self::MODULE_ID,
             'OnBeforeFieldDelete',
@@ -433,7 +433,7 @@ class TabTest extends ModuleTestCase
         );
         $this->assertFalse($tab->delete()->isSuccess());
         $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
-        $this->assertInstanceOf(ITab::class, $tab);
+        $this->assertInstanceOf(TabInterface::class, $tab);
         EventManager::getInstance()->removeEventHandler(
             self::MODULE_ID,
             'OnBeforeFieldDelete',

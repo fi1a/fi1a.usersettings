@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Fi1a\Unit\UserSettings;
 
 use Fi1a\Unit\UserSettings\TestCase\TabsAndFieldsTestCase;
-use Fi1a\UserSettings\ITab;
 use Fi1a\UserSettings\TabCollection;
+use Fi1a\UserSettings\TabInterface;
 use Fi1a\UserSettings\TabMapper;
 
 use const PHP_INT_MAX;
@@ -44,7 +44,7 @@ class TabMapperTest extends TabsAndFieldsTestCase
     public function testGetById(): void
     {
         $tab = TabMapper::getById(self::$tabIds['FUS_TEST_TAB1']);
-        $this->assertInstanceOf(ITab::class, $tab);
+        $this->assertInstanceOf(TabInterface::class, $tab);
         $this->assertEquals(self::$tabIds['FUS_TEST_TAB1'], $tab['ID']);
     }
 

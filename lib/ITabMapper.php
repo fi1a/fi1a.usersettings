@@ -23,7 +23,7 @@ interface ITabMapper
     /**
      * Возвращает вкладку по ее идентификатору
      *
-     * @return bool|ITab
+     * @return bool|TabInterface
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
