@@ -9,7 +9,7 @@ use Fi1a\Collection\InstanceCollectionInterface;
 /**
  * Интерфейс коллекций вкладок и полей
  */
-interface IBaseCollection extends InstanceCollectionInterface
+interface BaseCollectionInterface extends InstanceCollectionInterface
 {
     /**
      * Преобразует экземпляры классов в массив
