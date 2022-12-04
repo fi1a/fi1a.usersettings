@@ -50,7 +50,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\UserSettings\Field' => 'lib/Field.php',
         '\Fi1a\UserSettings\BaseCollectionInterface' => 'lib/BaseCollectionInterface.php',
         '\Fi1a\UserSettings\AbstractBaseCollection' => 'lib/AbstractBaseCollection.php',
-        '\Fi1a\UserSettings\ITabCollection' => 'lib/ITabCollection.php',
+        '\Fi1a\UserSettings\TabCollectionInterface' => 'lib/TabCollectionInterface.php',
         '\Fi1a\UserSettings\TabCollection' => 'lib/TabCollection.php',
         '\Fi1a\UserSettings\ITabMapper' => 'lib/ITabMapper.php',
         '\Fi1a\UserSettings\TabMapper' => 'lib/TabMapper.php',

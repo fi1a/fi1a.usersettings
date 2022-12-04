@@ -14,7 +14,7 @@ class TabMapper implements ITabMapper
     /**
      * @inheritDoc
      */
-    public static function getList(array $parameters = []): ITabCollection
+    public static function getList(array $parameters = []): TabCollectionInterface
     {
         $tabs = new TabCollection();
 
@@ -50,7 +50,7 @@ class TabMapper implements ITabMapper
     /**
      * @inheritDoc
      */
-    public static function getActive(array $parameters = []): ITabCollection
+    public static function getActive(array $parameters = []): TabCollectionInterface
     {
         $parameters['filter']['ACTIVE'] = 1;
 

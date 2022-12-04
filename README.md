@@ -306,7 +306,7 @@ if (!$addResult->isSuccess()) {
 ### Выборка вкладок
 
 Основным метод для выборки вкладок является метод
-```getList(array $parameters = []): ITabCollection```
+```getList(array $parameters = []): TabCollectionInterface```
 класса ```\Fi1a\UserSettings\TabMapper```. Данный метод принимает в качестве аргумента
 массив аналогичный синтаксису ORM D7. Метод возвращает коллекцию классов вкладок
 ```\Fi1a\UserSettings\TabCollection```. При пустом результате выборки
@@ -338,7 +338,7 @@ unset($tab);
 ```
 
 Предыдущий пример можно заменить с использованием метода
-```getActive(array $parameters = []): ITabCollection```. Данный метод
+```getActive(array $parameters = []): TabCollectionInterface```. Данный метод
 выполняет выборку всех активных вкладок с возможностью дополнительной фильтрации или сортировки путем
 передачи аргумента ```$parameters``` аналогичного ORM D7.
 
@@ -365,7 +365,7 @@ unset($tab);
 ```
 
 Метод ```getById(int $id)``` осуществляет поиск вкладки по идентификатору. В отличие от
-методов ```getList(array $parameters = []): ITabCollection``` и ```getActive(array $parameters = []): ITabCollection```
+методов ```getList(array $parameters = []): TabCollectionInterface``` и ```getActive(array $parameters = []): TabCollectionInterface```
 возвращает не коллекцию вкладок, а экземпляр класса вкладки ```\Fi1a\UserSettings\Tab```.
 Если вкладку не удалось найти по идентификатору, метод вернет значение ```false```.
 

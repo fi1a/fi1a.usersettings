@@ -18,7 +18,7 @@ interface ITabMapper
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public static function getList(array $parameters = []): ITabCollection;
+    public static function getList(array $parameters = []): TabCollectionInterface;
 
     /**
      * Возвращает вкладку по ее идентификатору
@@ -40,5 +40,5 @@ interface ITabMapper
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public static function getActive(array $parameters = []): ITabCollection;
+    public static function getActive(array $parameters = []): TabCollectionInterface;
 }

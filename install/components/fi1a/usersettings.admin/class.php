@@ -9,7 +9,7 @@ use Fi1a\UserSettings\FieldMapper;
 use Fi1a\UserSettings\Helpers\Flush;
 use Fi1a\UserSettings\FieldCollectionInterface;
 use Fi1a\UserSettings\OptionInterface;
-use Fi1a\UserSettings\ITabCollection;
+use Fi1a\UserSettings\TabCollectionInterface;
 use Fi1a\UserSettings\Option;
 use Fi1a\UserSettings\TabMapper;
 use Fi1a\UserSettings\UserTypeManager;
@@ -158,13 +158,13 @@ class Fi1aUserSettingsAdminComponent extends CBitrixComponent
     /**
      * Возвращает коллекцию табов
      *
-     * @return ITabCollection
+     * @return TabCollectionInterface
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    protected function getTabs(): ITabCollection
+    protected function getTabs(): TabCollectionInterface
     {
         return TabMapper::getActive([
             'order' => ['SORT' => 'ASC',]
