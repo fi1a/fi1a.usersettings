@@ -7,12 +7,12 @@ namespace Fi1a\UserSettings;
 use Bitrix\Main\ORM\Data\AddResult;
 use Bitrix\Main\ORM\Data\DeleteResult;
 use Bitrix\Main\ORM\Data\UpdateResult;
-use Fi1a\Collection\DataType\IArrayObject;
+use Fi1a\Collection\DataType\ArrayObjectInterface;
 
 /**
  * Интерфейс поля
  */
-interface IField extends IArrayObject
+interface FieldInterface extends ArrayObjectInterface
 {
     /**
      * Фабричный метод
@@ -23,7 +23,7 @@ interface IField extends IArrayObject
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public static function create(array $input = []): IField;
+    public static function create(array $input = []): FieldInterface;
 
     /**
      * Сохранение

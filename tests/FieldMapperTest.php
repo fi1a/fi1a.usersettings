@@ -6,10 +6,10 @@ namespace Fi1a\Unit\UserSettings;
 
 use CUserTypeEntity;
 use Fi1a\Unit\UserSettings\TestCase\TabsAndFieldsTestCase;
+use Fi1a\UserSettings\FieldCollectionInterface;
+use Fi1a\UserSettings\FieldInterface;
 use Fi1a\UserSettings\FieldMapper;
-use Fi1a\UserSettings\IField;
-use Fi1a\UserSettings\IFieldCollection;
-use Fi1a\UserSettings\IOption;
+use Fi1a\UserSettings\OptionInterface;
 
 use const PHP_INT_MAX;
 
@@ -24,7 +24,7 @@ class FieldMapperTest extends TabsAndFieldsTestCase
     public function testGetList(): void
     {
         $collection = FieldMapper::getList();
-        $this->assertInstanceOf(IFieldCollection::class, $collection);
+        $this->assertInstanceOf(FieldCollectionInterface::class, $collection);
         $this->assertCount(2, $collection);
     }
 
@@ -39,7 +39,7 @@ class FieldMapperTest extends TabsAndFieldsTestCase
     {
         $this->assertFalse(FieldMapper::getById(0));
         $this->assertFalse(FieldMapper::getById(PHP_INT_MAX));
-        $this->assertInstanceOf(IField::class, FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']));
+        $this->assertInstanceOf(FieldInterface::class, FieldMapper::getById(self::$fieldIds['UF_FUS_TEST_FIELD1']));
     }
 
     /**
@@ -53,7 +53,7 @@ class FieldMapperTest extends TabsAndFieldsTestCase
     {
         $this->assertFalse(FieldMapper::getByTabId(0));
         $collection = FieldMapper::getByTabId(self::$tabIds['FUS_TEST_TAB1']);
-        $this->assertInstanceOf(IFieldCollection::class, $collection);
+        $this->assertInstanceOf(FieldCollectionInterface::class, $collection);
         $this->assertCount(2, $collection);
     }
 
@@ -67,7 +67,7 @@ class FieldMapperTest extends TabsAndFieldsTestCase
     public function testGetActive(): void
     {
         $collection = FieldMapper::getActive();
-        $this->assertInstanceOf(IFieldCollection::class, $collection);
+        $this->assertInstanceOf(FieldCollectionInterface::class, $collection);
         $this->assertCount(2, $collection);
     }
 
@@ -78,7 +78,7 @@ class FieldMapperTest extends TabsAndFieldsTestCase
     {
         $this->assertFalse(FieldMapper::getByCode(''));
         $this->assertFalse(FieldMapper::getByCode('UF_FUS_TEST_UNKNOWN'));
-        $this->assertInstanceOf(IField::class, FieldMapper::getByCode('UF_FUS_TEST_FIELD1'));
+        $this->assertInstanceOf(FieldInterface::class, FieldMapper::getByCode('UF_FUS_TEST_FIELD1'));
     }
 
     /**
@@ -88,7 +88,7 @@ class FieldMapperTest extends TabsAndFieldsTestCase
     {
         $userTypeEntity  = new CUserTypeEntity();
         $userTypeId = $userTypeEntity->Add([
-            'ENTITY_ID' => IOption::ENTITY_ID,
+            'ENTITY_ID' => OptionInterface::ENTITY_ID,
             'FIELD_NAME' => 'UF_FUS_TEST_FIELD_CHECK',
             'USER_TYPE_ID' => 'string',
             'XML_ID' => '',

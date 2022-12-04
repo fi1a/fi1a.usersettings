@@ -7,9 +7,9 @@ namespace Fi1a\Unit\UserSettings\Helpers;
 use CUserFieldEnum;
 use Fi1a\Unit\UserSettings\TestCase\ModuleTestCase;
 use Fi1a\UserSettings\Field;
+use Fi1a\UserSettings\FieldInterface;
 use Fi1a\UserSettings\FieldMapper;
 use Fi1a\UserSettings\Helpers\Enums;
-use Fi1a\UserSettings\IField;
 use Fi1a\UserSettings\Tab;
 use Fi1a\UserSettings\TabMapper;
 use InvalidArgumentException;
@@ -112,7 +112,7 @@ class EnumsTest extends ModuleTestCase
     public function testGet(): void
     {
         $field = FieldMapper::getById(self::$field);
-        $this->assertInstanceOf(IField::class, $field);
+        $this->assertInstanceOf(FieldInterface::class, $field);
         $enums = Enums::get($field);
         $this->assertIsArray($enums);
         $this->assertCount(3, $enums);
@@ -125,7 +125,7 @@ class EnumsTest extends ModuleTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $field = FieldMapper::getById(self::$field);
-        $this->assertInstanceOf(IField::class, $field);
+        $this->assertInstanceOf(FieldInterface::class, $field);
         $field['UF_ID'] = null;
         Enums::get($field);
     }

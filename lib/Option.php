@@ -19,10 +19,10 @@ use function htmlspecialcharsbx;
 /**
  * Класс реализующий работу со значениями пользовательских настроек
  */
-class Option implements IOption
+class Option implements OptionInterface
 {
     /**
-     * @var IOption
+     * @var OptionInterface
      */
     protected static $instance;
 
@@ -39,7 +39,7 @@ class Option implements IOption
     /**
      * @inheritDoc
      */
-    public static function getInstance(): IOption
+    public static function getInstance(): OptionInterface
     {
         if (!static::$instance) {
             static::$instance = new static();

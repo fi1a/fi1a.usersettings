@@ -7,12 +7,12 @@ namespace Fi1a\UserSettings;
 use Bitrix\Main\ORM\Data\AddResult;
 use Bitrix\Main\ORM\Data\DeleteResult;
 use Bitrix\Main\ORM\Data\UpdateResult;
-use Fi1a\Collection\DataType\IArrayObject;
+use Fi1a\Collection\DataType\ArrayObjectInterface;
 
 /**
  * Интерфейс класса вкладки пользовательских настроек
  */
-interface ITab extends IArrayObject
+interface TabInterface extends ArrayObjectInterface
 {
     /**
      * Фабричный метод
@@ -23,7 +23,7 @@ interface ITab extends IArrayObject
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public static function create(array $input = []): ITab;
+    public static function create(array $input = []): TabInterface;
 
     /**
      * Сохранение

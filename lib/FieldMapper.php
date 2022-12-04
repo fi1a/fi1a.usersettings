@@ -12,12 +12,12 @@ use Fi1a\UserSettings\Internals\UserFieldLangTable;
 /**
  * Маппер полей пользовательских настроек
  */
-class FieldMapper implements IFieldMapper
+class FieldMapper implements FieldMapperInterface
 {
     /**
      * @inheritDoc
      */
-    public static function getList(array $parameters = []): IFieldCollection
+    public static function getList(array $parameters = []): FieldCollectionInterface
     {
         $fields = new FieldCollection();
         $userFieldIdsAlias = [];
@@ -102,7 +102,7 @@ class FieldMapper implements IFieldMapper
     /**
      * @inheritDoc
      */
-    public static function getActive(array $parameters = []): IFieldCollection
+    public static function getActive(array $parameters = []): FieldCollectionInterface
     {
         $parameters['filter']['ACTIVE'] = 1;
 
@@ -117,7 +117,10 @@ class FieldMapper implements IFieldMapper
         if (!$code) {
             return false;
         }
-        $fieldUf = CUserTypeEntity::GetList([], ['ENTITY_ID' => IOption::ENTITY_ID, 'FIELD_NAME' => $code,])->Fetch();
+        $fieldUf = CUserTypeEntity::GetList(
+            [],
+            ['ENTITY_ID' => OptionInterface::ENTITY_ID, 'FIELD_NAME' => $code,]
+        )->Fetch();
 
         if (!$fieldUf) {
             return false;

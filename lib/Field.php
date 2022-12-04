@@ -23,7 +23,7 @@ use Fi1a\UserSettings\Internals\TransactionState;
 /**
  * Поле пользовательских настроек
  */
-class Field extends ArrayObject implements IField
+class Field extends ArrayObject implements FieldInterface
 {
     use TransactionState;
 
@@ -40,7 +40,7 @@ class Field extends ArrayObject implements IField
     /**
      * @inheritDoc
      */
-    public static function create(array $input = []): IField
+    public static function create(array $input = []): FieldInterface
     {
         return new static($input);
     }
@@ -80,7 +80,7 @@ class Field extends ArrayObject implements IField
         unset($fields['UF_ID']);
         unset($fields['UF']['ID']);
 
-        $fields['UF']['ENTITY_ID'] = IOption::ENTITY_ID;
+        $fields['UF']['ENTITY_ID'] = OptionInterface::ENTITY_ID;
 
         try {
             $result = new AddResult();

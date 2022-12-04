@@ -7,7 +7,7 @@ namespace Fi1a\UserSettings;
 /**
  * Интерфейс маппера вкладок пользовательских настроек
  */
-interface ITabMapper
+interface TabMapperInterface
 {
     /**
      * Возвращает список вкладок пользовательских настроек
@@ -18,12 +18,12 @@ interface ITabMapper
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public static function getList(array $parameters = []): ITabCollection;
+    public static function getList(array $parameters = []): TabCollectionInterface;
 
     /**
      * Возвращает вкладку по ее идентификатору
      *
-     * @return bool|ITab
+     * @return bool|TabInterface
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
@@ -40,5 +40,5 @@ interface ITabMapper
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public static function getActive(array $parameters = []): ITabCollection;
+    public static function getActive(array $parameters = []): TabCollectionInterface;
 }

@@ -79,8 +79,8 @@
 
 В вашем composer.json проекта необходимо указать:
 
-- в блоке require указать инсталятор ```"fi1a/installers": "~1.0"```;
-- в блоке require указать модуль ```"fi1a/usersettings": "~1.3"```;
+- в блоке require указать инсталятор ```"fi1a/installers": "^2.0```;
+- в блоке require указать модуль ```"fi1a/usersettings": "^2.0"```;
 - указать путь до 1С-Битрикс (`bitrix-dir`) для копирования модулей при установке ```fi1a/installers```.
 
 Пример файла composer.json проекта:
@@ -97,8 +97,8 @@
     }
   ],
   "require": {
-    "fi1a/installers": "~1.0",
-    "fi1a/usersettings": "~1.2"
+    "fi1a/installers": "^2.0",
+    "fi1a/usersettings": "^2.0"
   },
   "extra": {
     "bitrix-dir": "../bitrix"
@@ -263,7 +263,7 @@ Option::getInstance()->clearCache();
 
 Класс вкладки ```\Fi1a\UserSettings\Tab``` является наследником класса
 ```\ArrayObject```. Для начала нужно получить экземпляр класса вкладки используя
-фабричный метод ```create(array $input = []): ITab``` передав в него все необходимые
+фабричный метод ```create(array $input = []): TabInterface``` передав в него все необходимые
 парамеры. Данный метод является статичным. После того как мы получили экземпляр
 класса ```\Fi1a\UserSettings\Tab``` вызовем метод ```add(): AddResult```,
 который вернет результат в виде объкта класса ```\Bitrix\Main\ORM\Data\AddResult```.
@@ -306,7 +306,7 @@ if (!$addResult->isSuccess()) {
 ### Выборка вкладок
 
 Основным метод для выборки вкладок является метод
-```getList(array $parameters = []): ITabCollection```
+```getList(array $parameters = []): TabCollectionInterface```
 класса ```\Fi1a\UserSettings\TabMapper```. Данный метод принимает в качестве аргумента
 массив аналогичный синтаксису ORM D7. Метод возвращает коллекцию классов вкладок
 ```\Fi1a\UserSettings\TabCollection```. При пустом результате выборки
@@ -338,7 +338,7 @@ unset($tab);
 ```
 
 Предыдущий пример можно заменить с использованием метода
-```getActive(array $parameters = []): ITabCollection```. Данный метод
+```getActive(array $parameters = []): TabCollectionInterface```. Данный метод
 выполняет выборку всех активных вкладок с возможностью дополнительной фильтрации или сортировки путем
 передачи аргумента ```$parameters``` аналогичного ORM D7.
 
@@ -365,7 +365,7 @@ unset($tab);
 ```
 
 Метод ```getById(int $id)``` осуществляет поиск вкладки по идентификатору. В отличие от
-методов ```getList(array $parameters = []): ITabCollection``` и ```getActive(array $parameters = []): ITabCollection```
+методов ```getList(array $parameters = []): TabCollectionInterface``` и ```getActive(array $parameters = []): TabCollectionInterface```
 возвращает не коллекцию вкладок, а экземпляр класса вкладки ```\Fi1a\UserSettings\Tab```.
 Если вкладку не удалось найти по идентификатору, метод вернет значение ```false```.
 
@@ -500,7 +500,7 @@ if (!$deleteResult->isSuccess()) {
 
 Класс поля ```\Fi1a\UserSettings\Field``` является наследником класса
 ```\ArrayObject```. Для начала нужно получить экземпляр класса поля, используя
-фабричный метод ```create(array $input = []): IField```, передав в него все необходимые
+фабричный метод ```create(array $input = []): FieldInterface```, передав в него все необходимые
 парамеры. Данный метод является статичным. После того как мы получили экземпляр
 класса ```\Fi1a\UserSettings\Field``` вызовем метод ```add(): AddResult```,
 который вернет результат в виде объкта класса ```\Bitrix\Main\ORM\Data\AddResult```.
@@ -554,7 +554,7 @@ if (!$addResult->isSuccess()) {
 ### Выборка полей
 
 Основным методом для выборки полей является
-```getList(array $parameters = []): IFieldCollection```
+```getList(array $parameters = []): FieldCollectionInterface```
 класса ```\Fi1a\UserSettings\FieldMapper```. Данный метод принимает в качестве аргумента
 массив аналогичный синтаксису ORM D7. Метод возвращает коллекцию классов полей
 ```\Fi1a\UserSettings\FieldCollection```. При пустом результате выборки
@@ -586,7 +586,7 @@ unset($field);
 ```
 
 Предыдущий пример можно заменить с использованием метода
-```getActive(array $parameters = []): IFieldCollection```. Данный метод
+```getActive(array $parameters = []): FieldCollectionInterface```. Данный метод
 выполняет выборку всех активных полей с возможностью дополнительной фильтрации или сортировки путем
 передачи аргумента ```$parameters``` аналогичного ORM D7.
 
@@ -613,7 +613,7 @@ unset($field);
 ```
 
 Метод ```getById(int $id)``` осуществляет поиск поля по идентификатору (не по идентификатору пользовательского поля).
-В отличие от методов ```getList(array $parameters = []): IFieldCollection``` и ```getActive(array $parameters = []): IFieldCollection```
+В отличие от методов ```getList(array $parameters = []): FieldCollectionInterface``` и ```getActive(array $parameters = []): IFieldCollection```
 возвращает не коллекцию полей, а экземпляр класса поля ```\Fi1a\UserSettings\Field```.
 Если поле не удалось найти по идентификатору, метод вернет значение ```false```.
 
@@ -781,7 +781,7 @@ if (!$deleteResult->isSuccess()) {
 ## Значения поля типа "список"
 
 Получить значения поля типа "список" можно с помощью класса-хелпера ```Fi1a\UserSettings\Helpers\Enums``` метода ```get```
-передав в качестве аргумента объект поля ```Fi1a\UserSettings\IField``` типа "список".
+передав в качестве аргумента объект поля ```Fi1a\UserSettings\FieldInterface``` типа "список".
 
 ```php
 use \Bitrix\Main\Loader;

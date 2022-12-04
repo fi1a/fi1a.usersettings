@@ -7,9 +7,9 @@ use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Type\ParameterDictionary;
 use Fi1a\UserSettings\FieldMapper;
 use Fi1a\UserSettings\Helpers\Flush;
-use Fi1a\UserSettings\IFieldCollection;
-use Fi1a\UserSettings\IOption;
-use Fi1a\UserSettings\ITabCollection;
+use Fi1a\UserSettings\FieldCollectionInterface;
+use Fi1a\UserSettings\OptionInterface;
+use Fi1a\UserSettings\TabCollectionInterface;
 use Fi1a\UserSettings\Option;
 use Fi1a\UserSettings\TabMapper;
 use Fi1a\UserSettings\UserTypeManager;
@@ -23,7 +23,7 @@ class Fi1aUserSettingsAdminComponent extends CBitrixComponent
     const MODULE_ID = 'fi1a.usersettings';
 
     /**
-     * @var IOption
+     * @var OptionInterface
      */
     protected $option = null;
 
@@ -158,13 +158,13 @@ class Fi1aUserSettingsAdminComponent extends CBitrixComponent
     /**
      * Возвращает коллекцию табов
      *
-     * @return ITabCollection
+     * @return TabCollectionInterface
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    protected function getTabs(): ITabCollection
+    protected function getTabs(): TabCollectionInterface
     {
         return TabMapper::getActive([
             'order' => ['SORT' => 'ASC',]
@@ -174,13 +174,13 @@ class Fi1aUserSettingsAdminComponent extends CBitrixComponent
     /**
      * Возвращает коллекцию полей
      *
-     * @return IFieldCollection
+     * @return FieldCollectionInterface
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    protected function getFields(): IFieldCollection
+    protected function getFields(): FieldCollectionInterface
     {
         return FieldMapper::getActive();
     }

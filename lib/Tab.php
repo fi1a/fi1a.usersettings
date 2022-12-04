@@ -23,7 +23,7 @@ use function htmlspecialcharsbx;
 /**
  * Класс вкладки в пользовательских настройках
  */
-class Tab extends ArrayObject implements ITab
+class Tab extends ArrayObject implements TabInterface
 {
     use TransactionState;
 
@@ -40,7 +40,7 @@ class Tab extends ArrayObject implements ITab
     /**
      * @inheritDoc
      */
-    public static function create(array $input = []): ITab
+    public static function create(array $input = []): TabInterface
     {
         return new static($input);
     }
@@ -276,7 +276,7 @@ class Tab extends ArrayObject implements ITab
                 $fieldCollection = FieldMapper::getByTabId($id);
                 foreach ($fieldCollection as $field) {
                     /**
-                     * @var IField $field
+                     * @var FieldInterface $field
                      */
                     $fieldDeleteResult = $field->delete();
 

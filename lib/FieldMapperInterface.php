@@ -7,25 +7,25 @@ namespace Fi1a\UserSettings;
 /**
  * Интерфейс маппера полей пользовательских настроек
  */
-interface IFieldMapper
+interface FieldMapperInterface
 {
     /**
      * Возвращает список полей пользовательских настроек
      *
      * @param string[] $parameters - синтаксис d7
      *
-     * @return IFieldCollection|IField[]
+     * @return FieldCollectionInterface|FieldInterface[]
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public static function getList(array $parameters = []): IFieldCollection;
+    public static function getList(array $parameters = []): FieldCollectionInterface;
 
     /**
      * Возвращает поле по идентификатору
      *
-     * @return bool|IField
+     * @return bool|FieldInterface
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
@@ -36,7 +36,7 @@ interface IFieldMapper
     /**
      * Возвращает список полей принадлежащих вкладке
      *
-     * @return IFieldCollection|bool|IField[]
+     * @return FieldCollectionInterface|bool|FieldInterface[]
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
@@ -53,12 +53,12 @@ interface IFieldMapper
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public static function getActive(array $parameters = []): IFieldCollection;
+    public static function getActive(array $parameters = []): FieldCollectionInterface;
 
     /**
      * Возвращает поле по коду
      *
-     * @return bool|IField
+     * @return bool|FieldInterface
      */
     public static function getByCode(string $code);
 }
