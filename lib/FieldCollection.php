@@ -7,7 +7,7 @@ namespace Fi1a\UserSettings;
 /**
  * Коллекция экземпляров классов полей пользовательских настроек
  */
-class FieldCollection extends ABaseCollection implements IFieldCollection
+class FieldCollection extends AbstractBaseCollection implements IFieldCollection
 {
     /**
      * Возвращает экземпляр класса элемента коллекции

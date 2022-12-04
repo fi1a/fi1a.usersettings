@@ -49,7 +49,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\UserSettings\IField' => 'lib/IField.php',
         '\Fi1a\UserSettings\Field' => 'lib/Field.php',
         '\Fi1a\UserSettings\IBaseCollection' => 'lib/IBaseCollection.php',
-        '\Fi1a\UserSettings\ABaseCollection' => 'lib/ABaseCollection.php',
+        '\Fi1a\UserSettings\AbstractBaseCollection' => 'lib/AbstractBaseCollection.php',
         '\Fi1a\UserSettings\ITabCollection' => 'lib/ITabCollection.php',
         '\Fi1a\UserSettings\TabCollection' => 'lib/TabCollection.php',
         '\Fi1a\UserSettings\ITabMapper' => 'lib/ITabMapper.php',

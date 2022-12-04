@@ -7,7 +7,7 @@ namespace Fi1a\UserSettings;
 /**
  * Коллекция экземпляров классов вкладок пользовательских настроек
  */
-class TabCollection extends ABaseCollection implements ITabCollection
+class TabCollection extends AbstractBaseCollection implements ITabCollection
 {
     /**
      * Возвращает экземпляр класса элемента коллекции
