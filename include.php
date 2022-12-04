@@ -52,7 +52,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\UserSettings\AbstractBaseCollection' => 'lib/AbstractBaseCollection.php',
         '\Fi1a\UserSettings\TabCollectionInterface' => 'lib/TabCollectionInterface.php',
         '\Fi1a\UserSettings\TabCollection' => 'lib/TabCollection.php',
-        '\Fi1a\UserSettings\ITabMapper' => 'lib/ITabMapper.php',
+        '\Fi1a\UserSettings\TabMapperInterface' => 'lib/TabMapperInterface.php',
         '\Fi1a\UserSettings\TabMapper' => 'lib/TabMapper.php',
         '\Fi1a\UserSettings\FieldCollectionInterface' => 'lib/FieldCollectionInterface.php',
         '\Fi1a\UserSettings\FieldCollection' => 'lib/FieldCollection.php',

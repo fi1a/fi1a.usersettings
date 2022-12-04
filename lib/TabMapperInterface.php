@@ -7,7 +7,7 @@ namespace Fi1a\UserSettings;
 /**
  * Интерфейс маппера вкладок пользовательских настроек
  */
-interface ITabMapper
+interface TabMapperInterface
 {
     /**
      * Возвращает список вкладок пользовательских настроек

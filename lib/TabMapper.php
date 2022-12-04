@@ -9,7 +9,7 @@ use Fi1a\UserSettings\Internals\TabsTable;
 /**
  * Маппер вкладок пользовательских настроек
  */
-class TabMapper implements ITabMapper
+class TabMapper implements TabMapperInterface
 {
     /**
      * @inheritDoc
