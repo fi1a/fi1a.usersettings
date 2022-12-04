@@ -79,8 +79,8 @@
 
 В вашем composer.json проекта необходимо указать:
 
-- в блоке require указать инсталятор ```"fi1a/installers": "~1.0"```;
-- в блоке require указать модуль ```"fi1a/usersettings": "~1.3"```;
+- в блоке require указать инсталятор ```"fi1a/installers": "^2.0```;
+- в блоке require указать модуль ```"fi1a/usersettings": "^2.0"```;
 - указать путь до 1С-Битрикс (`bitrix-dir`) для копирования модулей при установке ```fi1a/installers```.
 
 Пример файла composer.json проекта:
@@ -97,8 +97,8 @@
     }
   ],
   "require": {
-    "fi1a/installers": "~1.0",
-    "fi1a/usersettings": "~1.2"
+    "fi1a/installers": "^2.0",
+    "fi1a/usersettings": "^2.0"
   },
   "extra": {
     "bitrix-dir": "../bitrix"
