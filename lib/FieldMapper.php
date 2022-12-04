@@ -12,7 +12,7 @@ use Fi1a\UserSettings\Internals\UserFieldLangTable;
 /**
  * Маппер полей пользовательских настроек
  */
-class FieldMapper implements IFieldMapper
+class FieldMapper implements FieldMapperInterface
 {
     /**
      * @inheritDoc

@@ -7,7 +7,7 @@ namespace Fi1a\UserSettings;
 /**
  * Интерфейс маппера полей пользовательских настроек
  */
-interface IFieldMapper
+interface FieldMapperInterface
 {
     /**
      * Возвращает список полей пользовательских настроек
