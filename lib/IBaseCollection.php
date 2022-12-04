@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Fi1a\UserSettings;
 
-use Fi1a\Collection\IInstanceCollection;
+use Fi1a\Collection\InstanceCollectionInterface;
 
 /**
  * Интерфейс коллекций вкладок и полей
  */
-interface IBaseCollection extends IInstanceCollection
+interface IBaseCollection extends InstanceCollectionInterface
 {
     /**
      * Преобразует экземпляры классов в массив

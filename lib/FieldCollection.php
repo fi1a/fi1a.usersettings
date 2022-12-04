@@ -21,7 +21,7 @@ class FieldCollection extends ABaseCollection implements IFieldCollection
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public static function factory($key, $value)
+    protected function factory($key, $value)
     {
         return Field::create($value);
     }
@@ -29,7 +29,7 @@ class FieldCollection extends ABaseCollection implements IFieldCollection
     /**
      * @inheritDoc
      */
-    public static function isInstance($value): bool
+    protected function isInstance($value): bool
     {
         return $value instanceof Field;
     }

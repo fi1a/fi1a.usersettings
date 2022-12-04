@@ -21,7 +21,7 @@ class TabCollection extends ABaseCollection implements ITabCollection
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public static function factory($key, $value)
+    protected function factory($key, $value)
     {
         return Tab::create($value);
     }
@@ -29,7 +29,7 @@ class TabCollection extends ABaseCollection implements ITabCollection
     /**
      * @inheritDoc
      */
-    public static function isInstance($value): bool
+    protected function isInstance($value): bool
     {
         return $value instanceof ITab;
     }

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Fi1a\UserSettings;
 
-use Fi1a\Collection\AInstanceCollection;
+use Fi1a\Collection\AbstractInstanceCollection;
 
 /**
  * Абстрактный класс коллекций вкладок и полей
  */
-abstract class ABaseCollection extends AInstanceCollection implements IBaseCollection
+abstract class ABaseCollection extends AbstractInstanceCollection implements IBaseCollection
 {
     /**
      * @inheritDoc

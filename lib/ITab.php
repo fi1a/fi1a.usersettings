@@ -7,12 +7,12 @@ namespace Fi1a\UserSettings;
 use Bitrix\Main\ORM\Data\AddResult;
 use Bitrix\Main\ORM\Data\DeleteResult;
 use Bitrix\Main\ORM\Data\UpdateResult;
-use Fi1a\Collection\DataType\IArrayObject;
+use Fi1a\Collection\DataType\ArrayObjectInterface;
 
 /**
  * Интерфейс класса вкладки пользовательских настроек
  */
-interface ITab extends IArrayObject
+interface ITab extends ArrayObjectInterface
 {
     /**
      * Фабричный метод
