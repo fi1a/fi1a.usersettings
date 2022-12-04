@@ -54,7 +54,7 @@ Loader::registerAutoloadClasses(
         '\Fi1a\UserSettings\TabCollection' => 'lib/TabCollection.php',
         '\Fi1a\UserSettings\ITabMapper' => 'lib/ITabMapper.php',
         '\Fi1a\UserSettings\TabMapper' => 'lib/TabMapper.php',
-        '\Fi1a\UserSettings\IFieldCollection' => 'lib/IFieldCollection.php',
+        '\Fi1a\UserSettings\FieldCollectionInterface' => 'lib/FieldCollectionInterface.php',
         '\Fi1a\UserSettings\FieldCollection' => 'lib/FieldCollection.php',
         '\Fi1a\UserSettings\IFieldMapper' => 'lib/IFieldMapper.php',
         '\Fi1a\UserSettings\FieldMapper' => 'lib/FieldMapper.php',

@@ -17,7 +17,7 @@ class FieldMapper implements IFieldMapper
     /**
      * @inheritDoc
      */
-    public static function getList(array $parameters = []): IFieldCollection
+    public static function getList(array $parameters = []): FieldCollectionInterface
     {
         $fields = new FieldCollection();
         $userFieldIdsAlias = [];
@@ -102,7 +102,7 @@ class FieldMapper implements IFieldMapper
     /**
      * @inheritDoc
      */
-    public static function getActive(array $parameters = []): IFieldCollection
+    public static function getActive(array $parameters = []): FieldCollectionInterface
     {
         $parameters['filter']['ACTIVE'] = 1;
 

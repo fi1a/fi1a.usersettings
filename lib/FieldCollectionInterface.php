@@ -7,6 +7,6 @@ namespace Fi1a\UserSettings;
 /**
  * Коллекция полей пользовательских настроек
  */
-interface IFieldCollection extends BaseCollectionInterface
+interface FieldCollectionInterface extends BaseCollectionInterface
 {
 }

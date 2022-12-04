@@ -14,13 +14,13 @@ interface IFieldMapper
      *
      * @param string[] $parameters - синтаксис d7
      *
-     * @return IFieldCollection|FieldInterface[]
+     * @return FieldCollectionInterface|FieldInterface[]
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public static function getList(array $parameters = []): IFieldCollection;
+    public static function getList(array $parameters = []): FieldCollectionInterface;
 
     /**
      * Возвращает поле по идентификатору
@@ -36,7 +36,7 @@ interface IFieldMapper
     /**
      * Возвращает список полей принадлежащих вкладке
      *
-     * @return IFieldCollection|bool|FieldInterface[]
+     * @return FieldCollectionInterface|bool|FieldInterface[]
      *
      * @throws \Bitrix\Main\ArgumentException
      * @throws \Bitrix\Main\ObjectPropertyException
@@ -53,7 +53,7 @@ interface IFieldMapper
      * @throws \Bitrix\Main\ObjectPropertyException
      * @throws \Bitrix\Main\SystemException
      */
-    public static function getActive(array $parameters = []): IFieldCollection;
+    public static function getActive(array $parameters = []): FieldCollectionInterface;
 
     /**
      * Возвращает поле по коду

@@ -554,7 +554,7 @@ if (!$addResult->isSuccess()) {
 ### Выборка полей
 
 Основным методом для выборки полей является
-```getList(array $parameters = []): IFieldCollection```
+```getList(array $parameters = []): FieldCollectionInterface```
 класса ```\Fi1a\UserSettings\FieldMapper```. Данный метод принимает в качестве аргумента
 массив аналогичный синтаксису ORM D7. Метод возвращает коллекцию классов полей
 ```\Fi1a\UserSettings\FieldCollection```. При пустом результате выборки
@@ -586,7 +586,7 @@ unset($field);
 ```
 
 Предыдущий пример можно заменить с использованием метода
-```getActive(array $parameters = []): IFieldCollection```. Данный метод
+```getActive(array $parameters = []): FieldCollectionInterface```. Данный метод
 выполняет выборку всех активных полей с возможностью дополнительной фильтрации или сортировки путем
 передачи аргумента ```$parameters``` аналогичного ORM D7.
 
@@ -613,7 +613,7 @@ unset($field);
 ```
 
 Метод ```getById(int $id)``` осуществляет поиск поля по идентификатору (не по идентификатору пользовательского поля).
-В отличие от методов ```getList(array $parameters = []): IFieldCollection``` и ```getActive(array $parameters = []): IFieldCollection```
+В отличие от методов ```getList(array $parameters = []): FieldCollectionInterface``` и ```getActive(array $parameters = []): IFieldCollection```
 возвращает не коллекцию полей, а экземпляр класса поля ```\Fi1a\UserSettings\Field```.
 Если поле не удалось найти по идентификатору, метод вернет значение ```false```.
 
