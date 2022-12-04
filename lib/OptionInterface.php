@@ -9,7 +9,7 @@ use Bitrix\Main\Result;
 /**
  * Интерфейс класса реализующего работу со значениями пользовательских настроек
  */
-interface IOption
+interface OptionInterface
 {
     public const ENTITY_ID = 'FUS';
 
@@ -20,7 +20,7 @@ interface IOption
     /**
      * Синглетон
      */
-    public static function getInstance(): IOption;
+    public static function getInstance(): OptionInterface;
 
     /**
      * Возвращает все значения

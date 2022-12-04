@@ -8,8 +8,8 @@ use Bitrix\Main\Localization\Loc;
 use CUserFieldEnum;
 use Fi1a\UserSettings\Field;
 use Fi1a\UserSettings\FieldMapper;
-use Fi1a\UserSettings\IOption;
 use Fi1a\UserSettings\Option;
+use Fi1a\UserSettings\OptionInterface;
 use Fi1a\UserSettings\Tab;
 use Fi1a\UserSettings\TabMapper;
 use InvalidArgumentException;
@@ -682,7 +682,7 @@ class UserSettingsHelper extends Helper
             'HELP_MESSAGE' => '',
         ], $fields['UF']);
 
-        $fields['UF']['ENTITY_ID'] = IOption::ENTITY_ID;
+        $fields['UF']['ENTITY_ID'] = OptionInterface::ENTITY_ID;
         $fields['UF']['FIELD_NAME'] = $code;
 
         $enums = [];

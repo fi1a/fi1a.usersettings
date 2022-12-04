@@ -117,7 +117,10 @@ class FieldMapper implements FieldMapperInterface
         if (!$code) {
             return false;
         }
-        $fieldUf = CUserTypeEntity::GetList([], ['ENTITY_ID' => IOption::ENTITY_ID, 'FIELD_NAME' => $code,])->Fetch();
+        $fieldUf = CUserTypeEntity::GetList(
+            [],
+            ['ENTITY_ID' => OptionInterface::ENTITY_ID, 'FIELD_NAME' => $code,]
+        )->Fetch();
 
         if (!$fieldUf) {
             return false;

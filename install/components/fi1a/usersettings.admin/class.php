@@ -8,7 +8,7 @@ use Bitrix\Main\Type\ParameterDictionary;
 use Fi1a\UserSettings\FieldMapper;
 use Fi1a\UserSettings\Helpers\Flush;
 use Fi1a\UserSettings\FieldCollectionInterface;
-use Fi1a\UserSettings\IOption;
+use Fi1a\UserSettings\OptionInterface;
 use Fi1a\UserSettings\ITabCollection;
 use Fi1a\UserSettings\Option;
 use Fi1a\UserSettings\TabMapper;
@@ -23,7 +23,7 @@ class Fi1aUserSettingsAdminComponent extends CBitrixComponent
     const MODULE_ID = 'fi1a.usersettings';
 
     /**
-     * @var IOption
+     * @var OptionInterface
      */
     protected $option = null;
 

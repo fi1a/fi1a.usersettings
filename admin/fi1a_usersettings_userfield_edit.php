@@ -343,7 +343,7 @@ if (!empty($errors)) {
                     unset($tab);
                     ?>
                 </select>
-                <input type="hidden" name="ENTITY_ID" value="<?= IOption::ENTITY_ID?>">
+                <input type="hidden" name="ENTITY_ID" value="<?= OptionInterface::ENTITY_ID?>">
             </td>
         </tr>
         <tr class="adm-detail-required-field">

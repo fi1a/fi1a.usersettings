@@ -9,7 +9,7 @@ use Fi1a\Unit\UserSettings\TestCase\TabsAndFieldsTestCase;
 use Fi1a\UserSettings\FieldCollectionInterface;
 use Fi1a\UserSettings\FieldInterface;
 use Fi1a\UserSettings\FieldMapper;
-use Fi1a\UserSettings\IOption;
+use Fi1a\UserSettings\OptionInterface;
 
 use const PHP_INT_MAX;
 
@@ -88,7 +88,7 @@ class FieldMapperTest extends TabsAndFieldsTestCase
     {
         $userTypeEntity  = new CUserTypeEntity();
         $userTypeId = $userTypeEntity->Add([
-            'ENTITY_ID' => IOption::ENTITY_ID,
+            'ENTITY_ID' => OptionInterface::ENTITY_ID,
             'FIELD_NAME' => 'UF_FUS_TEST_FIELD_CHECK',
             'USER_TYPE_ID' => 'string',
             'XML_ID' => '',

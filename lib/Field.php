@@ -80,7 +80,7 @@ class Field extends ArrayObject implements FieldInterface
         unset($fields['UF_ID']);
         unset($fields['UF']['ID']);
 
-        $fields['UF']['ENTITY_ID'] = IOption::ENTITY_ID;
+        $fields['UF']['ENTITY_ID'] = OptionInterface::ENTITY_ID;
 
         try {
             $result = new AddResult();
