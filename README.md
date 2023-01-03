@@ -4,6 +4,7 @@
 [![Software License][badge-license]][license]
 [![PHP Version][badge-php]][php]
 [![Total Downloads][badge-downloads]][downloads]
+[![Support mail][badge-mail]][mail]
 
 Позволяет создать административную страницу с пользовательскими настройками.
 Предоставляет удобное API для создания вкладок и полей, что дает возможность
@@ -853,8 +854,10 @@ Option::getInstance()->get('UF_RECAPCHA_SECRET', 'foo');
 [badge-license]: https://img.shields.io/github/license/fi1a/usersettings?style=flat-square
 [badge-php]: https://img.shields.io/packagist/php-v/fi1a/usersettings?style=flat-square
 [badge-downloads]: https://img.shields.io/packagist/dt/fi1a/usersettings.svg?style=flat-square&colorB=mediumvioletred
+[badge-mail]: https://img.shields.io/badge/mail-support%40fi1a.ru-brightgreen
 
 [packagist]: https://packagist.org/packages/fi1a/usersettings
 [license]: https://github.com/fi1a/usersettings/blob/master/LICENSE
 [php]: https://php.net
 [downloads]: https://packagist.org/packages/fi1a/usersettings
+[mail]: mailto:support@fi1a.ru
