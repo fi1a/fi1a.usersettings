@@ -11,3 +11,4 @@ $MESS['FUS_WRITE_FILE_ERROR'] = 'Не удалось записать файл "
 $MESS['FUS_MENU_TITLE'] = 'Пользовательские настройки';
 $MESS['FUS_DELETE_FILE_ERROR'] = 'Не удалось удалить файл "#FILE_PATH#"';
 $MESS['FUS_PARTNER_NAME'] = 'Fi1a';
+$MESS['FUS_FBR_MODULE_REQUIRE'] = 'Перед установкой модуля необходимо установить <a target="_blank" href="http://marketplace.1c-bitrix.ru/solutions/fi1a.bitrixrequire/">Обертка над composer для установки зависимостей (fi1a.bitrixrequire)</a>';

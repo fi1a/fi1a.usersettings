@@ -3,3 +3,6 @@ composer.lock
 /tests/.env
 /phpunit.xml
 .phpunit.result.cache
+/node_modules/
+/dist/
+package-lock.json
