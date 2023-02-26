@@ -12,7 +12,7 @@ let gulp = require('gulp'),
     flatten = require('gulp-flatten'),
     nrc = require('node-run-cmd');
 
-const buildFolder = 'build/release';
+const buildFolder = 'runtime/release';
 const distrFolder = 'dist';
 
 let lastVersion = null;
