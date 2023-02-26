@@ -5,8 +5,8 @@ use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Fi1a\UserSettings\Helpers\ModuleRegistry;
 
-if (is_file(__DIR__ . '/vendor/autoload.php')) {
-    require_once __DIR__ . '/vendor/autoload.php';
+if (!defined('F1_INCLUDE_COMPOSER') || F1_INCLUDE_COMPOSER === false) {
+    Loader::includeModule('fi1a.bitrixrequire');
 }
 
 $classLocFilePaths = [
