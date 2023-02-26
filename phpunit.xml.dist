@@ -30,4 +30,7 @@
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
+    <php>
+        <env name="BITRIX_DIR" value="path/to/bitrix"/>
+    </php>
 </phpunit>
