@@ -213,8 +213,8 @@ gulp.task('version', () => {
     const fileContent = createVersionFileContent(lastVersion.version, lastVersion.date);
 
     return gulp.src(path.join(buildFolder, version, 'install', 'version.php'), {allowEmpty: true})
-        .pipe(file('version.php', fileContent))
-        .pipe(gulp.dest(path.join(buildFolder, version, 'install')));
+        .pipe(gulp.dest(path.join(buildFolder, version, 'install')))
+        .pipe(file('version.php', fileContent));
 });
 
 // Копируем файлы update
