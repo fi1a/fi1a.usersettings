@@ -39,7 +39,11 @@ class ModuleTestCase extends TestCase
                 && defined('MYSQL_TABLE_TYPE')
                 && strlen(MYSQL_TABLE_TYPE) > 0
             ) {
-                $connection->queryExecute('SET storage_engine = "' . MYSQL_TABLE_TYPE . '"');
+                try {
+                    $connection->queryExecute('SET storage_engine = "' . MYSQL_TABLE_TYPE . '"');
+                } catch (\Throwable $exception) {
+                    $connection->queryExecute('SET default_storage_engine = "' . MYSQL_TABLE_TYPE . '"');
+                }
             }
             foreach (GetModuleEvents('main', 'OnModuleInstalled', true) as $arEvent) {
                 ExecuteModuleEventEx($arEvent, [self::MODULE_ID, true]);

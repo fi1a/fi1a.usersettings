@@ -35,12 +35,15 @@ class UserTypeManager extends \CUserTypeManager
     /**
      * Возвращает поле для редактирования значения пользовательского поля
      *
+     * @param bool $bVarsFromForm
      * @param mixed $formValue
      * @param string[] $arUserField
      *
      * @return string
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
-    public function getEditFormHTML(bool $bVarsFromForm, $formValue, array $arUserField)
+    public function getEditFormHTML($bVarsFromForm, $formValue, $arUserField)
     {
         if ($arUserField['USER_TYPE']) {
             if (is_callable([$arUserField['USER_TYPE']['CLASS_NAME'], 'geteditformhtml'])) {
