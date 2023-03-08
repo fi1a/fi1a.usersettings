@@ -44,6 +44,7 @@ const extendGlob = glob => {
     globs.push('!{**/node_modules,**/node_modules/**}');
     globs.push('!{runtime,runtime/**}');
     globs.push('!{dist,dist/**}');
+    globs.push('!{.idea,.idea/**}');
     globs.push('!{.git,.git/**}');
     globs.push('!phpunit.xml');
     globs.push('!composer.lock');
