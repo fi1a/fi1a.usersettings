@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Dotenv\Dotenv;
-
 if (PHP_SAPI !== 'cli') {
     exit('only for cli use');
 }
