@@ -26,7 +26,7 @@
         </exclude>
     </coverage>
     <testsuites>
-        <testsuite name="Usersettings Test Suite">
+        <testsuite name="UserSettings Test Suite">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
