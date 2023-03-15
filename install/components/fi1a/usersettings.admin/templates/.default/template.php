@@ -89,7 +89,9 @@ if (empty($tabs)) {
     return;
 }
 
-if(method_exists($USER_FIELD_MANAGER, 'showscript')) {
+global $USER_FIELD_MANAGER;
+
+if($USER_FIELD_MANAGER && method_exists($USER_FIELD_MANAGER, 'showscript')) {
     echo $USER_FIELD_MANAGER->ShowScript();
 }
 

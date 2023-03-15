@@ -151,7 +151,8 @@ class FixtureUserSettingsHelper extends UserSettingsHelper
      *
      * @return void
      */
-    protected function outDiff(array $arr1, array $arr2)
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    protected function outDiff($arr1, $arr2)
     {
     }
 
@@ -162,7 +163,8 @@ class FixtureUserSettingsHelper extends UserSettingsHelper
      *
      * @return void
      */
-    protected function outDiffIf($cond, array $arr1, array $arr2)
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    protected function outDiffIf($cond, $arr1, $arr2)
     {
     }
 
@@ -171,7 +173,8 @@ class FixtureUserSettingsHelper extends UserSettingsHelper
      *
      * @return void
      */
-    protected function outMessages(array $messages = [])
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    protected function outMessages($messages = [])
     {
     }
 
