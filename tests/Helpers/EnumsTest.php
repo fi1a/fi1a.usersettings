@@ -100,8 +100,9 @@ class EnumsTest extends ModuleTestCase
      */
     public static function tearDownAfterClass(): void
     {
+        $userFieldEnum = new CUserFieldEnum();
         $field = FieldMapper::getById(self::$field);
-        CUserFieldEnum::DeleteFieldEnum($field['UF_ID']);
+        $userFieldEnum->DeleteFieldEnum($field['UF_ID']);
         TabMapper::getById(self::$tab)->delete();
         parent::tearDownAfterClass();
     }
